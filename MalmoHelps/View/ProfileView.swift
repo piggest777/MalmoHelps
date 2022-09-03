@@ -22,6 +22,7 @@ struct ProfileView: View {
                 .cornerRadius(12)
                 .padding()
         }
+        
     }
 }
 

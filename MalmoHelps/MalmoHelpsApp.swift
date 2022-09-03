@@ -14,8 +14,11 @@ struct MalmoHelpsApp: App {
     
     
     @StateObject var viewModel = AuthViewModel()
+ 
     
     var body: some Scene {
+        
+        
         WindowGroup {
             ContentView()
                 .environmentObject(viewModel)
@@ -25,5 +28,6 @@ struct MalmoHelpsApp: App {
                     }
                 }
         }
+
     }
 }

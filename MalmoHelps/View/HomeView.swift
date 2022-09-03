@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct HomeView: View {
     
@@ -14,6 +15,10 @@ struct HomeView: View {
     @StateObject var familiesLookUp = FamiliesLookupViewModel()
     @State var keyword = ""
     @State var keywordCalled = false
+    @State var currFamily: Family? = nil
+    @State var navLinkActive = false
+    @State var searching = false
+    @StateObject var cat  = Categories()
     
     var body: some View {
         
@@ -35,6 +40,7 @@ struct HomeView: View {
         )
         
         NavigationView {
+
         VStack {
             
         
@@ -47,19 +53,13 @@ struct HomeView: View {
                 //Add Circle Button
                 VStack {
                     
-                    SearchBarView(keyword: keywordBinding)
+                    SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
                     ScrollView {
-                        ForEach(familiesLookUp.queryResultUsers, id: \.secondName) { family in
-                            FamilyBarView(family: family)
+                        ForEach(familiesLookUp.queryResultUsers,  id: \.id) { family in
+                           FamilyBarView(family: family)
                                 .onTapGesture {
-                                    print("tapped")
-                                    NavigationLink(destination: FamilyDetails(family: family)) {
-                                        EmptyView()
-                                    }
-                                    .frame(width: 0)
-                                    .opacity(0)
-                                    
-                                
+                                    currFamily = family
+                                    navLinkActive = true
                                 }
                         }
                     }
@@ -67,6 +67,10 @@ struct HomeView: View {
                     circleButton (showAddFamily: $showAddFamily)
                             .frame(alignment: .bottom)
                             .padding(20)
+                    
+                    NavigationLink(destination: FamilyDetails(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
+                        EmptyView()
+                    }
                 }
             }
 
@@ -74,15 +78,22 @@ struct HomeView: View {
         .navigationTitle(Text("Malmö Helps"))
         .navigationBarTitleDisplayMode(.inline)
         .navigationBarItems(trailing:
-                                
-        NavigationLink(destination: ProfileView(), label: {
+                                NavigationLink(destination: ProfileView(), label: {
             Image(systemName: "gear")
         })
+                                
         )
-    }
+
+        }.onAppear(){
+            FsService.shared.getAllCategories{ categories in
+                cat.categories = categories
+            }
+            
+        }
         .sheet(isPresented: $showAddFamily) {
             AddFamilyView(showAddFamily: $showAddFamily)
         }
+        .environmentObject(cat)
     }
 }
 
@@ -94,6 +105,7 @@ struct SearchView_Previews: PreviewProvider {
 
 struct SearchBarView: View {
     @Binding var keyword: String
+    @Binding var searching: Bool
     
     var body: some View {
         ZStack {
@@ -103,12 +115,21 @@ struct SearchBarView: View {
                 Image(systemName: "magnifyingglass")
                 TextField("Searching for...", text: $keyword)
                 .autocapitalization(.none)
-                Image(systemName: "xmark.circle")
-                    .frame(alignment: .trailing)
-                    .onTapGesture {
-                        keyword = ""
-                    }
-                    .padding(.trailing, 13)
+                
+                if searching {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .frame(alignment: .trailing)
+                        .padding(.trailing, 13)
+                } else {
+                    Image(systemName: "xmark.circle")
+                        .frame(alignment: .trailing)
+                        .onTapGesture {
+                            keyword = ""
+                        }
+                        .padding(.trailing, 13)
+                }
+
             }
             .padding(.leading, 13)
         }

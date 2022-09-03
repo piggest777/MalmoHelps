@@ -32,9 +32,11 @@
 		B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719828B3C76E005F5387 /* AuthViewModel.swift */; };
 		B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719B28B3CFEB005F5387 /* GoogleSignInButton.swift */; };
 		B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719D28B3E909005F5387 /* ProfileView.swift */; };
-		B51B71A028B4104E005F5387 /* circleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719F28B4104E005F5387 /* circleButton.swift */; };
+		B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719F28B4104E005F5387 /* CircleButton.swift */; };
 		B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B71A128B505D2005F5387 /* AddFamilyView.swift */; };
 		B5533E5228B9BE5C00B73F01 /* FamilyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */; };
+		B5533E5428BA196200B73F01 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5328BA196200B73F01 /* CardView.swift */; };
+		B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5528BA288C00B73F01 /* DateExt.swift */; };
 		B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */; };
 		B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB228B8A0FE00321D23 /* ViewExt.swift */; };
 		B5818CB528B8B5E700321D23 /* Family.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB428B8B5E700321D23 /* Family.swift */; };
@@ -42,6 +44,13 @@
 		B5818CB928B9505200321D23 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB828B9505200321D23 /* Constant.swift */; };
 		B5818CBC28B95DD700321D23 /* FamiliesLookupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */; };
 		B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CBD28B95FF000321D23 /* StringExt.swift */; };
+		B5AF868D28BB374C005FCB26 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF868C28BB374C005FCB26 /* Category.swift */; };
+		B5AF868F28BB3EB1005FCB26 /* AddCategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */; };
+		B5AF869128BB413C005FCB26 /* AddCategoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF869028BB413C005FCB26 /* AddCategoryViewModel.swift */; };
+		B5AF869328BB5CEA005FCB26 /* StandardtButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF869228BB5CEA005FCB26 /* StandardtButton.swift */; };
+		B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AFA1BB28BA6D160006CDF0 /* SharedItemsViewModel.swift */; };
+		B5AFA1BE28BA6D8D0006CDF0 /* SharedItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AFA1BD28BA6D8C0006CDF0 /* SharedItems.swift */; };
+		B5AFA1C028BA97DB0006CDF0 /* DistributeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AFA1BF28BA97DA0006CDF0 /* DistributeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,9 +68,11 @@
 		B51B719828B3C76E005F5387 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		B51B719B28B3CFEB005F5387 /* GoogleSignInButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleSignInButton.swift; sourceTree = "<group>"; };
 		B51B719D28B3E909005F5387 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
-		B51B719F28B4104E005F5387 /* circleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = circleButton.swift; sourceTree = "<group>"; };
+		B51B719F28B4104E005F5387 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B51B71A128B505D2005F5387 /* AddFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyView.swift; sourceTree = "<group>"; };
 		B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyDetails.swift; sourceTree = "<group>"; };
+		B5533E5328BA196200B73F01 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		B5533E5528BA288C00B73F01 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithTextfield.swift; sourceTree = "<group>"; };
 		B5818CB228B8A0FE00321D23 /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		B5818CB428B8B5E700321D23 /* Family.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Family.swift; sourceTree = "<group>"; };
@@ -69,6 +80,13 @@
 		B5818CB828B9505200321D23 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamiliesLookupViewModel.swift; sourceTree = "<group>"; };
 		B5818CBD28B95FF000321D23 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
+		B5AF868C28BB374C005FCB26 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
+		B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryView.swift; sourceTree = "<group>"; };
+		B5AF869028BB413C005FCB26 /* AddCategoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCategoryViewModel.swift; sourceTree = "<group>"; };
+		B5AF869228BB5CEA005FCB26 /* StandardtButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardtButton.swift; sourceTree = "<group>"; };
+		B5AFA1BB28BA6D160006CDF0 /* SharedItemsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItemsViewModel.swift; sourceTree = "<group>"; };
+		B5AFA1BD28BA6D8C0006CDF0 /* SharedItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedItems.swift; sourceTree = "<group>"; };
+		B5AFA1BF28BA97DA0006CDF0 /* DistributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +160,8 @@
 			isa = PBXGroup;
 			children = (
 				B5818CB428B8B5E700321D23 /* Family.swift */,
+				B5AFA1BD28BA6D8C0006CDF0 /* SharedItems.swift */,
+				B5AF868C28BB374C005FCB26 /* Category.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -151,6 +171,8 @@
 			children = (
 				B51B719828B3C76E005F5387 /* AuthViewModel.swift */,
 				B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */,
+				B5AFA1BB28BA6D160006CDF0 /* SharedItemsViewModel.swift */,
+				B5AF869028BB413C005FCB26 /* AddCategoryViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -163,8 +185,11 @@
 				B51B716228B3BE8F005F5387 /* HomeView.swift */,
 				B51B716428B3BEA5005F5387 /* RegisterView.swift */,
 				B51B719D28B3E909005F5387 /* ProfileView.swift */,
-				B51B719A28B3CFA1005F5387 /* ViewComponent */,
 				B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */,
+				B5AFA1BF28BA97DA0006CDF0 /* DistributeView.swift */,
+				B51B71A128B505D2005F5387 /* AddFamilyView.swift */,
+				B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */,
+				B51B719A28B3CFA1005F5387 /* ViewComponent */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -181,9 +206,10 @@
 			isa = PBXGroup;
 			children = (
 				B51B719B28B3CFEB005F5387 /* GoogleSignInButton.swift */,
-				B51B719F28B4104E005F5387 /* circleButton.swift */,
-				B51B71A128B505D2005F5387 /* AddFamilyView.swift */,
+				B51B719F28B4104E005F5387 /* CircleButton.swift */,
 				B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */,
+				B5533E5328BA196200B73F01 /* CardView.swift */,
+				B5AF869228BB5CEA005FCB26 /* StandardtButton.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -193,6 +219,7 @@
 			children = (
 				B5818CB228B8A0FE00321D23 /* ViewExt.swift */,
 				B5818CBD28B95FF000321D23 /* StringExt.swift */,
+				B5533E5528BA288C00B73F01 /* DateExt.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -295,8 +322,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B5AF869328BB5CEA005FCB26 /* StandardtButton.swift in Sources */,
+				B5AF869128BB413C005FCB26 /* AddCategoryViewModel.swift in Sources */,
 				B5818CB728B94F1200321D23 /* FsService.swift in Sources */,
+				B5AFA1BE28BA6D8D0006CDF0 /* SharedItems.swift in Sources */,
+				B5AF868F28BB3EB1005FCB26 /* AddCategoryView.swift in Sources */,
 				B51B716328B3BE8F005F5387 /* HomeView.swift in Sources */,
+				B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */,
 				B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */,
 				B5818CB928B9505200321D23 /* Constant.swift in Sources */,
 				B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */,
@@ -305,10 +337,14 @@
 				B51B715A28B25FDF005F5387 /* AppDelegate.swift in Sources */,
 				B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */,
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
-				B51B71A028B4104E005F5387 /* circleButton.swift in Sources */,
+				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
+				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
 				B5533E5228B9BE5C00B73F01 /* FamilyDetails.swift in Sources */,
 				B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */,
+				B5AF868D28BB374C005FCB26 /* Category.swift in Sources */,
 				B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */,
+				B5AFA1C028BA97DB0006CDF0 /* DistributeView.swift in Sources */,
+				B5533E5428BA196200B73F01 /* CardView.swift in Sources */,
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
 				B51B716528B3BEA5005F5387 /* RegisterView.swift in Sources */,
 				B5818CB528B8B5E700321D23 /* Family.swift in Sources */,

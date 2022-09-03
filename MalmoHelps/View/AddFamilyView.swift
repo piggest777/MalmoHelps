@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Combine
+import FirebaseFirestore
 
 struct AddFamilyView: View {
     
@@ -131,7 +132,7 @@ struct AddFamilyView: View {
                             
                             if self.room != "" {room = self.room} else {room = nil}
                             showAlert = false
-                            let newFamily = Family(place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords)
+                            let newFamily = Family(place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
                             visibilityProgressView = .visible
                             FsService.shared.addFamilyToDB(family: newFamily) { success in
                                 if success {

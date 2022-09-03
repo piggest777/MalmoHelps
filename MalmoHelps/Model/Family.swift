@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestore
 
 struct Family: Codable {
+    var id = ""
     var place: String 
     var room: String?
     var firstName : String
@@ -15,6 +17,7 @@ struct Family: Codable {
     var memberCount: String
     var notes: String?
     var keywords: [String]
+    var addingDate: Timestamp
     
 //    init(place: String, room: String?, firstName: String, secondName: String, memberCount: String, notes: String?, keywords: [String]) {
 //        self.place = place
