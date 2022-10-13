@@ -34,7 +34,8 @@
 		B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719D28B3E909005F5387 /* ProfileView.swift */; };
 		B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719F28B4104E005F5387 /* CircleButton.swift */; };
 		B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B71A128B505D2005F5387 /* AddFamilyView.swift */; };
-		B5533E5228B9BE5C00B73F01 /* FamilyDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */; };
+		B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52797F328C3EB3D00AFF75E /* DistributeViewModel.swift */; };
+		B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5128B9BE5B00B73F01 /* FamilyDetailsView.swift */; };
 		B5533E5428BA196200B73F01 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5328BA196200B73F01 /* CardView.swift */; };
 		B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5528BA288C00B73F01 /* DateExt.swift */; };
 		B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */; };
@@ -70,7 +71,8 @@
 		B51B719D28B3E909005F5387 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		B51B719F28B4104E005F5387 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B51B71A128B505D2005F5387 /* AddFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyView.swift; sourceTree = "<group>"; };
-		B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyDetails.swift; sourceTree = "<group>"; };
+		B52797F328C3EB3D00AFF75E /* DistributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributeViewModel.swift; sourceTree = "<group>"; };
+		B5533E5128B9BE5B00B73F01 /* FamilyDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyDetailsView.swift; sourceTree = "<group>"; };
 		B5533E5328BA196200B73F01 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B5533E5528BA288C00B73F01 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
 		B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithTextfield.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */,
 				B5AFA1BB28BA6D160006CDF0 /* SharedItemsViewModel.swift */,
 				B5AF869028BB413C005FCB26 /* AddCategoryViewModel.swift */,
+				B52797F328C3EB3D00AFF75E /* DistributeViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -185,7 +188,7 @@
 				B51B716228B3BE8F005F5387 /* HomeView.swift */,
 				B51B716428B3BEA5005F5387 /* RegisterView.swift */,
 				B51B719D28B3E909005F5387 /* ProfileView.swift */,
-				B5533E5128B9BE5B00B73F01 /* FamilyDetails.swift */,
+				B5533E5128B9BE5B00B73F01 /* FamilyDetailsView.swift */,
 				B5AFA1BF28BA97DA0006CDF0 /* DistributeView.swift */,
 				B51B71A128B505D2005F5387 /* AddFamilyView.swift */,
 				B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */,
@@ -339,11 +342,12 @@
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
 				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
 				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
-				B5533E5228B9BE5C00B73F01 /* FamilyDetails.swift in Sources */,
+				B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */,
 				B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */,
 				B5AF868D28BB374C005FCB26 /* Category.swift in Sources */,
 				B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */,
 				B5AFA1C028BA97DB0006CDF0 /* DistributeView.swift in Sources */,
+				B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */,
 				B5533E5428BA196200B73F01 /* CardView.swift in Sources */,
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
 				B51B716528B3BEA5005F5387 /* RegisterView.swift in Sources */,
@@ -476,9 +480,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
-				DEVELOPMENT_TEAM = 9X329BRT6C;
+				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MalmoHelps/Info.plist;
@@ -491,7 +495,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -506,9 +510,9 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
-				DEVELOPMENT_TEAM = 9X329BRT6C;
+				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MalmoHelps/Info.plist;
@@ -521,7 +525,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.01;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

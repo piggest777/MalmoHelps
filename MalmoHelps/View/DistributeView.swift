@@ -6,11 +6,18 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct DistributeView: View {
+    
+    
+    @Environment(\.dismiss) var dismiss
+    
+    var family: Family
     @EnvironmentObject var cat: Categories
     @State var showAddCategoryView: Bool = false
     @State var selectedCategory = [Category]()
+    @ObservedObject var vm = DistributeViewModel()
     
     
     var body: some View {
@@ -25,8 +32,20 @@ struct DistributeView: View {
             })
             .sheet(isPresented: $showAddCategoryView){ AddCategoryView(showAddCategoryView: $showAddCategoryView)}
             
+            ZStack {
+                ProgressView()
+                    .progressViewStyle(.circular)
+                    .visibility(vm.progressViewVisibility)
+            
             StandardtButton(color: Color(.systemMint), text: "Finish") {
-                print("Finish")
+                
+                vm.addCategoriesToFamily(familyId: family.id, selectedCategories: selectedCategory){ success in
+                    if success {
+                        dismiss()
+                    }
+                    
+                }
+            }
             }
             
             
@@ -47,7 +66,7 @@ struct DistributeView: View {
 
 struct DistributeView_Previews: PreviewProvider {
     static var previews: some View {
-        DistributeView()
+        DistributeView(family: Family(id: "", place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp()))
     }
 }
 

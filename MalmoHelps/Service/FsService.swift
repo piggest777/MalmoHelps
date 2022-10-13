@@ -39,6 +39,27 @@ class FsService {
         }
     }
     
+    func updateFamily(family: Family, completionHandler: @escaping (Bool) -> () ) {
+        
+        db.collection(REF_FAMILIES).document(family.id).setData([
+            PLACE : family.place,
+            ROOM : family.room ?? "",
+            FIRST_NAME : family.firstName,
+            SECOND_NAME : family.secondName,
+            FAMILY_SIZE : family.memberCount,
+            NOTES : family.notes ?? "",
+            KEYWORDS : family.keywords,
+            ADDING_DATE : family.addingDate
+            
+        ], merge: true) { err in
+            if err != nil {
+                completionHandler(false)
+            } else {
+                completionHandler(true)
+            }
+        }
+    }
+    
     func getAllCategories(completionHandler: @escaping ([Category])->()) {
         
         var categories: [Category] = []
@@ -64,6 +85,8 @@ class FsService {
         }
         
     }
+    
+    
 }
 
 class Categories: ObservableObject {

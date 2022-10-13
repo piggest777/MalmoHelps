@@ -8,11 +8,12 @@
 import SwiftUI
 import FirebaseFirestore
 
-struct FamilyDetails: View {
+struct FamilyDetailsView: View {
     
     var family: Family
     @State var navLinkActive: Bool = false
     @StateObject var vm = SharedItemsViewModel()
+    @State var showSheet = false
     
     var body: some View {
         VStack{
@@ -46,7 +47,26 @@ struct FamilyDetails: View {
                 .padding(.horizontal, 10)
 
             List(vm.itemList, id: \.id ) { item in
-                Text(item.category)
+                HStack{
+                VStack{
+                    Text(item.category)
+                        .font(Font.system(size: 16, weight: .semibold, design: .rounded))
+                        .frame(maxWidth: .infinity,  alignment: .leading)
+                    Text(item.distributionDate.toMonthDayString())
+                        .font(Font.system(size: 12, weight: .thin, design: .rounded))
+                        .foregroundColor(Color.gray)
+                        .padding(.leading, 5)
+                        .frame(maxWidth: .infinity,  alignment: .leading)
+                }
+                .frame(maxWidth: .infinity,  alignment: .leading)
+                    
+                    
+                    Text( item.expiredDate.toMonthDayString())
+                        .font(Font.system(size: 16, weight: .semibold, design: .rounded))
+                        .frame( alignment: .trailing)
+                    
+                }.frame( maxWidth: .infinity)
+
                     
             }
         
@@ -63,19 +83,43 @@ struct FamilyDetails: View {
         .padding()
         }
         
-        NavigationLink(destination: DistributeView(), isActive: $navLinkActive) {
+            NavigationLink(destination: DistributeView(family: family), isActive: $navLinkActive) {
             EmptyView()
         }
         }.onAppear() {
+            vm.itemList.removeAll()
+            vm.familyId = family.id
             vm.downloadSharedItems(listSize: .short)
         }
+        .sheet(isPresented: $showSheet) {
+            AddFamilyView(showAddFamily: $showSheet, family: family)
+        }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button {
+                    showSheet = true
+                } label: {
+                    HStack {
+                        Image(systemName: "pencil.circle")
+                        Text("Edit")
+                            .font(.callout)
+                    }
+                }
+
+            }
+        }
+
 
     }
+    
+    
 }
 
 struct FamilyDetails_Previews: PreviewProvider {
     static var previews: some View {
-        FamilyDetails(family: Family(place: "Jägersro", firstName: "Denis", secondName: "Rakitin", memberCount: "1", keywords: [], addingDate: Timestamp()))
+        FamilyDetailsView(family: Family(place: "Jägersro", firstName: "Denis", secondName: "Rakitin", memberCount: "1", keywords: [], addingDate: Timestamp()))
     }
 }
+
+
 

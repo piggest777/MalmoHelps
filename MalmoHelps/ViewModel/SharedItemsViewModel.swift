@@ -21,7 +21,7 @@ class SharedItemsViewModel: ObservableObject {
     func downloadSharedItems(listSize: ListSize) {
         searching = true
         if !familyId.isEmpty {
-            db.collection(REF_FAMILIES).document(familyId).collection(SHARED_ITEMS).getDocuments { shapshot, err in
+            db.collection(REF_FAMILIES).document(familyId).collection(REF_DISTRIBUTED).getDocuments { shapshot, err in
                 guard let documents = shapshot?.documents, err == nil else {
                     print("No documents")
                     return
@@ -31,25 +31,22 @@ class SharedItemsViewModel: ObservableObject {
                 documents.forEach { doc in
                     let data = doc.data()
                     let id = doc.documentID
-                    let category = data[CATEGORY] as? String ?? ""
+                    let category = data[CATEGORY_NAME] as? String
                     let distributionDate = data[DISTRIBUTION_DATE] as? Timestamp
-                    let duration = data[DURATION] as? Int ?? 0
+                    let expiredDate = data[EXPIRED_DATE] as? Timestamp
                     
-                    guard let date = distributionDate else {return}
-                    let normalDate = date.dateValue()
-                    
-                    guard let expiredData = Calendar.current.date(byAdding: .day, value: duration, to: normalDate) else {return}
-                    
-                    switch listSize {
-                    case .short:
-                        if (expiredData > Date()) {
-                            let newItem = SharedItems(id: id, category: category, distributionDate: date, duration: duration)
+                    if let distDate = distributionDate?.dateValue(), let expDate = expiredDate?.dateValue(), let name = category {
+                        switch listSize {
+                        case .short:
+                            if (expDate > Date()) {
+                                let newItem = SharedItems(id: id, category: name, distributionDate: distDate, expiredDate: expDate)
+                                self.itemList.append(newItem)
+                            }
+                        case .long:
+                            let newItem = SharedItems(id: id, category: name, distributionDate: distDate, expiredDate: expDate)
                             self.itemList.append(newItem)
-                        }
-                    case .long:
-                        let newItem = SharedItems(id: id, category: category, distributionDate: date, duration: duration)
-                        self.itemList.append(newItem)
 
+                        }
                     }
                 }
                 

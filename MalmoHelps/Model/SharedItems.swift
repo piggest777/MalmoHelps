@@ -11,6 +11,6 @@ import FirebaseFirestore
 struct SharedItems {
     var id = ""
     var category: String
-    var distributionDate: Timestamp
-    var duration: Int
+    var distributionDate: Date
+    var expiredDate: Date
 }

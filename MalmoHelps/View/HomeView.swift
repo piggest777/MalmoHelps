@@ -68,7 +68,7 @@ struct HomeView: View {
                             .frame(alignment: .bottom)
                             .padding(20)
                     
-                    NavigationLink(destination: FamilyDetails(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
+                    NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
                         EmptyView()
                     }
                 }
@@ -91,7 +91,7 @@ struct HomeView: View {
             
         }
         .sheet(isPresented: $showAddFamily) {
-            AddFamilyView(showAddFamily: $showAddFamily)
+            AddFamilyView(showAddFamily: $showAddFamily, family: Family(place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
         }
         .environmentObject(cat)
     }
@@ -123,7 +123,8 @@ struct SearchBarView: View {
                         .padding(.trailing, 13)
                 } else {
                     Image(systemName: "xmark.circle")
-                        .frame(alignment: .trailing)
+                        .resizable()
+                        .frame(width: 30, height: 30,alignment: .trailing)
                         .onTapGesture {
                             keyword = ""
                         }
@@ -133,7 +134,7 @@ struct SearchBarView: View {
             }
             .padding(.leading, 13)
         }
-        .frame(height: 40)
+        .frame(height: 50)
         .cornerRadius(13)
         .padding()
     }
@@ -160,7 +161,7 @@ struct FamilyBarView: View {
         }
         .frame(maxWidth: .infinity, minHeight: 75)
         .cornerRadius(13)
-        .padding()
+        .padding(.horizontal, 10)
     }
 }
 

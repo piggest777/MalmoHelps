@@ -28,6 +28,9 @@ struct AddFamilyView: View {
     @State var showAlert = false
     @State var alertText = ""
     @State var visibilityProgressView: ViewVisibility = .invisible
+    @State var buttonDisabled = false
+    
+    var family: Family
     
     
     var body: some View {
@@ -107,10 +110,7 @@ struct AddFamilyView: View {
                             .visibility(visibilityProgressView)
                             
                         Button {
-                        
-
-                        
-                        if !place.isEmpty &&  !firstName.isEmpty && !secondName.isEmpty {
+                        if !place.isEmpty && !secondName.isEmpty {
                             var keywords = [String]()
                             
                             if liveInMGS {
@@ -132,18 +132,39 @@ struct AddFamilyView: View {
                             
                             if self.room != "" {room = self.room} else {room = nil}
                             showAlert = false
-                            let newFamily = Family(place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
+                            
+                            
+                            let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
                             visibilityProgressView = .visible
-                            FsService.shared.addFamilyToDB(family: newFamily) { success in
-                                if success {
-                                    showAddFamily  = false
-                                    visibilityProgressView = .invisible
-                                    print("Added")
-                                } else {
-                                    alertText = "Something goes wrong while adding, try one more time"
-                                    showAlert = true
+                            buttonDisabled = true
+                            
+                            
+                            if family.id.isEmpty {
+                                FsService.shared.addFamilyToDB(family: newFamily) { success in
+                                    if success {
+                                        showAddFamily  = false
+                                        visibilityProgressView = .invisible
+                                        buttonDisabled = false
+                                        print("Added")
+                                    } else {
+                                        alertText = "Something goes wrong while adding, try one more time"
+                                        showAlert = true
+                                    }
+                                }
+                            } else {
+                                FsService.shared.updateFamily(family: newFamily) { success in
+                                    if success {
+                                        showAddFamily  = false
+                                        visibilityProgressView = .invisible
+                                        buttonDisabled = false
+                                        print("Edited")
+                                    } else {
+                                        alertText = "Something goes wrong while adding, try one more time"
+                                        showAlert = true
+                                    }
                                 }
                             }
+
 
                             
                         } else {
@@ -161,11 +182,22 @@ struct AddFamilyView: View {
                             .cornerRadius(12)
                             .padding()
                     }
+                    .disabled(buttonDisabled)
                     .alert(alertText, isPresented: $showAlert) {
                         Button("OK", role: .cancel) {}
                 }
                     }
 
+                }
+            }.onAppear{
+                firstName = family.firstName
+                secondName = family.secondName
+                familySize = family.memberCount
+                place = family.place
+                room = family.room ?? ""
+                notes = family.notes ?? ""
+                if let room = family.room, room.isEmpty {
+                    liveInMGS = false
                 }
             }
             .padding(.horizontal)
@@ -187,7 +219,7 @@ struct AddFamilyView: View {
 struct AddFamilyView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AddFamilyView(showAddFamily: .constant(true))
+        AddFamilyView(showAddFamily: .constant(true), family: Family(place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
     }
 }
 
@@ -203,3 +235,4 @@ struct MyTextFieldStyle: TextFieldStyle {
         ).padding(.horizontal,5)
     }
 }
+

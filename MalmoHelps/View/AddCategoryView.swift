@@ -71,7 +71,7 @@ struct AddCategoryView: View {
             }
             
         }.padding()
-                .environmentObject(cat)
+            .environmentObject(cat)
             .navigationTitle("Add new item")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

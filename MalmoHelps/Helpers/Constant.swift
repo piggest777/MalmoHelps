@@ -10,6 +10,7 @@ import Foundation
 
 let REF_FAMILIES = "families"
 let CATEGORIES = "categories"
+let REF_DISTRIBUTED = "distributed_categories"
 
 let PLACE = "place"
 let ROOM = "room"
@@ -19,11 +20,11 @@ let FAMILY_SIZE = "family_size"
 let NOTES = "notes"
 let KEYWORDS = "keywords"
 let ADDING_DATE = "adding_date"
-let SHARED_ITEMS = "shared_items"
 
 let CATEGORY = "category"
 let DISTRIBUTION_DATE = "distribution_date"
 let DURATION = "duration"
+let EXPIRED_DATE = "expired_date"
 
 let CATEGORY_NAME = "name"
 
