@@ -29,6 +29,8 @@ struct AddFamilyView: View {
     @State var alertText = ""
     @State var visibilityProgressView: ViewVisibility = .invisible
     @State var buttonDisabled = false
+    @State var navigationTitle = "Add new family"
+    @State var buttonTitle = "Add new family"
     
     var family: Family
     
@@ -51,8 +53,6 @@ struct AddFamilyView: View {
                     }
                 })
                 .padding(2)
-                
-                    
                 TextWithTextfield(textString: placeDefinition, textBinding: $place, editing: $editingPlace)
                 
                 TextWithTextfield(textString: "First name", textBinding: $firstName, editing: $editingFirst)
@@ -60,9 +60,6 @@ struct AddFamilyView: View {
                 TextWithTextfield(textString: "Second name", textBinding: $secondName, editing: $editingSecond)
                     
                 }
-
-                    
-                
                 Text("Family size")
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .font(.system(size: 16, weight: .bold, design: .default))
@@ -128,16 +125,15 @@ struct AddFamilyView: View {
                             var room: String?
                             var notes: String?
                             
-                            if self.notes != "" {notes = self.notes} else {room = notes}
+                            if !self.notes.isEmpty {notes = self.notes}
                             
-                            if self.room != "" {room = self.room} else {room = nil}
+                            if !self.room.isEmpty {room = self.room}
                             showAlert = false
                             
                             
                             let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
                             visibilityProgressView = .visible
                             buttonDisabled = true
-                            
                             
                             if family.id.isEmpty {
                                 FsService.shared.addFamilyToDB(family: newFamily) { success in
@@ -173,7 +169,7 @@ struct AddFamilyView: View {
                         }
                         
                     } label: {
-                        Text("Add Family")
+                        Text(buttonTitle)
                             .foregroundColor(.black)
                             .font(.headline)
                             .padding()
@@ -198,10 +194,17 @@ struct AddFamilyView: View {
                 notes = family.notes ?? ""
                 if let room = family.room, room.isEmpty {
                     liveInMGS = false
+                } else {
+                    liveInMGS = true
+                    place = room
+                }
+                if !family.id.isEmpty {
+                    buttonTitle = "Edit family"
+                    navigationTitle = "Edit family"
                 }
             }
             .padding(.horizontal)
-            .navigationTitle("Add new family")
+            .navigationTitle(navigationTitle)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {

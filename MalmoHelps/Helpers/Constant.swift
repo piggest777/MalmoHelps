@@ -28,6 +28,16 @@ let EXPIRED_DATE = "expired_date"
 
 let CATEGORY_NAME = "name"
 
+let DIST_POINTS = [
+    DistPoint(id: 1, name: "Jägersro"),
+    DistPoint(id: 2, name: "ABF"),
+    DistPoint(id: 3, name: "Bilda"),
+    DistPoint(id: 4, name: "Wesley"),
+    DistPoint(id: 5, name: "St Petri"),
+    DistPoint(id: 6, name: "Out of list")
+]
+
+let CURR_POINT = "distribution_point"
 
 
 

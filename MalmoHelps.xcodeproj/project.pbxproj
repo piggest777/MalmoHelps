@@ -35,6 +35,7 @@
 		B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B719F28B4104E005F5387 /* CircleButton.swift */; };
 		B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B71A128B505D2005F5387 /* AddFamilyView.swift */; };
 		B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B52797F328C3EB3D00AFF75E /* DistributeViewModel.swift */; };
+		B54AEDAC28FF3F580094B024 /* DistPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = B54AEDAB28FF3F580094B024 /* DistPoint.swift */; };
 		B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5128B9BE5B00B73F01 /* FamilyDetailsView.swift */; };
 		B5533E5428BA196200B73F01 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5328BA196200B73F01 /* CardView.swift */; };
 		B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5533E5528BA288C00B73F01 /* DateExt.swift */; };
@@ -72,6 +73,7 @@
 		B51B719F28B4104E005F5387 /* CircleButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButton.swift; sourceTree = "<group>"; };
 		B51B71A128B505D2005F5387 /* AddFamilyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFamilyView.swift; sourceTree = "<group>"; };
 		B52797F328C3EB3D00AFF75E /* DistributeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistributeViewModel.swift; sourceTree = "<group>"; };
+		B54AEDAB28FF3F580094B024 /* DistPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DistPoint.swift; sourceTree = "<group>"; };
 		B5533E5128B9BE5B00B73F01 /* FamilyDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamilyDetailsView.swift; sourceTree = "<group>"; };
 		B5533E5328BA196200B73F01 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		B5533E5528BA288C00B73F01 /* DateExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateExt.swift; sourceTree = "<group>"; };
@@ -164,6 +166,7 @@
 				B5818CB428B8B5E700321D23 /* Family.swift */,
 				B5AFA1BD28BA6D8C0006CDF0 /* SharedItems.swift */,
 				B5AF868C28BB374C005FCB26 /* Category.swift */,
+				B54AEDAB28FF3F580094B024 /* DistPoint.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -341,6 +344,7 @@
 				B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */,
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
 				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
+				B54AEDAC28FF3F580094B024 /* DistPoint.swift in Sources */,
 				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
 				B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */,
 				B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */,
@@ -480,7 +484,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -489,18 +493,22 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -510,7 +518,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -519,18 +527,22 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.01;
+				MARKETING_VERSION = 1.02;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

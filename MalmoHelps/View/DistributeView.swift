@@ -12,16 +12,21 @@ struct DistributeView: View {
     
     
     @Environment(\.dismiss) var dismiss
+    @AppStorage("distribution_place") var distPlace: String = ""
     
     var family: Family
     @EnvironmentObject var cat: Categories
     @State var showAddCategoryView: Bool = false
     @State var selectedCategory = [Category]()
     @ObservedObject var vm = DistributeViewModel()
+    @State var buttonDisabled = false
     
     
     var body: some View {
         VStack {
+            Text("Distribution point: \(distPlace)")
+                .font(.title3)
+                .padding(.bottom, 10)
             ScrollView{
                 ForEach(cat.categories, id: \.id) { cat in
                     CategoryItemWithCheckBoxView (category: cat, checkedCategory: $selectedCategory)
@@ -38,14 +43,16 @@ struct DistributeView: View {
                     .visibility(vm.progressViewVisibility)
             
             StandardtButton(color: Color(.systemMint), text: "Finish") {
-                
+                buttonDisabled = true
                 vm.addCategoriesToFamily(familyId: family.id, selectedCategories: selectedCategory){ success in
                     if success {
+                        buttonDisabled = false
                         dismiss()
                     }
                     
                 }
-            }
+            }.disabled(buttonDisabled)
+                
             }
             
             

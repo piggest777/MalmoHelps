@@ -7,9 +7,11 @@
 
 import Foundation
 import FirebaseFirestore
+import SwiftUI
 
 class DistributeViewModel: ObservableObject {
     
+    @AppStorage("distribution_place") var distPlace: String = ""
     @Published var distributed: Bool = false
     @Published var progressViewVisibility: ViewVisibility = .invisible
     @Published var distributedCategories: [Category] = []
@@ -35,7 +37,8 @@ class DistributeViewModel: ObservableObject {
                 batch.setData([
                     CATEGORY_NAME: cat.name,
                     DISTRIBUTION_DATE: currentTimeStamp,
-                    EXPIRED_DATE: expiredDateTSP
+                    EXPIRED_DATE: expiredDateTSP,
+                    CURR_POINT: distPlace
                 ], forDocument: catRef, merge: true)
             }
             
