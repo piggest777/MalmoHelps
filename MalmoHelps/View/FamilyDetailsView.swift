@@ -24,30 +24,30 @@ struct FamilyDetailsView: View {
                     .fill(.white)
                     .shadow(radius: 10)
                 
-                    HStack {
-                        VStack {
-                            Text("\(family.firstName) \(family.secondName)")
-                                .font(Font.headline.weight(.bold))
-                                .frame( maxWidth: .infinity, alignment: .leading)
-                            Text("Place: \(family.place) \(family.room ?? "")")
-                                .font(Font.system(size: 15, weight: .regular))
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }.frame( maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    VStack {
+                        Text("\(family.firstName) \(family.secondName)")
+                            .font(Font.headline.weight(.bold))
+                            .frame( maxWidth: .infinity, alignment: .leading)
+                        Text("Place: \(family.place) \(family.room ?? "")")
+                            .font(Font.system(size: 15, weight: .regular))
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }.frame( maxWidth: .infinity, alignment: .leading)
+                    
+                    VStack {
+                        Text("Family size: \(family.memberCount)")
+                            .font(Font.system(size: 15, weight: .thin))
                         
-                        VStack {
-                            Text("Family size: \(family.memberCount)")
-                                .font(Font.system(size: 15, weight: .thin))
-                            
-                            Text("Adding date: \(family.addingDate.dateValue().toString())")
-                                .font(Font.system(size: 15, weight: .thin))
-                            
-                        }.frame( maxWidth: .infinity,alignment: .leading)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .top)
-                    .padding()
+                        Text("Adding date: \(family.addingDate.dateValue().toString())")
+                            .font(Font.system(size: 15, weight: .thin))
+                        
+                    }.frame( maxWidth: .infinity,alignment: .leading)
+                }
+                .frame(maxWidth: .infinity, alignment: .top)
+                .padding()
             }
             .frame( height: 100)
-                .padding(.horizontal, 10)
+            .padding(.horizontal, 10)
             if let notes = family.notes, !notes.isEmpty {
                 Text(notes)
                     .frame(maxWidth: .infinity)
@@ -71,47 +71,48 @@ struct FamilyDetailsView: View {
                     )
                 
             }
-
-
-            List(vm.itemList, id: \.id ) { item in
-                HStack{
-                VStack{
-                    Text(item.category)
-                        .font(Font.system(size: 16, weight: .semibold, design: .rounded))
+            
+            List {
+                ForEach (vm.itemList, id: \.id ) { item in
+                    HStack{
+                        VStack{
+                            Text(item.category)
+                                .font(Font.system(size: 16, weight: .semibold, design: .rounded))
+                                .frame(maxWidth: .infinity,  alignment: .leading)
+                            Text(item.distributionDate.toMonthDayString())
+                                .font(Font.system(size: 12, weight: .thin, design: .rounded))
+                                .foregroundColor(Color.gray)
+                                .padding(.leading, 5)
+                                .frame(maxWidth: .infinity,  alignment: .leading)
+                        }
                         .frame(maxWidth: .infinity,  alignment: .leading)
-                    Text(item.distributionDate.toMonthDayString())
-                        .font(Font.system(size: 12, weight: .thin, design: .rounded))
-                        .foregroundColor(Color.gray)
-                        .padding(.leading, 5)
-                        .frame(maxWidth: .infinity,  alignment: .leading)
+                        
+                        
+                        Text( item.expiredDate.toMonthDayString())
+                            .font(Font.system(size: 16, weight: .semibold, design: .rounded))
+                            .frame( alignment: .trailing)
+                        
+                    }
+                    .frame( maxWidth: .infinity, maxHeight: .infinity)
                 }
-                .frame(maxWidth: .infinity,  alignment: .leading)
-                    
-                    
-                    Text( item.expiredDate.toMonthDayString())
-                        .font(Font.system(size: 16, weight: .semibold, design: .rounded))
-                        .frame( alignment: .trailing)
-                    
-                }
-                .frame( maxWidth: .infinity, maxHeight: .infinity)
             }
-        
-        
-        Button {
-            navLinkActive = true
-        } label: {
-        Text("Distribute")
-        .foregroundColor(.white)
-        .padding()
-        .frame(maxWidth: .infinity)
-        .background(Color(.systemMint))
-        .cornerRadius(12)
-        .padding()
-        }
-        
+            
+            
+            Button {
+                navLinkActive = true
+            } label: {
+                Text("Distribute")
+                    .foregroundColor(.white)
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(.systemMint))
+                    .cornerRadius(12)
+                    .padding()
+            }
+            
             NavigationLink(destination: DistributeView(family: family), isActive: $navLinkActive) {
-            EmptyView()
-        }
+                EmptyView()
+            }
         }.onAppear() {
             vm.itemList.removeAll()
             vm.familyId = family.id
@@ -131,14 +132,16 @@ struct FamilyDetailsView: View {
                             .font(.callout)
                     }
                 }
-
+                
             }
         }
-
-
     }
     
-    
+    func delete(at offsets: IndexSet, distId: String) {
+        FsService.shared.deleteDistCategory(familyId: family.id, distCatId: <#T##String#>)
+        vm.itemList.remove(atOffsets: offsets)
+      }
+
 }
 
 struct FamilyDetails_Previews: PreviewProvider {

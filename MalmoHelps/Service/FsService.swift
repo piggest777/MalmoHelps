@@ -60,6 +60,31 @@ class FsService {
         }
     }
     
+    func deleteFamily(familyId: String, completionHandler: @escaping (Bool)->()) {
+        db.collection(REF_FAMILIES).document(familyId).delete(){
+            err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                    completionHandler(false)
+                } else {
+                    print("Document successfully removed!")
+                    completionHandler(true)
+                }
+        }
+    }
+    
+    func deleteDistCategory(familyId: String, distCatId: String) {
+        db.collection(REF_FAMILIES).document(familyId).collection(REF_DISTRIBUTED).document(distCatId).delete(){
+            err in
+                if let err = err {
+                    print("Error removing document: \(err)")
+                } else {
+                    print("Document successfully removed!")
+                }
+        }
+    }
+    
+    
     func getAllCategories(completionHandler: @escaping ([Category])->()) {
         
         var categories: [Category] = []
