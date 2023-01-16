@@ -15,9 +15,12 @@ struct FamilyDetailsView: View {
     @StateObject var vm = SharedItemsViewModel()
     @State var showSheet = false
     @State private var isExpanded: Bool = false
+    @State var isDeleted = false
+    @Environment(\.rootPresentationMode) private var rootPresentationMode: Binding<RootPresentationMode>
     
     
     var body: some View {
+        
         VStack{
             ZStack {
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
@@ -94,6 +97,8 @@ struct FamilyDetailsView: View {
                         
                     }
                     .frame( maxWidth: .infinity, maxHeight: .infinity)
+                }.onDelete { index in
+                    delete(at: index)
                 }
             }
             
@@ -118,9 +123,16 @@ struct FamilyDetailsView: View {
             vm.familyId = family.id
             vm.downloadSharedItems(listSize: .short)
         }
+        .onChange(of: isDeleted, perform: { isDeleted in
+            if isDeleted {
+                self.rootPresentationMode.wrappedValue.dismiss()
+                navLinkActive = true
+            }
+        })
         .sheet(isPresented: $showSheet) {
-            AddFamilyView(showAddFamily: $showSheet, family: family)
+            AddFamilyView(showAddFamily: $showSheet, isDeleted: $isDeleted, family: family)
         }
+        .navigationBarTitle("DETAILS")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button {
@@ -137,11 +149,13 @@ struct FamilyDetailsView: View {
         }
     }
     
-    func delete(at offsets: IndexSet, distId: String) {
-        FsService.shared.deleteDistCategory(familyId: family.id, distCatId: <#T##String#>)
+    func delete(at offsets: IndexSet) {
+        offsets.map{ vm.itemList[$0] }.forEach { item in
+            FsService.shared.deleteDistCategory(familyId: family.id, distCatId: item.id)
+        }
         vm.itemList.remove(atOffsets: offsets)
-      }
-
+    }
+    
 }
 
 struct FamilyDetails_Previews: PreviewProvider {

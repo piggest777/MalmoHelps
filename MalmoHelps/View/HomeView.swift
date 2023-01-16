@@ -19,6 +19,9 @@ struct HomeView: View {
     @State var navLinkActive = false
     @State var searching = false
     @StateObject var cat  = Categories()
+   
+    @State var isPresented: Bool = false
+    @State var isDeleted = false
     
     var body: some View {
         
@@ -40,58 +43,54 @@ struct HomeView: View {
         )
         
         NavigationView {
-
-        VStack {
-            
-        
-            ZStack {
-                Rectangle()
-                    .fill(Color("Background"))
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                
-                //Add Circle Button
-                VStack {
+            VStack {
+                ZStack {
+                    Rectangle()
+                        .fill(Color("Background"))
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .edgesIgnoringSafeArea(.all)
                     
-                    SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
-                    ScrollView {
-                        ForEach(familiesLookUp.queryResultUsers,  id: \.id) { family in
-                           FamilyBarView(family: family)
-                                .onTapGesture {
-                                    currFamily = family
-                                    navLinkActive = true
-                                }
+                    //Add Circle Button
+                    VStack {
+                        SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
+                        ScrollView {
+                            ForEach(familiesLookUp.queryResultUsers,  id: \.id) { family in
+                                FamilyBarView(family: family)
+                                    .onTapGesture {
+                                        currFamily = family
+                                        navLinkActive = true
+                                    }
+                            }
                         }
-                    }
-                    Spacer()
-                    circleButton (showAddFamily: $showAddFamily)
+                        Spacer()
+                        circleButton (showAddFamily: $showAddFamily)
                             .frame(alignment: .bottom)
                             .padding(20)
-                    
-                    NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
-                        EmptyView()
+                        
+                        NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
+                            EmptyView()
+                        }.isDetailLink(false)
                     }
                 }
             }
-
-        }
-        .navigationTitle(Text("Malmö Helps"))
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarItems(trailing:
-                                NavigationLink(destination: ProfileView(), label: {
-            Image(systemName: "gear")
-        })
+            .navigationTitle(Text("Malmö Helps"))
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(trailing:
+                                    NavigationLink(destination: ProfileView(), label: {
+                Image(systemName: "gear")
+            })
                                 
-        )
-
-        }.onAppear(){
+            )
+        }
+        .environment(\.rootPresentationMode, self.$isPresented)
+        .navigationViewStyle(StackNavigationViewStyle())
+        .onAppear(){
             FsService.shared.getAllCategories{ categories in
                 cat.categories = categories
             }
-            
         }
         .sheet(isPresented: $showAddFamily) {
-            AddFamilyView(showAddFamily: $showAddFamily, family: Family(place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+            AddFamilyView(showAddFamily: $showAddFamily, isDeleted: $isDeleted, family: Family(place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
         }
         .environmentObject(cat)
     }
@@ -165,4 +164,24 @@ struct FamilyBarView: View {
     }
 }
 
+
+struct RootPresentationModeKey: EnvironmentKey {
+    static let defaultValue: Binding<RootPresentationMode> = .constant(RootPresentationMode())
+}
+
+extension EnvironmentValues {
+    var rootPresentationMode: Binding<RootPresentationMode> {
+        get { return self[RootPresentationModeKey.self] }
+        set { self[RootPresentationModeKey.self] = newValue }
+    }
+}
+
+typealias RootPresentationMode = Bool
+
+extension RootPresentationMode {
+    
+    public mutating func dismiss() {
+        self.toggle()
+    }
+}
 

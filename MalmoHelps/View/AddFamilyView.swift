@@ -31,6 +31,8 @@ struct AddFamilyView: View {
     @State var buttonDisabled = false
     @State var navigationTitle = "Add new family"
     @State var buttonTitle = "Add new family"
+
+    @Binding var isDeleted: Bool
     
     
     var family: Family
@@ -94,7 +96,7 @@ struct AddFamilyView: View {
                             .font(.body)
                             .opacity(self.notes.isEmpty ? 0.25 : 1)
                             .addBorder(Color.gray, width: 3, cornerRadius: 10)
-                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: 75)
+                            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 75, maxHeight: 150)
                             .padding(.horizontal, 5)
                     }
                     
@@ -190,7 +192,6 @@ struct AddFamilyView: View {
                                 .visibility(visibilityProgressView)
                             
                             Button {
-                                print("deleted")
                                 buttonDisabled = true
                                 visibilityProgressView = .visible
                                 FsService.shared.deleteFamily(familyId: family.id) { success in
@@ -198,6 +199,7 @@ struct AddFamilyView: View {
                                     visibilityProgressView = .invisible
                                     if success {
                                         showAddFamily  = false
+                                        isDeleted = true
                                     }  else {
                                         alertText = "Error while delete family, please try again"
                                         showAlert = true
@@ -215,7 +217,6 @@ struct AddFamilyView: View {
                                     .padding()
                             }
                             .disabled(buttonDisabled)
-
                         }
                     }
 
@@ -257,7 +258,7 @@ struct AddFamilyView: View {
 struct AddFamilyView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AddFamilyView(showAddFamily: .constant(true), family: Family(id: "123",place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+        AddFamilyView(showAddFamily: .constant(true), isDeleted: .constant(false), family: Family(id: "123",place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
     }
 }
 
