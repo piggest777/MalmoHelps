@@ -64,6 +64,8 @@ struct AddFamilyView: View {
                     Text("Family size")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.system(size: 16, weight: .bold, design: .default))
+                        .padding(.bottom, 5)
+                        .padding(.leading, 10)
                     TextField("Family size", text: $familySize, onEditingChanged: { edit in
                         self.editingNumberOfFamilies = edit
                     })
@@ -80,8 +82,8 @@ struct AddFamilyView: View {
                     Text("Notes")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .font(.system(size: 14, design: .default))
-                    
-                    
+                        .padding(.bottom, 5)
+                        .padding(.leading, 10)
                     ZStack {
                         if self.notes.isEmpty {
                             TextEditor(text:$placeholder)
@@ -270,7 +272,7 @@ struct MyTextFieldStyle: TextFieldStyle {
             .padding(10)
             .background(
                 RoundedRectangle(cornerRadius: 10, style: .continuous)
-                    .stroke(focused ? Color.red : Color.gray, lineWidth: 3)
+                    .stroke(focused ? Color.red : Color.gray, lineWidth: 1)
             ).padding(.horizontal,5)
     }
 }

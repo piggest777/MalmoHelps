@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct circleButton: View {
+struct CircleButton: View {
     
     @State var circleTapped = false
     @State var circlePressed = false

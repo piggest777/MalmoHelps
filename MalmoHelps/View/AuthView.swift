@@ -11,25 +11,77 @@ import SwiftUI
 struct AuthView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
+    @State var login: String = .init()
+    @State var password: String = .init()
+    @State var loginEditing = false
+    @State var passwordEditing = false
+    @State var showAlert = false
+    @State var alertText = ""
+    @State var visibilityProgressView: ViewVisibility = .invisible
+    @State var buttonDisabled = false
     
     var body: some View {
         VStack {
-            Spacer()
-            Image("MH_round_logo")
+                Image("MH_round_logo")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 200, height: 200, alignment: .center)
             Text("MALMÖ HELPS")
                 .font(.largeTitle)
-            Spacer()
-            
+            Spacer().frame(height: 15)
             Text("Log in with Google")
             GoogleSignInButton()
-                .padding()
+                .padding(.horizontal, 50)
                 .onTapGesture {
                     viewModel.signIn()
                 }
-            
+                .frame(height: 100)
+            Text("Log in with e-mail")
+            Group {
+                VStack {
+                    TextWithTextfield(textString: "Login", textBinding: $login, editing: $loginEditing)
+                    TextWithTextfield(textString: "Password", textBinding: $password, editing: $passwordEditing)
+                    ZStack {
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .visibility(visibilityProgressView)
+                        
+                        Button {
+                            if !login.isEmpty && !password.isEmpty {
+                                
+                                visibilityProgressView = .visible
+                                buttonDisabled = true
+
+                                        FsService.shared.authUserWithLoginAndPass(login: login, password: password) { success in
+                                            if success {
+                                                viewModel.authState = .signedIn
+                                    }
+                                }
+                                
+                            } else {
+                                alertText = "Please fill login and password"
+                                showAlert = true
+                            }
+                            
+                        } label: {
+                            Text("Log In")
+                                .foregroundColor(.black)
+                                .font(.headline)
+                                .padding()
+                                .frame(maxWidth: .infinity)
+                                .background(Color("Background"))
+                                .cornerRadius(12)
+                                .padding()
+                        }
+                        .disabled(buttonDisabled)
+                        .alert(alertText, isPresented: $showAlert) {
+                            Button("OK", role: .cancel) {}
+                        }
+                    }
+                }.padding(.horizontal, 50)
+                .frame(height: 250)
+            }
+            Spacer().frame(height: .infinity)
         }
     }
 }

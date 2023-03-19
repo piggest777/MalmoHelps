@@ -7,6 +7,7 @@
 
 import Foundation
 import FirebaseFirestore
+import FirebaseAuth
 import SwiftUI
 
 
@@ -84,6 +85,25 @@ class FsService {
         }
     }
     
+    func createUserWithLoginAndPass (login: String, password: String, completion handler: @escaping (Bool)->()) {
+        Auth.auth().createUser(withEmail: login, password: password) { authResult, error in
+            if error == nil {
+                handler(true)
+            } else {
+                handler (false)
+            }
+        }
+    }
+    
+    func authUserWithLoginAndPass (login: String, password: String, completion handler: @escaping (Bool)->()) {
+        Auth.auth().signIn(withEmail: login, password: password) { authResult, error in
+            if error == nil {
+                handler(true)
+            } else {
+                handler (false)
+            }
+        }
+    }
     
     func getAllCategories(completionHandler: @escaping ([Category])->()) {
         

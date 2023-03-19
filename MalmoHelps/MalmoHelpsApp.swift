@@ -21,6 +21,7 @@ struct MalmoHelpsApp: App {
         
         WindowGroup {
             ContentView()
+                .accentColor(.black)
                 .environmentObject(viewModel)
                 .onAppear(){
                     if Auth.auth().currentUser != nil {

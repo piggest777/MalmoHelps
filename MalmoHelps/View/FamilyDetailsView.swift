@@ -126,7 +126,6 @@ struct FamilyDetailsView: View {
         .onChange(of: isDeleted, perform: { isDeleted in
             if isDeleted {
                 self.rootPresentationMode.wrappedValue.dismiss()
-                navLinkActive = true
             }
         })
         .sheet(isPresented: $showSheet) {

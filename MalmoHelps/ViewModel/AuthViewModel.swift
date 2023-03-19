@@ -12,7 +12,7 @@ class AuthViewModel: ObservableObject {
     
     @Published var authState: SignInState = .signedOut
     
-    enum SignInState {
+    public enum SignInState {
         case signedIn
         case signedOut
     }

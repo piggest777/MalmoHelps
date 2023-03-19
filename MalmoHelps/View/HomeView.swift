@@ -59,13 +59,14 @@ struct HomeView: View {
                                     .onTapGesture {
                                         currFamily = family
                                         navLinkActive = true
+                                        UIApplication.shared.endEditing()
                                     }
                             }
                         }
                         Spacer()
-                        circleButton (showAddFamily: $showAddFamily)
-                            .frame(alignment: .bottom)
-                            .padding(20)
+//                        CircleButton (showAddFamily: $showAddFamily)
+//                            .frame(alignment: .bottom)
+//                            .padding(20)
                         
                         NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
                             EmptyView()
@@ -75,13 +76,17 @@ struct HomeView: View {
             }
             .navigationTitle(Text("Malmö Helps"))
             .navigationBarTitleDisplayMode(.inline)
-            .navigationBarItems(trailing:
+            .navigationBarItems(leading: Button(action: {
+                showAddFamily.toggle()
+            }, label: { Image(systemName: "plus") }),
+                                trailing:
                                     NavigationLink(destination: ProfileView(), label: {
                 Image(systemName: "gear")
             })
                                 
             )
         }
+        .gesture(DragGesture().onChanged{_ in UIApplication.shared.endEditing()})
         .environment(\.rootPresentationMode, self.$isPresented)
         .navigationViewStyle(StackNavigationViewStyle())
         .onAppear(){
@@ -94,11 +99,12 @@ struct HomeView: View {
         }
         .environmentObject(cat)
     }
+
 }
 
 struct SearchView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView( familiesLookUp: FamiliesLookupViewModel())
+        HomeView(familiesLookUp: FamiliesLookupViewModel())
     }
 }
 

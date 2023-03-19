@@ -16,12 +16,13 @@ struct TextWithTextfield: View {
         Text(textString)
             .frame(maxWidth: .infinity, alignment: .leading)
             .font(.system(size: 16, weight: .bold, design: .default))
-            .padding(2)
+            .padding(.bottom, 5)
+            .padding(.leading, 10)
         TextField(textString, text: $textBinding, onEditingChanged: { edit in
             self.editing = edit
         })
         .textFieldStyle(MyTextFieldStyle(focused: $editing))
-            .padding(.bottom)
+            .padding(.bottom, 10)
     }
 }
 

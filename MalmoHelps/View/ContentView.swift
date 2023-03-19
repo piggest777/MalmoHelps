@@ -14,7 +14,7 @@ struct ContentView: View {
 
     var body: some View {
         switch viewModel.authState {
-        case .signedIn: HomeView()
+        case .signedIn: SwitchView()
         case .signedOut: AuthView()
         }
         
