@@ -29,7 +29,7 @@ struct FamilyDetailsView: View {
                 
                 HStack {
                     VStack {
-                        Text("\(family.firstName) \(family.secondName)")
+                        Text("\(family.firstName) \(family.lastName)")
                             .font(Font.headline.weight(.bold))
                             .frame( maxWidth: .infinity, alignment: .leading)
                         Text("Place: \(family.place) \(family.room ?? "")")
@@ -159,7 +159,7 @@ struct FamilyDetailsView: View {
 
 struct FamilyDetails_Previews: PreviewProvider {
     static var previews: some View {
-        FamilyDetailsView(family: Family(place: "Jägersro", firstName: "Denis", secondName: "Rakitin", memberCount: "1", notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Senectus et netus et malesuada fames ac turpis egestas sed. A iaculis at erat pellentesque adipiscing commodo elit at. Et ligula ullamcorper malesuada proin libero. In arcu cursus euismod quis. Vitae auctor eu augue ut lectus arcu. Nam at lectus urna duis convallis convallis tellus id interdum. Tellus in metus vulputate eu scelerisque felis. In ante metus dictum at tempor commodo ullamcorper a lacus. Cursus eget nunc scelerisque viverra mauris in. Ac felis donec et odio pellentesque diam volutpat commodo sed.", keywords: [], addingDate: Timestamp()))
+        FamilyDetailsView(family: Family(place: "Jägersro", firstName: "Denis", lastName: "Rakitin", memberCount: "1", notes: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Senectus et netus et malesuada fames ac turpis egestas sed. A iaculis at erat pellentesque adipiscing commodo elit at. Et ligula ullamcorper malesuada proin libero. In arcu cursus euismod quis. Vitae auctor eu augue ut lectus arcu. Nam at lectus urna duis convallis convallis tellus id interdum. Tellus in metus vulputate eu scelerisque felis. In ante metus dictum at tempor commodo ullamcorper a lacus. Cursus eget nunc scelerisque viverra mauris in. Ac felis donec et odio pellentesque diam volutpat commodo sed.", keywords: [], addingDate: Timestamp()))
     }
 }
 

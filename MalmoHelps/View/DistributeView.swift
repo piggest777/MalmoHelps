@@ -42,7 +42,7 @@ struct DistributeView: View {
                     .progressViewStyle(.circular)
                     .visibility(vm.progressViewVisibility)
             
-            StandardtButton(color: Color(.systemMint), text: "Finish") {
+            StandardButton(color: Color(.systemMint), text: "Finish") {
                 buttonDisabled = true
                 vm.addCategoriesToFamily(familyId: family.id, selectedCategories: selectedCategory){ success in
                     if success {
@@ -73,7 +73,7 @@ struct DistributeView: View {
 
 struct DistributeView_Previews: PreviewProvider {
     static var previews: some View {
-        DistributeView(family: Family(id: "", place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp()))
+        DistributeView(family: Family(id: "", place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp()))
     }
 }
 

@@ -81,7 +81,7 @@ struct AuthView: View {
                 }.padding(.horizontal, 50)
                 .frame(height: 250)
             }
-            Spacer().frame(height: .infinity)
+            Spacer()
         }
     }
 }

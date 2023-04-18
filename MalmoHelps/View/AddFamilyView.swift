@@ -134,7 +134,7 @@ struct AddFamilyView: View {
                                 showAlert = false
                                 
                                 
-                                let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, secondName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
+                                let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, lastName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
                                 visibilityProgressView = .visible
                                 buttonDisabled = true
                                 
@@ -225,7 +225,7 @@ struct AddFamilyView: View {
                 }
             }.onAppear{
                 firstName = family.firstName
-                secondName = family.secondName
+                secondName = family.lastName
                 familySize = family.memberCount
                 place = family.place
                 room = family.room ?? ""
@@ -250,7 +250,6 @@ struct AddFamilyView: View {
                     } label: {
                         Image(systemName: "xmark.circle")
                     }
-                    
                 }
             }
         }
@@ -260,7 +259,7 @@ struct AddFamilyView: View {
 struct AddFamilyView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AddFamilyView(showAddFamily: .constant(true), isDeleted: .constant(false), family: Family(id: "123",place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+        AddFamilyView(showAddFamily: .constant(true), isDeleted: .constant(false), family: Family(id: "123",place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
     }
 }
 

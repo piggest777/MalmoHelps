@@ -12,14 +12,14 @@ struct HomeView: View {
     
     @EnvironmentObject var viewModel: AuthViewModel
     @State var showAddFamily: Bool = false
-    @StateObject var familiesLookUp = FamiliesLookupViewModel()
+    @ObservedObject var familiesLookUp = FamiliesLookupViewModel()
     @State var keyword = ""
     @State var keywordCalled = false
     @State var currFamily: Family? = nil
     @State var navLinkActive = false
     @State var searching = false
     @StateObject var cat  = Categories()
-   
+    
     @State var isPresented: Bool = false
     @State var isDeleted = false
     
@@ -32,8 +32,8 @@ struct HomeView: View {
             set: {
                 if keywordCalled == false {
                     keyword = $0
-                    familiesLookUp.queryResultUsers.removeAll()
-                    familiesLookUp.fetchUsers(with: keyword.lowercased())
+                    familiesLookUp.queryResultFamilies.removeAll()
+                    familiesLookUp.fetchFamilies(with: keyword.lowercased())
                     
                     keywordCalled = true
                 } else {
@@ -49,12 +49,12 @@ struct HomeView: View {
                         .fill(Color("Background"))
                         .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .edgesIgnoringSafeArea(.all)
-                    
+
                     //Add Circle Button
                     VStack {
                         SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
                         ScrollView {
-                            ForEach(familiesLookUp.queryResultUsers,  id: \.id) { family in
+                            ForEach(familiesLookUp.queryResultFamilies,  id: \.id) { family in
                                 FamilyBarView(family: family)
                                     .onTapGesture {
                                         currFamily = family
@@ -64,17 +64,13 @@ struct HomeView: View {
                             }
                         }
                         Spacer()
-//                        CircleButton (showAddFamily: $showAddFamily)
-//                            .frame(alignment: .bottom)
-//                            .padding(20)
-                        
-                        NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", secondName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
+                        NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
                             EmptyView()
                         }.isDetailLink(false)
                     }
                 }
             }
-            .navigationTitle(Text("Malmö Helps"))
+            .navigationTitle(Text("Families"))
             .navigationBarTitleDisplayMode(.inline)
             .navigationBarItems(leading: Button(action: {
                 showAddFamily.toggle()
@@ -83,7 +79,6 @@ struct HomeView: View {
                                     NavigationLink(destination: ProfileView(), label: {
                 Image(systemName: "gear")
             })
-                                
             )
         }
         .gesture(DragGesture().onChanged{_ in UIApplication.shared.endEditing()})
@@ -95,11 +90,10 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showAddFamily) {
-            AddFamilyView(showAddFamily: $showAddFamily, isDeleted: $isDeleted, family: Family(place: "", firstName: "", secondName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+            AddFamilyView(showAddFamily: $showAddFamily, isDeleted: $isDeleted, family: Family(place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
         }
         .environmentObject(cat)
     }
-
 }
 
 struct SearchView_Previews: PreviewProvider {
@@ -108,42 +102,7 @@ struct SearchView_Previews: PreviewProvider {
     }
 }
 
-struct SearchBarView: View {
-    @Binding var keyword: String
-    @Binding var searching: Bool
-    
-    var body: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(Color.gray.opacity(0.5))
-            HStack {
-                Image(systemName: "magnifyingglass")
-                TextField("Searching for...", text: $keyword)
-                .autocapitalization(.none)
-                
-                if searching {
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .frame(alignment: .trailing)
-                        .padding(.trailing, 13)
-                } else {
-                    Image(systemName: "xmark.circle")
-                        .resizable()
-                        .frame(width: 30, height: 30,alignment: .trailing)
-                        .onTapGesture {
-                            keyword = ""
-                        }
-                        .padding(.trailing, 13)
-                }
 
-            }
-            .padding(.leading, 13)
-        }
-        .frame(height: 50)
-        .cornerRadius(13)
-        .padding()
-    }
-}
 
 struct FamilyBarView: View {
     var family: Family
@@ -151,9 +110,9 @@ struct FamilyBarView: View {
     var body: some View {
         ZStack {
             Rectangle()
-            .foregroundColor(Color.gray.opacity(0.2))
+                .foregroundColor(Color.gray.opacity(0.2))
             VStack {
-                Text("\(family.firstName) \(family.secondName)")
+                Text("\(family.firstName) \(family.lastName)")
                     .padding(.horizontal,10)
                     .frame(maxWidth: .infinity,alignment: .leading)
                     .font(Font.headline.weight(.bold))

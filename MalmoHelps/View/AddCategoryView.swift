@@ -48,7 +48,7 @@ struct AddCategoryView: View {
                     .progressViewStyle(.circular)
                     .visibility(vm.progressViewVisibility)
                 
-                StandardtButton(color: Color(.systemMint), text: "Add category") {
+                StandardButton(color: Color(.systemMint), text: "Add category") {
                     
                     if !catName.isEmpty && !catDuration.isEmpty, let numericDuration = Int(catDuration) {
                         let newCategory = Category(name: catName, durationInDays: numericDuration)

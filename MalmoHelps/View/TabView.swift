@@ -9,24 +9,26 @@ import SwiftUI
 
 struct SwitchView: View {
     @State private var selectedTabIndex = 0
-    
+    init() {
+        UITabBar.appearance().backgroundColor = UIColor(Color("LightShadow"))
+    }
     var body: some View {
-        TabView(selection: $selectedTabIndex) {
-            HomeView()
-                .tabItem {
-                    Image(systemName: "1.circle")
-                    Text("First")
-                }
-                .tag(0)
-            
-            ActivitiesView()
-                .tabItem {
-                    Image(systemName: "2.circle")
-                    Text("Second")
-                }
-                .tag(1)
-        }
-        .background(Color.white)
+        HomeView()
+//        TabView(selection: $selectedTabIndex) {
+//            HomeView()
+//                .tabItem {
+//                    Image(systemName: "person.3.sequence.fill")
+//                    Text("Queue")
+//                }
+//                .tag(0)
+//
+//            ActivitiesView()
+//                .tabItem {
+//                    Image(systemName: "rectangle.stack.badge.person.crop.fill")
+//                    Text("Activities")
+//                }
+//                .tag(1)
+//        }
     }
 }
 

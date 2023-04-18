@@ -20,9 +20,9 @@ struct ProfileView: View {
                 .font(.title3)
                 .padding()
             Menu {
-                ForEach(DIST_POINTS, id: \.id){ point in
-                    Button("\(point.name)") {
-                        distPlace = point.name
+                ForEach(DIST_POINTS, id: \.self){ point in
+                    Button("\(point.venue)") {
+                        distPlace = point.venue
                     }
                 }
                 

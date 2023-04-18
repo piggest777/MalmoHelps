@@ -9,6 +9,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 import SwiftUI
+import Combine
 
 
 class FsService {
@@ -24,7 +25,7 @@ class FsService {
             PLACE : family.place,
             ROOM : family.room ?? "",
             FIRST_NAME : family.firstName,
-            SECOND_NAME : family.secondName,
+            LAST_NAME : family.lastName,
             FAMILY_SIZE : family.memberCount,
             NOTES : family.notes ?? "",
             KEYWORDS : family.keywords,
@@ -46,7 +47,7 @@ class FsService {
             PLACE : family.place,
             ROOM : family.room ?? "",
             FIRST_NAME : family.firstName,
-            SECOND_NAME : family.secondName,
+            LAST_NAME : family.lastName,
             FAMILY_SIZE : family.memberCount,
             NOTES : family.notes ?? "",
             KEYWORDS : family.keywords,
@@ -64,24 +65,77 @@ class FsService {
     func deleteFamily(familyId: String, completionHandler: @escaping (Bool)->()) {
         db.collection(REF_FAMILIES).document(familyId).delete(){
             err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                    completionHandler(false)
-                } else {
-                    print("Document successfully removed!")
-                    completionHandler(true)
-                }
+            if let err = err {
+                print("Error removing document: \(err)")
+                completionHandler(false)
+            } else {
+                print("Document successfully removed!")
+                completionHandler(true)
+            }
         }
     }
+    
+    func addNewPerson(_ person: Person) -> Future<Void, Error> {
+        return Future<Void, Error> { promise in
+            self.db.collection(PERSON_COLLECTION).addDocument(data: [
+                FIRST_NAME : person.firstName,
+                LAST_NAME : person.lastName,
+                PERSONAL_NUMBER : person.personalNumber,
+                PHONE_NUMBER : person.phoneNumber,
+                START_DATE : Timestamp(),
+                FINISH_DATE : FINISH_DATE,
+                CUSTOM_QR_CODE : person.customQrCode ?? "",
+                KEYWORDS : person.keywords
+            ]) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+    }
+    
+    func addNewRegistration(for person: Person, at date: Date, with duration: Float = 1.0) -> Future<Void, Error> {
+        return Future<Void, Error> { promise in
+            let calendar = Calendar.current
+            
+            let year = calendar.component(.year, from: date)
+            let month = calendar.component(.month, from: date)
+            let day = calendar.component(.day, from: date)
+            
+            self.db.collection(REGISTRATION_COLLECTION).addDocument(data: [
+                PARTICIPANT_NAME : "\(person.firstName) \(person.lastName)",
+                PARTICIPANT_ID :  person.id,
+                YEAR : year,
+                MONTH : month,
+                DAY : day,
+                TIMESTAMP : Timestamp(date: date),
+                DURATION : duration
+            ]) { error in
+                if let error {
+                    promise(.failure(error))
+                    print("error while adding registration document: \(error)")
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+    }
+    
+    func removeRegistration(for person: Registration) {
+        guard let id = person.id else {return}
+        db.collection(REGISTRATION_COLLECTION).document(id).delete()
+        }
     
     func deleteDistCategory(familyId: String, distCatId: String) {
         db.collection(REF_FAMILIES).document(familyId).collection(REF_DISTRIBUTED).document(distCatId).delete(){
             err in
-                if let err = err {
-                    print("Error removing document: \(err)")
-                } else {
-                    print("Document successfully removed!")
-                }
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
         }
     }
     
@@ -102,6 +156,50 @@ class FsService {
             } else {
                 handler (false)
             }
+        }
+    }
+    
+    func getAllActivities() -> Future<[ActivityEntry], Error> {
+        let collectionRef = db.collection(ACTIVITY_COLLECTION)
+        return Future<[ActivityEntry], Error> { promise in
+            collectionRef
+                .order(by: "activity_name", descending: true)
+                .getDocuments { snapshot, error in
+                    if let error {
+                        promise(.failure(error))
+                    } else {
+                        guard let documents = snapshot?.documents else {
+                            promise(.success([]))
+                            return
+                        }
+                        let entries = documents.compactMap { document in
+                            try? document.data(as: ActivityEntry.self)
+                        }
+                        promise(.success(entries))
+                    }
+                }
+        }
+    }
+    
+    func fetchParticipants(with keyword: String) -> Future<[Person], Error> {
+        let collectionRef = db.collection(PERSON_COLLECTION)
+        return Future<[Person], Error> { promise in
+            collectionRef
+                .whereField(KEYWORDS, arrayContains: keyword.lowercased())
+                .getDocuments { snapshot, error in
+                    if let error {
+                        promise(.failure(error))
+                    } else {
+                        guard let documents = snapshot?.documents else {
+                            promise(.success([]))
+                            return
+                        }
+                        let entries = documents.compactMap { document in
+                            Person.fromDocument(document)
+                        }
+                        promise(.success(entries))
+                    }
+                }
         }
     }
     

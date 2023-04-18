@@ -7,13 +7,14 @@
 
 import SwiftUI
 
-struct StandardtButton: View {
-    var color: Color
+struct StandardButton: View {
+    var color: Color = Color("ButtonColor")
     var text: String
     var action: ()->Void
     var body: some View {
         Button(action: action) {
-            Text(text)
+            Text(text.uppercased())
+                .font(Font.headline.weight(.bold))
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
@@ -26,7 +27,7 @@ struct StandardtButton: View {
 
 struct StandartButton_Previews: PreviewProvider {
     static var previews: some View {
-        StandardtButton(color: Color((.systemMint)), text: "Test"){
+        StandardButton(text: "Test"){
             print("nothing")
         }
     }

@@ -26,8 +26,8 @@ struct TextWithTextfield: View {
     }
 }
 
-//struct TextWithTextfield_Previews: PreviewProvider {
-//    static var previews: some View {
-//        TextWithTextfield()
-//    }
-//}
+struct TextWithTextfield_Previews: PreviewProvider {
+    static var previews: some View {
+        TextWithTextfield(textString: "Name", textBinding: .constant("Denis"), editing: .constant(true))
+    }
+}
