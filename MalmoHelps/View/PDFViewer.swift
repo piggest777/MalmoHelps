@@ -16,19 +16,33 @@ struct PDFViewer: View {
     let pdfData: Data?
     
     var body: some View {
-        if let pdfData  {
-            ZStack {
-                PDFKitView(pdfData: pdfData)
-//                VStack {
-//                    Spacer()
-//                    StandardButton(text: "Create PDF") {
-//                        sharePDF()
-//                }
-//                }
+        NavigationView {
+            if let pdfData  {
+                ZStack {
+                    PDFKitView(pdfData: pdfData)
+    //                VStack {
+    //                    Spacer()
+    //                    StandardButton(text: "Create PDF") {
+    //                        sharePDF()
+    //                }
+    //                }
+                }.toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isPresented = false
+                        } label: {
+                            Image(systemName: "xmark")
+                                .imageScale(.medium)
+                                .padding()
+                        }
+                    }
+                }
+                
+            } else {
+                Text("Something goes wrong while fetching PDF Data")
             }
-        } else {
-            Text("Something goes wrong while fetching PDF Data")
         }
+
     }
 
     func sharePDF() {

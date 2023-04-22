@@ -64,7 +64,7 @@ struct ActivitiesView: View {
                                 Spacer().frame(height: calendarViewHeight)
                                 ScrollView{
                                     ForEach(viewModel.activities, id:\.self) { activity in
-                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, activityName: $selectedActivity.activityName)
+                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity)
                                             .padding(.horizontal, 10)
                                             .padding(.vertical, 5)
                                     }

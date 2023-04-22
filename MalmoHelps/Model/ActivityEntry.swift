@@ -11,11 +11,13 @@ struct ActivityEntry: Hashable, Codable {
     var activityName: String
     var venue: String?
     var personInCharge: String?
+    var defaultDuration: Float?
     
-    init(activityName: String, venue: String?, personInCharge: String?) {
+    init(activityName: String, venue: String?, personInCharge: String?, defaultDuration: Float? = 1.0) {
         self.activityName = activityName
         self.venue = venue
         self.personInCharge = personInCharge
+        self.defaultDuration = defaultDuration
     }
     
     func hash(into hasher: inout Hasher) {
@@ -30,6 +32,7 @@ struct ActivityEntry: Hashable, Codable {
         case activityName = "activity_name"
         case venue
         case personInCharge = "person_in_charge"
+        case defaultDuration = "default_duration"
     }
     
     init(from decoder: Decoder) throws {
@@ -38,5 +41,6 @@ struct ActivityEntry: Hashable, Codable {
         self.activityName = try container.decode(String.self, forKey: .activityName)
         self.venue = try container.decodeIfPresent(String.self, forKey: .venue)
         self.personInCharge = try container.decodeIfPresent(String.self, forKey: .personInCharge)
+        self.defaultDuration = try container.decodeIfPresent(Float.self, forKey: .defaultDuration)
     }
 }

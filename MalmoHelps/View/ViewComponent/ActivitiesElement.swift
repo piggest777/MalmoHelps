@@ -11,7 +11,7 @@ struct ActivitiesElement: View {
     let activity: ActivityEntry
     
     @Binding var showSearchView: Bool
-    @Binding var activityName: String
+    @Binding var currActivity: ActivityEntry
     
     var body: some View {
         HStack {
@@ -27,7 +27,7 @@ struct ActivitiesElement: View {
                 }
             }
             Button {
-                activityName = activity.activityName
+                currActivity = activity
                 showSearchView.toggle()
             } label: {
                 Circle()
@@ -55,6 +55,6 @@ struct ActivitiesElement: View {
 
 struct ActivitiesViewElement_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesElement(activity: ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), activityName: .constant("Dancing"))
+        ActivitiesElement(activity: ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), currActivity: .constant(ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: nil)))
     }
 }

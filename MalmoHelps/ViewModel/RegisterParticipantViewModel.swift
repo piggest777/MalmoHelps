@@ -26,7 +26,7 @@ class RegisterParticipantViewModel: ObservableObject {
     private var endOfDay: Date
     private var cancellables = Set<AnyCancellable>()
     
-    init(registrationDay: Date) {
+    init(registrationDay: Date, activityName: String) {
         self.registrationDay = registrationDay
         let calendar = Calendar.current
                 
@@ -36,18 +36,19 @@ class RegisterParticipantViewModel: ObservableObject {
                 
         self.startOfDay = calendar.startOfDay(for: registrationDay)
         self.endOfDay = calendar.date(byAdding: .day, value: 1, to: registrationDay)!
-        fetchParticipantListFor(for: registrationDay)
+        fetchParticipantListFor(for: registrationDay, activityName: activityName)
     }
     deinit {
         registrationListener?.remove()
         cancellables.removeAll()
     }
     
-    func fetchParticipantListFor(for date: Date) {
+    func fetchParticipantListFor(for date: Date, activityName: String) {
         let query = db.collection(REGISTRATION_COLLECTION)
               .whereField(YEAR, isEqualTo: year)
               .whereField(MONTH, isEqualTo: month)
               .whereField(DAY, isEqualTo: day)
+              .whereField(ACTIVITY_NAME, isEqualTo: activityName)
               .whereField(TIMESTAMP, isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
               .whereField(TIMESTAMP, isLessThan: Timestamp(date: endOfDay))
         
@@ -56,9 +57,10 @@ class RegisterParticipantViewModel: ObservableObject {
                 print("Error fetching registration: \(error!)")
                 return
             }
-            self.registeredParticipants = documents.compactMap({ document -> Registration?  in
+            let registrations = documents.compactMap({ document -> Registration?  in
                 try? document.data(as: Registration.self)
             })
+            self.registeredParticipants.append(contentsOf: registrations)
         })
     }
     

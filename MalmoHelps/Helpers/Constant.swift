@@ -42,6 +42,7 @@ let ACTIVITY_NAME = "activity_name"
 let VENUE = "venue"
 let PERSON_IN_CHARGE = "person_in_charge"
 let ACTIVITY_COLLECTION = "activities"
+let DEFAULT_DURATION = "default_duration"
 
 //ParticipantRegistration
 let REGISTRATION_COLLECTION = "participant_registration"

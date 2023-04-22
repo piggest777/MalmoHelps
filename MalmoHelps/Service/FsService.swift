@@ -101,7 +101,8 @@ class FsService {
             self.db.collection(ACTIVITY_COLLECTION).addDocument(data: [
                 ACTIVITY_NAME : activity.activityName,
                 PERSON_IN_CHARGE : activity.personInCharge as Any,
-                VENUE : activity.venue as Any
+                VENUE : activity.venue as Any,
+                DEFAULT_DURATION: activity.defaultDuration as Any
             ]) { error in
                 if let error = error {
                     promise(.failure(error))

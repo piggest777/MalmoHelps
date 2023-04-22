@@ -18,7 +18,7 @@ struct RegisterParticipantView: View {
     @State var keywordCalled = false
     
     init(date: Date, activity: Binding<ActivityEntry>, isPresented: Binding<Bool>, familiesLookUp: FamiliesLookupViewModel = FamiliesLookupViewModel(), keyword: String = "", keywordCalled: Bool = false) {
-        viewModel = RegisterParticipantViewModel(registrationDay: date)
+        viewModel = RegisterParticipantViewModel(registrationDay: date, activityName: activity.activityName.wrappedValue)
         self.date = date
         self._activity = activity
         self._isPresented = isPresented
@@ -60,9 +60,10 @@ struct RegisterParticipantView: View {
                 ScrollView {
                     if !familiesLookUp.queryResultPerson.isEmpty {
                        ForEach (familiesLookUp.queryResultPerson,  id: \.id) { person in
-                           PersonElement(person: person, date: date, activityName: activity.activityName, personInCharge: activity.personInCharge, showDuration: true) {
+                           PersonElement(person: person, date: date, activityName: activity.activityName, defaultDuration: activity.defaultDuration, personInCharge: activity.personInCharge, showDuration: true) {
                                familiesLookUp.queryResultPerson.removeAll()
                            }
+
                         }
                     }
                     else {
@@ -76,6 +77,17 @@ struct RegisterParticipantView: View {
                 .padding(.horizontal)
                 Spacer()
             }.navigationTitle(Text(activity.activityName))
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            isPresented = false
+                        } label: {
+                            Image(systemName: "xmark")
+                                .imageScale(.medium)
+                                .padding()
+                        }
+                    }
+                }
         }
     }
 }

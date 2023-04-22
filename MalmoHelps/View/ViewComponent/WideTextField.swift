@@ -11,6 +11,7 @@ enum ValidatorType {
     case number
     case mobilePhone
     case required
+    case float
     case none
 }
 
@@ -35,6 +36,8 @@ struct WideTextField: View, Hashable {
             return .default
         case .none:
             return .default
+        case .float:
+            return .numbersAndPunctuation
         }
     }
     
@@ -94,7 +97,14 @@ struct WideTextField: View, Hashable {
     private func validateLMANumber(_ number: String) {
         let lmaNumberPredicate = NSPredicate(format:"SELF MATCHES %@", lmaNumberRegex)
         fieldValidation = lmaNumberPredicate.evaluate(with: number)
-        
+    }
+    
+    private func validateFloat(_ duration: String) {
+        if (Float(duration) != nil) {
+            fieldValidation = true
+        } else {
+            fieldValidation = false
+        }
     }
     
     private func validator() {
@@ -107,6 +117,8 @@ struct WideTextField: View, Hashable {
             fieldValidation = !input.isEmpty
         case .none:
             fieldValidation = true
+        case .float:
+            validateFloat(input)
         }
     }
 }

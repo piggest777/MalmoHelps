@@ -14,6 +14,7 @@ struct PersonElement: View {
     let person: Person
     let date: Date
     let activityName: String
+    let defaultDuration: Float?
     let personInCharge: String?
     var showDuration: Bool
     @State var duration: Float = 1.0
@@ -50,6 +51,11 @@ struct PersonElement: View {
             }.padding(.trailing, 20)
 
         }
+        .onAppear{
+            if defaultDuration != nil {
+                duration = defaultDuration ?? 1.0
+            }
+        }
         .frame(height: 75)
         .background(Color.white)
         .cornerRadius(5)
@@ -64,6 +70,6 @@ struct PersonElement: View {
 struct PersonElement_Previews: PreviewProvider {
     static var previews: some View {
         
-        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"]), date: Date(), activityName: "Dancing", personInCharge: "Victoria", showDuration: true, action: {print("")})
+        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"]), date: Date(), activityName: "Dancing", defaultDuration: 1.5, personInCharge: "Victoria", showDuration: true, action: {print("")})
     }
 }
