@@ -10,7 +10,9 @@ import FirebaseFirestore
 import Firebase
 import FirebaseFirestoreSwift
 
-struct Registration: Codable {
+struct Registration: Codable, Identifiable, Hashable {
+    
+    
     
     @DocumentID var id: String?
     var participantName: String
@@ -20,8 +22,10 @@ struct Registration: Codable {
     var day: Int
     var duration: Float = 1.0
     var timestamp: Timestamp
+    var activityName: String
+    var activityPersonInCharge: String?
     
-    init(id: String = "", participantName: String, participantId: String, year: Int, month: Int, day: Int, duration: Float, timestamp: Timestamp) {
+    init(id: String = "", participantName: String, participantId: String, year: Int, month: Int, day: Int, duration: Float, timestamp: Timestamp, activityName: String, activityPersonInCharge: String?) {
         self.id = id
         self.participantName = participantName
         self.participantId = participantId
@@ -30,6 +34,8 @@ struct Registration: Codable {
         self.day = day
         self.duration = duration
         self.timestamp = timestamp
+        self.activityName = activityName
+        self.activityPersonInCharge = activityPersonInCharge
     }
     
     init(from decoder: Decoder) throws {
@@ -42,18 +48,22 @@ struct Registration: Codable {
         self.day = try container.decode(Int.self, forKey: .day)
         self.duration = try container.decode(Float.self, forKey: .duration)
         self.timestamp = try container.decode(Timestamp.self, forKey: .timestamp)
+        self.activityName = try container.decode(String.self, forKey: .activityName)
+        self.activityPersonInCharge = try container.decodeIfPresent(String.self, forKey: .activityPersonInCharge)
     }
     
     enum CodingKeys: String, CodingKey {
-         case id
-         case participantName = "participant_name"
-         case participantId = "participant_id"
-         case year
-         case month
-         case day
-         case duration
-         case timestamp
-     }
+        case id
+        case participantName = "participant_name"
+        case participantId = "participant_id"
+        case year
+        case month
+        case day
+        case duration
+        case timestamp
+        case activityName = "activity_name"
+        case activityPersonInCharge = "person_in_charge"
+    }
     
     
     

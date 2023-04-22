@@ -134,6 +134,15 @@
         "revision" : "fa0fcd43f272a260e7f734f23e6dc55e16fcae0a",
         "version" : "1.19.1"
       }
+    },
+    {
+      "identity" : "tppdf",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/techprimate/TPPDF",
+      "state" : {
+        "revision" : "1955ebbc090a3fb2149fb53e703595c3146689af",
+        "version" : "2.4.1"
+      }
     }
   ],
   "version" : 2

@@ -62,8 +62,8 @@ class RegisterParticipantViewModel: ObservableObject {
         })
     }
     
-    func addRegistration(for person: Person, duration: Float = 1.0) {
-        let newRegistration = FsService.shared.addNewRegistration(for: person, at: registrationDay, with: duration)
+    func addRegistration(for person: Person, duration: Float = 1.0, activityName: String, personInCharge: String?) {
+        let newRegistration = FsService.shared.addNewRegistration(for: person, at: registrationDay, with: duration, activityName: activityName, personInCharge: personInCharge)
         newRegistration.sink { error in
             print("Error while registration \(error)")
         } receiveValue: {  _ in }

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Firebase
 
 
 let REF_FAMILIES = "families"
@@ -67,6 +68,8 @@ let DIST_POINTS = [
 ]
 
 let CURR_POINT = "distribution_point"
+
+let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "_", phoneNumber: "_", customQrCode: nil, keywords: [])
 
 
 

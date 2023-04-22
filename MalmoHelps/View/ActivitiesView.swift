@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ActivitiesView: View {
     @State var showAddPerson: Bool = false
+    @State var showAddActivity: Bool = false
     @StateObject var viewModel = ActivitiesViewModel()
     @ObservedObject var familiesLookUp = FamiliesLookupViewModel()
     @State var showSearchPersonView: Bool = false
@@ -17,17 +18,17 @@ struct ActivitiesView: View {
     @State var changeDateByArrow = false
     @State var keyword = ""
     @State var keywordCalled = false
-    @State var selectedActivity = ""
+    @State var selectedActivity: ActivityEntry = ActivityEntry(activityName: "", venue: nil, personInCharge: nil)
     @State var navLinkActive = false
     @State var currPerson: Person?
     @State var calendarViewHeight = 40.0
+    @StateObject private var selectedMonth = SelectedMonth()
     
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         return formatter
     }
-    
     
     var body: some View {
         
@@ -63,8 +64,9 @@ struct ActivitiesView: View {
                                 Spacer().frame(height: calendarViewHeight)
                                 ScrollView{
                                     ForEach(viewModel.activities, id:\.self) { activity in
-                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, activityName: $selectedActivity)
-                                            .padding()
+                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, activityName: $selectedActivity.activityName)
+                                            .padding(.horizontal, 10)
+                                            .padding(.vertical, 5)
                                     }
                                 }
                             }
@@ -83,18 +85,11 @@ struct ActivitiesView: View {
                                         navLinkActive = true
                                     }
                                 }
-                                
                             }
                         }.padding(.horizontal)
                     }
                     Spacer()
-                    NavigationLink {
-                        EmptyView()
-                    } label: {
-                        EmptyView()
-                    }
-
-                    NavigationLink(destination:  EmptyView() , isActive: $navLinkActive) {
+                    NavigationLink(destination:  ParticipantDetailsView(person: currPerson ?? dummyPerson) , isActive: $navLinkActive) {
                        EmptyView()
                     }
                 }
@@ -102,14 +97,25 @@ struct ActivitiesView: View {
             .navigationBarItems(trailing: Button(action: {
                 showAddPerson.toggle()
             }, label: { Image(systemName: "person.fill.badge.plus").imageScale(.large).padding() }))
+            .navigationBarItems(leading:  Button(action: {
+                showAddActivity.toggle()
+            }, label: { Image(systemName: "note.text.badge.plus").imageScale(.large).padding() }))
             .navigationTitle(Text("Activities"))
             .navigationBarTitleDisplayMode(.inline)
-            .navigationTitle("Items")
         }
+        .environmentObject(selectedMonth)
         .sheet(isPresented: $showAddPerson) {
             AddPersonView(isPresented: $showAddPerson)
         }.sheet(isPresented: $showSearchPersonView) {
             RegisterParticipantView(date: selectedDate, activity: $selectedActivity, isPresented: $showSearchPersonView)
+        }
+        .sheet(isPresented: $showAddActivity) {
+            AddActivityView(isPresented: $showAddActivity)
+        }
+        .onChange(of: showAddActivity) { newValue in
+            if newValue == false {
+                viewModel.getActivities()
+            }
         }
     }
     

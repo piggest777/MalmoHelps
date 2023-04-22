@@ -10,14 +10,14 @@ import Firebase
 
 struct RegisterParticipantView: View {
     var date: Date
-    @Binding var activity: String
+    @Binding var activity: ActivityEntry
     @Binding var isPresented: Bool
     @ObservedObject var familiesLookUp: FamiliesLookupViewModel
     @ObservedObject var viewModel: RegisterParticipantViewModel
     @State var keyword = ""
     @State var keywordCalled = false
     
-    init(date: Date, activity: Binding<String>, isPresented: Binding<Bool>, familiesLookUp: FamiliesLookupViewModel = FamiliesLookupViewModel(), keyword: String = "", keywordCalled: Bool = false) {
+    init(date: Date, activity: Binding<ActivityEntry>, isPresented: Binding<Bool>, familiesLookUp: FamiliesLookupViewModel = FamiliesLookupViewModel(), keyword: String = "", keywordCalled: Bool = false) {
         viewModel = RegisterParticipantViewModel(registrationDay: date)
         self.date = date
         self._activity = activity
@@ -60,7 +60,7 @@ struct RegisterParticipantView: View {
                 ScrollView {
                     if !familiesLookUp.queryResultPerson.isEmpty {
                        ForEach (familiesLookUp.queryResultPerson,  id: \.id) { person in
-                           PersonElement(person: person, date: date, showDuration: true) {
+                           PersonElement(person: person, date: date, activityName: activity.activityName, personInCharge: activity.personInCharge, showDuration: true) {
                                familiesLookUp.queryResultPerson.removeAll()
                            }
                         }
@@ -75,20 +75,20 @@ struct RegisterParticipantView: View {
                 }
                 .padding(.horizontal)
                 Spacer()
-            }.navigationTitle(Text(activity))
+            }.navigationTitle(Text(activity.activityName))
         }
     }
 }
 
 struct RegisterParticipantView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterParticipantView(date: Date(), activity: .constant("Dancing"), isPresented: .constant(true))
+        RegisterParticipantView(date: Date(), activity: .constant(ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Victoria")), isPresented: .constant(true))
     }
 }
 
 struct RegistrateElement_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp()), action: {print("Action")})
+        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp(), activityName: "Dancing", activityPersonInCharge: "Victoria"), action: {print("Action")})
     }
 }
 

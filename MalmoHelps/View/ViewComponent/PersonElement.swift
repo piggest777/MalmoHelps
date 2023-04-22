@@ -13,6 +13,8 @@ import Combine
 struct PersonElement: View {
     let person: Person
     let date: Date
+    let activityName: String
+    let personInCharge: String?
     var showDuration: Bool
     @State var duration: Float = 1.0
     var action: ()->Void
@@ -34,7 +36,7 @@ struct PersonElement: View {
                 FloatingTextField(floatValue: $duration, placeholder: "1.0")
             }
             Button {
-                viewModel.addParticipant(for: person, at: date, with: duration)
+                viewModel.addParticipant(for: person, at: date, with: duration, activityName: activityName, personInCharge: personInCharge)
                 action()
             } label: {
                 Circle()
@@ -62,6 +64,6 @@ struct PersonElement: View {
 struct PersonElement_Previews: PreviewProvider {
     static var previews: some View {
         
-        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"]), date: Date() , showDuration: true, action: {print("")})
+        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"]), date: Date(), activityName: "Dancing", personInCharge: "Victoria", showDuration: true, action: {print("")})
     }
 }

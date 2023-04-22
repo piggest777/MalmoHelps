@@ -96,7 +96,23 @@ class FsService {
         }
     }
     
-    func addNewRegistration(for person: Person, at date: Date, with duration: Float = 1.0) -> Future<Void, Error> {
+    func addNewActivity(_ activity: ActivityEntry) -> Future<Void, Error> {
+        return Future<Void, Error> { promise in
+            self.db.collection(ACTIVITY_COLLECTION).addDocument(data: [
+                ACTIVITY_NAME : activity.activityName,
+                PERSON_IN_CHARGE : activity.personInCharge as Any,
+                VENUE : activity.venue as Any
+            ]) { error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    promise(.success(()))
+                }
+            }
+        }
+    }
+    
+    func addNewRegistration(for person: Person, at date: Date, with duration: Float = 1.0, activityName: String, personInCharge: String?) -> Future<Void, Error> {
         return Future<Void, Error> { promise in
             let calendar = Calendar.current
             
@@ -111,7 +127,9 @@ class FsService {
                 MONTH : month,
                 DAY : day,
                 TIMESTAMP : Timestamp(date: date),
-                DURATION : duration
+                DURATION : duration,
+                ACTIVITY_NAME: activityName,
+                PERSON_IN_CHARGE: personInCharge as Any
             ]) { error in
                 if let error {
                     promise(.failure(error))
@@ -122,6 +140,7 @@ class FsService {
             }
         }
     }
+
     
     func removeRegistration(for person: Registration) {
         guard let id = person.id else {return}
@@ -229,7 +248,27 @@ class FsService {
         
     }
     
-    
+    func getAllParticipantActivities(for personId: String, month: Int, year: Int) -> Future<[Registration], Error> {
+        return Future { promise in
+            let query = self.db.collection(REGISTRATION_COLLECTION)
+                .whereField(PARTICIPANT_ID, isEqualTo: personId)
+                .whereField(MONTH, isEqualTo: month)
+                .whereField(YEAR, isEqualTo: year)
+                .order(by: TIMESTAMP, descending: false)
+
+                query.getDocuments { snapshot, error in
+                    if let error {
+                        print("Error while fetching registration list for participant: \(error)")
+                        promise(.failure(error))
+                    } else if let snapshot {
+                        let registrations = snapshot.documents.compactMap { document in
+                            try? document.data(as: Registration.self)
+                        }
+                        promise(.success(registrations))
+                    }
+                }
+        }
+    }
 }
 
 class Categories: ObservableObject {

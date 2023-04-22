@@ -13,22 +13,22 @@ struct SwitchView: View {
         UITabBar.appearance().backgroundColor = UIColor(Color("LightShadow"))
     }
     var body: some View {
-        HomeView()
-//        TabView(selection: $selectedTabIndex) {
-//            HomeView()
-//                .tabItem {
-//                    Image(systemName: "person.3.sequence.fill")
-//                    Text("Queue")
-//                }
-//                .tag(0)
-//
-//            ActivitiesView()
-//                .tabItem {
-//                    Image(systemName: "rectangle.stack.badge.person.crop.fill")
-//                    Text("Activities")
-//                }
-//                .tag(1)
-//        }
+//        HomeView()
+        TabView(selection: $selectedTabIndex) {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "person.3.sequence.fill")
+                    Text("Queue")
+                }
+                .tag(0)
+
+            ActivitiesView()
+                .tabItem {
+                    Image(systemName: "rectangle.stack.badge.person.crop.fill")
+                    Text("Activities")
+                }
+                .tag(1)
+        }
     }
 }
 
