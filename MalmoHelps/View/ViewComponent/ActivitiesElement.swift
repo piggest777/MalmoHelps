@@ -55,6 +55,6 @@ struct ActivitiesElement: View {
 
 struct ActivitiesViewElement_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesElement(activity: ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), currActivity: .constant(ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: nil)))
+        ActivitiesElement(activity: ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), currActivity: .constant(ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: nil)))
     }
 }

@@ -57,10 +57,10 @@ class RegisterParticipantViewModel: ObservableObject {
                 print("Error fetching registration: \(error!)")
                 return
             }
-            let registrations = documents.compactMap({ document -> Registration?  in
+            self.registeredParticipants = documents.compactMap({ document -> Registration?  in
                 try? document.data(as: Registration.self)
             })
-            self.registeredParticipants.append(contentsOf: registrations)
+            
         })
     }
     

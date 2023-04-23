@@ -183,7 +183,7 @@ class FsService {
         let collectionRef = db.collection(ACTIVITY_COLLECTION)
         return Future<[ActivityEntry], Error> { promise in
             collectionRef
-                .order(by: "activity_name", descending: true)
+                .order(by: "activity_name", descending: false)
                 .getDocuments { snapshot, error in
                     if let error {
                         promise(.failure(error))

@@ -33,7 +33,7 @@ struct ParticipantDetailsView: View {
             MonthPicker()
             ScrollView {
                 ForEach(viewModel.participantActivitiesList, id: \.self) { registration in
-                    ParticipantDetatilsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: Date(), duration: registration.duration) {
+                    ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {
                         print("Hello")
                     }
                 }

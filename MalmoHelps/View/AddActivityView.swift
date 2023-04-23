@@ -40,17 +40,23 @@ struct AddActivityView: View {
                     WideTextField(title: "Activity Name", placeholder: .required, validatorType: .required, input: $activityName, fieldValidation: $activityNameValidation)
                     WideTextField(title: "Person in charge", placeholder: .optional, validatorType: .none, input: $personInCharge, fieldValidation: $personInChargeValidation)
                     WideTextField(title: "Venue", placeholder: .optional, validatorType: .none, input: $venue, fieldValidation: $venueValidation)
-                    WideTextField(title: "Default duration", placeholder: .optional, validatorType: .float, input: $duration, fieldValidation: $durationValidation)
+                    WideTextField(title: "Default duration", placeholder: .required, validatorType: .float, input: $duration, fieldValidation: $durationValidation)
                     Spacer()
                     if !isKeyboardVisible  {
                         Button {
                             if activityName.isEmpty {
                                 viewModel.showAlert = true
-                                viewModel.alertText = "Format don't satisfy requirements"
+                                viewModel.alertText = "Please fill activity name"
                                 return
                             }
                             
-                            let activity = ActivityEntry(activityName: activityName, venue: venue.isEmpty ? nil : venue , personInCharge: personInCharge.isEmpty ? nil : personInCharge, defaultDuration: Float(duration))
+                            guard Float(duration) != nil else {
+                                viewModel.showAlert = true
+                                viewModel.alertText = "Check duration number format (use . instead of ,)"
+                                return
+                            }
+                            
+                            let activity = ActivityEntry(id: "", activityName: activityName, venue: venue.isEmpty ? nil : venue , personInCharge: personInCharge.isEmpty ? nil : personInCharge, defaultDuration: Float(duration))
                             
                             viewModel.addNewActivity(activity)
                             

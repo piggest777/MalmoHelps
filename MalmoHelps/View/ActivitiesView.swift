@@ -18,7 +18,7 @@ struct ActivitiesView: View {
     @State var changeDateByArrow = false
     @State var keyword = ""
     @State var keywordCalled = false
-    @State var selectedActivity: ActivityEntry = ActivityEntry(activityName: "", venue: nil, personInCharge: nil)
+    @State var selectedActivity: ActivityEntry = ActivityEntry(id: "", activityName: "", venue: nil, personInCharge: nil)
     @State var navLinkActive = false
     @State var currPerson: Person?
     @State var calendarViewHeight = 40.0
@@ -58,12 +58,12 @@ struct ActivitiesView: View {
                 VStack {
                     SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
                     
-                    if familiesLookUp.queryResultPerson.isEmpty {
+                    if familiesLookUp.queryResultPerson.isEmpty && keyword.isEmpty {
                         ZStack(alignment: .top) {
                             VStack {
-                                Spacer().frame(height: calendarViewHeight)
+                                Spacer().frame(height: calendarViewHeight + 10)
                                 ScrollView{
-                                    ForEach(viewModel.activities, id:\.self) { activity in
+                                    ForEach(viewModel.activities, id:\.id) { activity in
                                         ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity)
                                             .padding(.horizontal, 10)
                                             .padding(.vertical, 5)
@@ -174,6 +174,6 @@ struct ActivitiesView: View {
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesView(viewModel: ActivitiesViewModel(activities: [ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Denis")]))
+        ActivitiesView(viewModel: ActivitiesViewModel(activities: [ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Denis")]))
     }
 }

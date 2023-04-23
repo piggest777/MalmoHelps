@@ -33,7 +33,7 @@
 		7BD5C92429C7CB7F008FD3F4 /* UIAplicationExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD5C92329C7CB7F008FD3F4 /* UIAplicationExt.swift */; };
 		7BF5E96729EF4F9600DE8BD2 /* ParticipantDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */; };
 		7BF5E96B29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5E96A29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift */; };
-		7BF5E96D29F1A1E400DE8BD2 /* ParticipantDetatilsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetatilsElement.swift */; };
+		7BF5E96D29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift */; };
 		B51B713B28B14CC9005F5387 /* MalmoHelpsApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B713A28B14CC9005F5387 /* MalmoHelpsApp.swift */; };
 		B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B51B713C28B14CC9005F5387 /* ContentView.swift */; };
 		B51B713F28B14CCF005F5387 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B51B713E28B14CCF005F5387 /* Assets.xcassets */; };
@@ -107,7 +107,7 @@
 		7BD5C92329C7CB7F008FD3F4 /* UIAplicationExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAplicationExt.swift; sourceTree = "<group>"; };
 		7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDetailsView.swift; sourceTree = "<group>"; };
 		7BF5E96A29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDetailsViewModel.swift; sourceTree = "<group>"; };
-		7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetatilsElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDetatilsElement.swift; sourceTree = "<group>"; };
+		7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDetailsElement.swift; sourceTree = "<group>"; };
 		B51B713728B14CC9005F5387 /* MalmoHelps.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MalmoHelps.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B51B713A28B14CC9005F5387 /* MalmoHelpsApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MalmoHelpsApp.swift; sourceTree = "<group>"; };
 		B51B713C28B14CC9005F5387 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -290,7 +290,7 @@
 				7BC5B46329CFB00600655834 /* AsyncButton.swift */,
 				7BC5B46B29D301B200655834 /* ActivitiesElement.swift */,
 				7BAF03D429E1F952001562B1 /* PersonElement.swift */,
-				7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetatilsElement.swift */,
+				7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift */,
 				7BAF03D629E204FE001562B1 /* FloatingTextField.swift */,
 			);
 			path = ViewComponent;
@@ -427,7 +427,7 @@
 				B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */,
 				B5818CBC28B95DD700321D23 /* FamiliesLookupViewModel.swift in Sources */,
 				7BAF03D129DF64AD001562B1 /* RegisterParticipantViewModel.swift in Sources */,
-				7BF5E96D29F1A1E400DE8BD2 /* ParticipantDetatilsElement.swift in Sources */,
+				7BF5E96D29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift in Sources */,
 				7BD5C92029C7C1F6008FD3F4 /* TabView.swift in Sources */,
 				B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */,
 				B51B715A28B25FDF005F5387 /* AppDelegate.swift in Sources */,
@@ -588,7 +588,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -625,7 +625,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 9;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;

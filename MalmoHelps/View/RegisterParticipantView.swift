@@ -94,7 +94,7 @@ struct RegisterParticipantView: View {
 
 struct RegisterParticipantView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterParticipantView(date: Date(), activity: .constant(ActivityEntry(activityName: "Dancing", venue: nil, personInCharge: "Victoria")), isPresented: .constant(true))
+        RegisterParticipantView(date: Date(), activity: .constant(ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Victoria")), isPresented: .constant(true))
     }
 }
 

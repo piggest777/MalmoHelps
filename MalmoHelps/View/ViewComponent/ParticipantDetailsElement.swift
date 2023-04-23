@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ParticipantDetatilsElement: View {
+struct ParticipantDetailsElement: View {
     let title: String
     let subtitle: String?
     let date: Date
@@ -52,6 +52,7 @@ struct ParticipantDetatilsElement: View {
                 .background(Color("ButtonColor"))
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .padding(.trailing, 10)
+                .frame(width: 80, height: 60)
                 .onTapGesture {
                     action()
                 }
@@ -68,8 +69,8 @@ struct ParticipantDetatilsElement: View {
     }
 }
 
-struct ParticipantDetatilsElement_Previews: PreviewProvider {
+struct ParticipantDetailsElement_Previews: PreviewProvider {
     static var previews: some View {
-        ParticipantDetatilsElement(title: "Dancing", subtitle: "Victoria", date: Date(), duration: 1.0, action: {print("Action")})
+        ParticipantDetailsElement(title: "Dancing", subtitle: "Victoria", date: Date(), duration: 1.0, action: {print("Action")})
     }
 }

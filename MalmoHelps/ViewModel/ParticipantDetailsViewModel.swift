@@ -105,7 +105,6 @@ class ParticipantDetailsViewModel: ObservableObject {
         var layout = PDFPageFormat.a4.layout
         layout.size = PDFPageFormat.a4.landscapeSize
         layout.margin.left = 10.0
-        layout.margin.right = 20.0
         let document = PDFDocument(layout: layout)
         
         
@@ -113,9 +112,8 @@ class ParticipantDetailsViewModel: ObservableObject {
         let personalNumber = person.personalNumber
         let phoneNumber = person.phoneNumber
         
-        let font = UIFont.systemFont(ofSize: 36)
         let attributesTitle: [NSAttributedString.Key: Any] = [
-            .font: font
+            .font: UIFont.systemFont(ofSize: 36)
         ]
         
         let attributesMonth: [NSAttributedString.Key: Any] = [
@@ -154,7 +152,7 @@ class ParticipantDetailsViewModel: ObservableObject {
             case numberOfColumns-1:
                 table.widths[numberOfColumns-1] = 0.025
             default:
-                table.widths[i] = (1.0-0.15)/CGFloat(numberOfDays)
+                table.widths[i] = (1.0-0.2)/CGFloat(numberOfDays)
             }
         }
         table.widths[numberOfDays+1] = 0.1
@@ -171,15 +169,28 @@ class ParticipantDetailsViewModel: ObservableObject {
             table[row: i].content = configureTableContent(for: activitiesArray[i-1], numberOfDays: numberOfDays)
         }
         
+        let totalHoursForAllActivities = getTotalHoursFor(for: participantActivitiesList)
+        
+        
+        
         document.add(table: table)
+        document.add(space: 10)
+        
+        let attributesTotalHours: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18)
+        ]
+        let attributedTotalHours = NSMutableAttributedString(string: "Total hours for all activities: \(totalHoursForAllActivities)", attributes: attributesTotalHours)
+        
+        document.add(attributedText: attributedTotalHours)
         document.add(space: 30)
         
-        let section = PDFSection(columnWidths: [0.1, 0.3, 0.075, 0.1,0.3])
+        
+        let section = PDFSection(columnWidths: [0.2, 0.2, 0.075, 0.2,0.2])
         section.columns[0].add(.right, text: "ABF")
-        section.columns[1].add(.left, text: "_________________")
+        section.columns[1].add(.left, text: "_______________")
         section.columns[2].add(.center, text: "        ")
         section.columns[3].add(.right, text: personName)
-        section.columns[4].add(.left, text: "_________________")
+        section.columns[4].add(.left, text: "_______________")
         document.add(section: section)
         
         

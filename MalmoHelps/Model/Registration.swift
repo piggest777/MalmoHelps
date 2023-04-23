@@ -12,8 +12,6 @@ import FirebaseFirestoreSwift
 
 struct Registration: Codable, Identifiable, Hashable {
     
-    
-    
     @DocumentID var id: String?
     var participantName: String
     var participantId: String
@@ -64,7 +62,4 @@ struct Registration: Codable, Identifiable, Hashable {
         case activityName = "activity_name"
         case activityPersonInCharge = "person_in_charge"
     }
-    
-    
-    
 }
