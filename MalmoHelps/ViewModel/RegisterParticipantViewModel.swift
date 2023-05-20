@@ -26,7 +26,7 @@ class RegisterParticipantViewModel: ObservableObject {
     private var endOfDay: Date
     private var cancellables = Set<AnyCancellable>()
     
-    init(registrationDay: Date, activityName: String) {
+    init(registrationDay: Date, activity: ActivityEntry) {
         self.registrationDay = registrationDay
         let calendar = Calendar.current
                 
@@ -36,21 +36,26 @@ class RegisterParticipantViewModel: ObservableObject {
                 
         self.startOfDay = calendar.startOfDay(for: registrationDay)
         self.endOfDay = calendar.date(byAdding: .day, value: 1, to: registrationDay)!
-        fetchParticipantListFor(for: registrationDay, activityName: activityName)
+        fetchParticipantListFor(for: registrationDay, activity: activity)
     }
     deinit {
         registrationListener?.remove()
         cancellables.removeAll()
     }
     
-    func fetchParticipantListFor(for date: Date, activityName: String) {
+    func fetchParticipantListFor(for date: Date, activity: ActivityEntry) {
+        
         let query = db.collection(REGISTRATION_COLLECTION)
               .whereField(YEAR, isEqualTo: year)
               .whereField(MONTH, isEqualTo: month)
               .whereField(DAY, isEqualTo: day)
-              .whereField(ACTIVITY_NAME, isEqualTo: activityName)
+              .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
               .whereField(TIMESTAMP, isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
               .whereField(TIMESTAMP, isLessThan: Timestamp(date: endOfDay))
+        
+        if let personInCharge = activity.personInCharge {
+            query.whereField(PERSON_IN_CHARGE, isEqualTo: personInCharge)
+        }
         
         registrationListener = query.addSnapshotListener({ querySnapshot, error in
             guard let documents = querySnapshot?.documents else {
@@ -58,17 +63,22 @@ class RegisterParticipantViewModel: ObservableObject {
                 return
             }
             self.registeredParticipants = documents.compactMap({ document -> Registration?  in
-                try? document.data(as: Registration.self)
+                let registration  = try? document.data(as: Registration.self)
+                let venue = registration?.venue
+                if venue == nil || venue == activity.venue {
+                    return registration
+                }
+                return nil
             })
             
         })
     }
     
-    func addRegistration(for person: Person, duration: Float = 1.0, activityName: String, personInCharge: String?) {
-        let newRegistration = FsService.shared.addNewRegistration(for: person, at: registrationDay, with: duration, activityName: activityName, personInCharge: personInCharge)
-        newRegistration.sink { error in
-            print("Error while registration \(error)")
-        } receiveValue: {  _ in }
-            .store(in: &cancellables)
-    }
+//    func addRegistration(for person: Person, duration: Float = 1.0, activityName: String, personInCharge: String?) {
+//        let newRegistration = FsService.shared.addNewRegistration(for: person, at: registrationDay, with: duration, activityName: activityName, personInCharge: personInCharge, venue: )
+//        newRegistration.sink { error in
+//            print("Error while registration \(error)")
+//        } receiveValue: {  _ in }
+//            .store(in: &cancellables)
+//    }
 }

@@ -18,7 +18,7 @@ struct RegisterParticipantView: View {
     @State var keywordCalled = false
     
     init(date: Date, activity: Binding<ActivityEntry>, isPresented: Binding<Bool>, familiesLookUp: FamiliesLookupViewModel = FamiliesLookupViewModel(), keyword: String = "", keywordCalled: Bool = false) {
-        viewModel = RegisterParticipantViewModel(registrationDay: date, activityName: activity.activityName.wrappedValue)
+        viewModel = RegisterParticipantViewModel(registrationDay: date, activity: activity.wrappedValue)
         self.date = date
         self._activity = activity
         self._isPresented = isPresented
@@ -60,7 +60,7 @@ struct RegisterParticipantView: View {
                 ScrollView {
                     if !familiesLookUp.queryResultPerson.isEmpty {
                        ForEach (familiesLookUp.queryResultPerson,  id: \.id) { person in
-                           PersonElement(person: person, date: date, activityName: activity.activityName, defaultDuration: activity.defaultDuration, personInCharge: activity.personInCharge, showDuration: true) {
+                           PersonElement(person: person, date: date, activityName: activity.activityName, defaultDuration: activity.defaultDuration, personInCharge: activity.personInCharge, venue: activity.venue, showDuration: true) {
                                familiesLookUp.queryResultPerson.removeAll()
                            }
 
@@ -100,7 +100,7 @@ struct RegisterParticipantView_Previews: PreviewProvider {
 
 struct RegistrateElement_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp(), activityName: "Dancing", activityPersonInCharge: "Victoria"), action: {print("Action")})
+        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp(), activityName: "Dancing", activityPersonInCharge: "Victoria", venue: "Malmo"), action: {print("Action")})
     }
 }
 
