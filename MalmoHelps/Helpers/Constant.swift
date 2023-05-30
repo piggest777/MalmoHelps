@@ -72,6 +72,8 @@ let CURR_POINT = "distribution_point"
 
 let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "_", phoneNumber: "_", customQrCode: nil, keywords: [])
 
+let dummyActivity = ActivityEntry(id: "", activityName: "Dancing", venue: "Malmö", personInCharge: "Victoria")
+
 
 
 

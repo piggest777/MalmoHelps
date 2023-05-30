@@ -12,6 +12,7 @@ struct ActivitiesElement: View {
     
     @Binding var showSearchView: Bool
     @Binding var currActivity: ActivityEntry
+    var action: () -> Void
     
     var body: some View {
         HStack {
@@ -26,6 +27,19 @@ struct ActivitiesElement: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
+            Button {
+                action()
+            } label: {
+                Circle()
+                    .fill(Color("DarkShadow"))
+                     .frame(width: 40, height: 40)
+                     .overlay(
+                         Image(systemName: "doc.text")
+                             .foregroundColor(.white)
+                             .font(.system(size: 25, weight: .bold))
+                     )
+            }
+
             Button {
                 currActivity = activity
                 showSearchView.toggle()
@@ -55,6 +69,6 @@ struct ActivitiesElement: View {
 
 struct ActivitiesViewElement_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesElement(activity: ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), currActivity: .constant(ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: nil)))
+        ActivitiesElement(activity: ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Victoria"), showSearchView: .constant(true), currActivity: .constant(ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: nil)), action: {})
     }
 }

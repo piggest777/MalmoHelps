@@ -62,15 +62,9 @@ class RegisterParticipantViewModel: ObservableObject {
                 print("Error fetching registration: \(error!)")
                 return
             }
-            self.registeredParticipants = documents.compactMap({ document -> Registration?  in
-                let registration  = try? document.data(as: Registration.self)
-                let venue = registration?.venue
-                if venue == nil || venue == activity.venue {
-                    return registration
-                }
-                return nil
-            })
-            
+            self.registeredParticipants = documents.compactMap { document in
+                try? document.data(as: Registration.self)
+            }.filter { $0.venue == nil || $0.venue == activity.venue }
         })
     }
     

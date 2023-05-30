@@ -8,37 +8,65 @@
 import SwiftUI
 import Firebase
 
+enum ReportType {
+    case personReport
+    case activityReport
+    
+    mutating func toggle() {
+        switch self {
+        case .personReport:
+            self = .activityReport
+        case .activityReport:
+            self = .personReport
+        }
+    }
+
+}
+
 struct ParticipantDetailsView: View {
     let person: Person
+    let activity: ActivityEntry
+    
+    let reportType: ReportType
 
     @StateObject var viewModel = ParticipantDetailsViewModel()
     @EnvironmentObject var selectedMonth: SelectedMonth
     @State var isPdfViewerPresented: Bool  = false
     @State var shareListPresented: Bool = false
     
+    let titles = ["Title 1", "Title 2", "Title 3"]
+    let items = ["Item 1", "Item 2", "Item 3"]
+    
     
     var body: some View {
         VStack {
             Spacer()
                 .frame(height: 20)
-            Text("\(person.firstName) \(person.lastName)")
-                .font(.largeTitle)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.horizontal, 10)
-            Text("\(person.personalNumber)")
-                .font(.title2)
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.horizontal, 15)
-            
+            switch reportType {
+            case .personReport:
+                titleText(titleText: "\(person.firstName) \(person.lastName)", subtitleText: person.personalNumber)
+            case .activityReport:
+                titleText(titleText: activity.activityName, subtitleText: "\(activity.venue ?? String()), \(activity.personInCharge ?? String())")
+            }
             MonthPicker()
             ScrollView {
-                ForEach(viewModel.participantActivitiesList, id: \.self) { registration in
-                    ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {
-                        print("Hello")
+                ForEach(titles, id: \.self) { title in
+                    Section(header: Text(title)) {
+                        ForEach(items, id: \.self) { item in
+                            PersonElement(person: dummyPerson, date: Date(), activity: dummyActivity, showDuration: false) {
+
+                            }
+                        }
                     }
                 }
-            }.frame(maxHeight: .infinity)
-                .padding(.horizontal, 10)
+            }
+//            ScrollView {
+//                ForEach(viewModel.participantActivitiesList, id: \.self) { registration in
+//                    ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {
+//                    }
+//                }
+//            }.frame(maxHeight: .infinity)
+//                .padding(.horizontal, 10)
             
             Spacer()
         }.onAppear{
@@ -71,13 +99,24 @@ struct ParticipantDetailsView: View {
 //        .navigationTitle("\(person.firstName) \(person.lastName)")
     }
     
-    
+    @ViewBuilder func titleText(titleText: String, subtitleText: String) -> some View {
+        VStack {
+            Text(titleText)
+                .font(.largeTitle)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 10)
+            Text(subtitleText)
+                .font(.title2)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, 15)
+        }
+    }
 }
 
 struct ParticipantDetailsView_Previews: PreviewProvider {
     static let selectedMonth = SelectedMonth()
     static var previews: some View {
-        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: [])).environmentObject(selectedMonth)
+        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: []), activity: dummyActivity, reportType: .personReport).environmentObject(selectedMonth)
     }
 }
 

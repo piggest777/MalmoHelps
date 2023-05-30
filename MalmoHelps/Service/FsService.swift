@@ -113,7 +113,7 @@ class FsService {
         }
     }
     
-    func addNewRegistration(for person: Person, at date: Date, with duration: Float = 1.0, activityName: String, personInCharge: String?, venue: String?) -> Future<Void, Error> {
+    func addNewRegistration(for person: Person, at date: Date, activity: ActivityEntry) -> Future<Void, Error> {
         return Future<Void, Error> { promise in
             let calendar = Calendar.current
             
@@ -128,10 +128,10 @@ class FsService {
                 MONTH : month,
                 DAY : day,
                 TIMESTAMP : Timestamp(date: date),
-                DURATION : duration,
-                ACTIVITY_NAME: activityName,
-                PERSON_IN_CHARGE: personInCharge as Any,
-                VENUE: venue as Any
+                DURATION : activity.defaultDuration ?? 1.0,
+                ACTIVITY_NAME: activity.activityName,
+                PERSON_IN_CHARGE: activity.personInCharge as Any,
+                VENUE: activity.venue as Any
             ]) { error in
                 if let error {
                     promise(.failure(error))

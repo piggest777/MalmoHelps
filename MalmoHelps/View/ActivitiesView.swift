@@ -23,6 +23,9 @@ struct ActivitiesView: View {
     @State var currPerson: Person?
     @State var calendarViewHeight = 40.0
     @StateObject private var selectedMonth = SelectedMonth()
+    @State private var reportType: ReportType = .personReport
+    
+    @State var activityRepportNavLink: Bool = false
     
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -64,7 +67,12 @@ struct ActivitiesView: View {
                                 Spacer().frame(height: calendarViewHeight + 10)
                                 ScrollView{
                                     ForEach(viewModel.activities, id:\.id) { activity in
-                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity)
+                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity) {
+                                            reportType = .activityReport
+                                            selectedActivity = activity
+                                            navLinkActive = true
+                                            print("Actitity repport pressed for activity: \(selectedActivity.activityName)")
+                                        }
                                             .padding(.horizontal, 10)
                                             .padding(.vertical, 5)
                                     }
@@ -81,6 +89,7 @@ struct ActivitiesView: View {
                                 
                                 ParticipantListViewElement(person: person) {
                                     currPerson = person
+                                    reportType = .personReport
                                     if currPerson != nil {
                                         navLinkActive = true
                                     }
@@ -89,7 +98,7 @@ struct ActivitiesView: View {
                         }.padding(.horizontal)
                     }
                     Spacer()
-                    NavigationLink(destination:  ParticipantDetailsView(person: currPerson ?? dummyPerson) , isActive: $navLinkActive) {
+                    NavigationLink(destination:  ParticipantDetailsView(person: currPerson ?? dummyPerson, activity: selectedActivity, reportType: reportType) , isActive: $navLinkActive) {
                        EmptyView()
                     }
                 }

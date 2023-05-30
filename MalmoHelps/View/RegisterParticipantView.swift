@@ -60,7 +60,7 @@ struct RegisterParticipantView: View {
                 ScrollView {
                     if !familiesLookUp.queryResultPerson.isEmpty {
                        ForEach (familiesLookUp.queryResultPerson,  id: \.id) { person in
-                           PersonElement(person: person, date: date, activityName: activity.activityName, defaultDuration: activity.defaultDuration, personInCharge: activity.personInCharge, venue: activity.venue, showDuration: true) {
+                           PersonElement(person: person, date: date, activity: activity, showDuration: true) {
                                familiesLookUp.queryResultPerson.removeAll()
                            }
 

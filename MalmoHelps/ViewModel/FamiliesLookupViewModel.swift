@@ -65,7 +65,6 @@ class FamiliesLookupViewModel: ObservableObject {
             } receiveValue: { participants in
                 self.queryResultPerson = participants
                 self.searching = false
-                print(self.queryResultPerson)
             }.store(in: &cancellables)
         
     }
