@@ -29,6 +29,7 @@ class ParticipantDetailsViewModel: ObservableObject {
     
     func getActivities(participantId: String, month: Int, year: Int) {
         participantRegistrationList.removeAll()
+        groupedRegistrations.removeAll()
         FsService.shared.getAllParticipantActivities(for: participantId, month: month, year: year)
             .sink { completion in
                 switch completion {
@@ -69,7 +70,7 @@ class ParticipantDetailsViewModel: ObservableObject {
         return Array(activityTypes)
     }
     
-    func getPartisipantList(from registrations: [Registration]) -> [String] {
+    func getParticipantList(from registrations: [Registration]) -> [String] {
         var patricipantsList = Set<String>()
         for partisipant in registrations {
             patricipantsList.insert(partisipant.participantName)
@@ -116,8 +117,25 @@ class ParticipantDetailsViewModel: ObservableObject {
         document.add(attributedText: attributedMonth)
         document.add(space: 10)
         
-        let generator = PDFGenerator(document: document)
+        let participantsList = getParticipantList(from: participantRegistrationList)
+        let numberOfTableRows = participantsList.count + 1
+        let numberOfTablesColumns = groupedRegistrations.count + 2
+        let table = PDFTable(rows: numberOfTableRows, columns: numberOfTablesColumns)
+        let contentTableStyle = configTableChar()
+        table.style = PDFTableStyle(footerCount: 0, rowHeaderStyle: contentTableStyle, columnHeaderStyle: contentTableStyle, contentStyle: contentTableStyle)
         
+        let headerRow = table[row: 0]
+        var headerRowArray: [String] = []
+        headerRowArray.append("Participants")
+        
+        let daysArray: [String] = groupedRegistrations.keys.sorted().map(String.init)
+        headerRowArray.append(contentsOf: daysArray)
+        headerRowArray.append("Total")
+        headerRow.content = headerRowArray
+        
+        document.add(table: table)
+        
+        let generator = PDFGenerator(document: document)
         let pdfData = try? generator.generateData()
         self.pdfData = pdfData
     }
