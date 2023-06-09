@@ -12,12 +12,23 @@ import TPPDF
 
 
 class ParticipantDetailsViewModel: ObservableObject {
-    @Published var participantActivitiesList: [Registration] = []
+    @Published var participantRegistrationList: [Registration] = []
+    @Published var groupedRegistrations: [Int: [Registration]] = [:]
     @Published var pdfData: Data?
     private var cancellables = Set<AnyCancellable>()
     
+    let attributesTitle: [NSAttributedString.Key: Any] = [
+        .font: UIFont.systemFont(ofSize: 36)
+    ]
+    let attributesMonth: [NSAttributedString.Key: Any] = [
+        .font: UIFont.systemFont(ofSize: 24)
+    ]
+    let attributesSubtitle: [NSAttributedString.Key: Any] = [
+        .font: UIFont.boldSystemFont(ofSize: 18)
+    ]
+    
     func getActivities(participantId: String, month: Int, year: Int) {
-        participantActivitiesList.removeAll()
+        participantRegistrationList.removeAll()
         FsService.shared.getAllParticipantActivities(for: participantId, month: month, year: year)
             .sink { completion in
                 switch completion {
@@ -27,8 +38,25 @@ class ParticipantDetailsViewModel: ObservableObject {
                     break
                 }
             } receiveValue: { registrations in
-                print(registrations)
-                self.participantActivitiesList.append(contentsOf: registrations)
+                self.participantRegistrationList.append(contentsOf: registrations)
+            }
+            .store(in: &cancellables)
+    }
+    
+    func getParticipants(for activity: ActivityEntry, month: Int, year: Int) {
+        participantRegistrationList.removeAll()
+        groupedRegistrations.removeAll()
+        FsService.shared.getActivitiesParticipantFor(month: month, year: year, activity: activity)
+            .sink { completion in
+                switch completion {
+                case .failure(let error):
+                    print("Error fetching activities for partisipant: \(error)")
+                case .finished:
+                    break
+                }
+            } receiveValue: { registrations in
+                self.participantRegistrationList.append(contentsOf: registrations)
+                self.groupedRegistrations = Dictionary(grouping: registrations, by: { $0.day })
             }
             .store(in: &cancellables)
     }
@@ -39,6 +67,14 @@ class ParticipantDetailsViewModel: ObservableObject {
             activityTypes.insert(activity.activityName)
         }
         return Array(activityTypes)
+    }
+    
+    func getPartisipantList(from registrations: [Registration]) -> [String] {
+        var patricipantsList = Set<String>()
+        for partisipant in registrations {
+            patricipantsList.insert(partisipant.participantName)
+        }
+        return Array(patricipantsList).sorted()
     }
     
     func getNumberOfDays(for month: Int, year: Int) -> Int {
@@ -61,10 +97,33 @@ class ParticipantDetailsViewModel: ObservableObject {
         return activities.reduce(0.0) {$0 + $1.duration}
     }
     
-//    func createTestPDF() {
-//       pdfURL = PDFManager.shared.createTestPDF()
-//    }
+    ///**Activity report part**
     
+    func createDocumentFor(activity: ActivityEntry, for month: Int, year: Int) {
+        var layout = PDFPageFormat.a4.layout
+        layout.size = PDFPageFormat.a4.landscapeSize
+        layout.margin.left = 10.0
+        layout.margin.right = 10.0
+        let document = PDFDocument(layout: layout)
+        
+        let attributedMonth = NSMutableAttributedString(string: getFullMonthName(month: month), attributes: attributesMonth)
+        let attributedTitle = NSMutableAttributedString(string: activity.activityName, attributes: attributesTitle)
+        let attributedSubtitle = NSMutableAttributedString(string: "\(activity.venue ?? "") \(activity.personInCharge ?? "")", attributes: attributesSubtitle)
+        
+        document.add(attributedText: attributedTitle)
+        document.add(attributedText: attributedSubtitle)
+        document.add(space: 10)
+        document.add(attributedText: attributedMonth)
+        document.add(space: 10)
+        
+        let generator = PDFGenerator(document: document)
+        
+        let pdfData = try? generator.generateData()
+        self.pdfData = pdfData
+    }
+    
+    ///**Personaly activity repport part
+    //configuation for table cell for personal repport
     func configTableChar()-> PDFTableCellStyle {
         let colors = (fill: UIColor.white, text: UIColor.black)
         let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
@@ -72,8 +131,10 @@ class ParticipantDetailsViewModel: ObservableObject {
         let font = UIFont.systemFont(ofSize: 8)
         return PDFTableCellStyle(colors: colors, borders: borders, font: font)
     }
+    
+    //table content for personal report
     func configureTableContent(for activity: String, numberOfDays: Int) -> [String?]  {
-        let filteredActivities = participantActivitiesList.filter {
+        let filteredActivities = participantRegistrationList.filter {
             $0.activityName == activity
         }
         let totalHours = getTotalHoursFor(for: filteredActivities)
@@ -101,24 +162,17 @@ class ParticipantDetailsViewModel: ObservableObject {
         return rowContent
     }
     
+        // create PDF document for repport for peson
     func createDocumentFor(person: Person, for month: Int, year: Int) {
         var layout = PDFPageFormat.a4.layout
         layout.size = PDFPageFormat.a4.landscapeSize
         layout.margin.left = 10.0
         let document = PDFDocument(layout: layout)
         
-        
         let personName = "\(person.firstName) \(person.lastName)"
         let personalNumber = person.personalNumber
         let phoneNumber = person.phoneNumber
-        
-        let attributesTitle: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 36)
-        ]
-        
-        let attributesMonth: [NSAttributedString.Key: Any] = [
-            .font: UIFont.systemFont(ofSize: 24)
-        ]
+    
         let attributedMonth = NSMutableAttributedString(string: getFullMonthName(month: month), attributes: attributesMonth)
         
         let attributedTitle = NSMutableAttributedString(string: personName, attributes: attributesTitle)
@@ -136,7 +190,7 @@ class ParticipantDetailsViewModel: ObservableObject {
         document.add(attributedText: attributedMonth)
         document.add(space: 10)
         
-        let activitiesArray = getActivityTypes(from: participantActivitiesList)
+        let activitiesArray = getActivityTypes(from: participantRegistrationList)
         let numberOfRow = activitiesArray.count
         let numberOfDays = getNumberOfDays(for: month, year: year)
         let numberOfColumns = numberOfDays + 2
@@ -169,9 +223,7 @@ class ParticipantDetailsViewModel: ObservableObject {
             table[row: i].content = configureTableContent(for: activitiesArray[i-1], numberOfDays: numberOfDays)
         }
         
-        let totalHoursForAllActivities = getTotalHoursFor(for: participantActivitiesList)
-        
-        
+        let totalHoursForAllActivities = getTotalHoursFor(for: participantRegistrationList)
         
         document.add(table: table)
         document.add(space: 10)

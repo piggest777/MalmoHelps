@@ -227,7 +227,9 @@ class FsService {
     func getAllCategories(completionHandler: @escaping ([Category])->()) {
         
         var categories: [Category] = []
-        db.collection(CATEGORIES).getDocuments { querySnapshot, error in
+        db.collection(CATEGORIES)
+            .order(by: CATEGORY_NAME, descending: false)
+            .getDocuments { querySnapshot, error in
             guard let documents = querySnapshot?.documents, error == nil else {
                 print("Failed to fetch docs: \(String(describing: error?.localizedDescription))")
                 return
@@ -269,6 +271,34 @@ class FsService {
                         promise(.success(registrations))
                     }
                 }
+        }
+    }
+    
+    func getActivitiesParticipantFor(month: Int, year: Int, activity: ActivityEntry) -> Future<[Registration], Error> {
+        return Future { promise in
+            let colection = self.db.collection(REGISTRATION_COLLECTION)
+            let query = colection
+                .whereField(MONTH, isEqualTo: month)
+                .whereField(YEAR, isEqualTo: year)
+                .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
+            if let venue = activity.venue {
+                query.whereField(VENUE, isEqualTo: venue)
+            }
+            if let personInCharge = activity.personInCharge{
+                query.whereField(PERSON_IN_CHARGE, isEqualTo: personInCharge)
+            }
+            
+            query.getDocuments { snapshot, error in
+                if let error {
+                    print("Error while fetchih actities participant: \(error)")
+                    promise(.failure(error))
+                } else if let snapshot {
+                    let registrations = snapshot.documents.compactMap { document in
+                        try? document.data(as: Registration.self)
+                    }
+                    promise(.success(registrations))
+                }
+            }
         }
     }
 }

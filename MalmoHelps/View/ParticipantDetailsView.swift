@@ -20,7 +20,6 @@ enum ReportType {
             self = .personReport
         }
     }
-
 }
 
 struct ParticipantDetailsView: View {
@@ -34,10 +33,6 @@ struct ParticipantDetailsView: View {
     @State var isPdfViewerPresented: Bool  = false
     @State var shareListPresented: Bool = false
     
-    let titles = ["Title 1", "Title 2", "Title 3"]
-    let items = ["Item 1", "Item 2", "Item 3"]
-    
-    
     var body: some View {
         VStack {
             Spacer()
@@ -49,31 +44,17 @@ struct ParticipantDetailsView: View {
                 titleText(titleText: activity.activityName, subtitleText: "\(activity.venue ?? String()), \(activity.personInCharge ?? String())")
             }
             MonthPicker()
-            ScrollView {
-                ForEach(titles, id: \.self) { title in
-                    Section(header: Text(title)) {
-                        ForEach(items, id: \.self) { item in
-                            PersonElement(person: dummyPerson, date: Date(), activity: dummyActivity, showDuration: false) {
 
-                            }
-                        }
-                    }
-                }
-            }
-//            ScrollView {
-//                ForEach(viewModel.participantActivitiesList, id: \.self) { registration in
-//                    ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {
-//                    }
-//                }
-//            }.frame(maxHeight: .infinity)
-//                .padding(.horizontal, 10)
+            regisrtartionList()
+                .frame(maxHeight: .infinity)
+                .padding(.horizontal, 10)
             
             Spacer()
         }.onAppear{
-            viewModel.getActivities(participantId: person.id, month: selectedMonth.index+1, year: 2023)
+            requestRegistrations()
         }
         .onChange(of: selectedMonth.index) { _ in
-            viewModel.getActivities(participantId: person.id, month: selectedMonth.index+1, year: 2023)
+            requestRegistrations()
         }
         .sheet(isPresented: $isPdfViewerPresented, content: {
             PDFViewer(isPresented: $isPdfViewerPresented, presentShareList: $shareListPresented, pdfData: viewModel.pdfData)
@@ -87,16 +68,22 @@ struct ParticipantDetailsView: View {
             }
         })
         .navigationBarItems(trailing: Button(action: {
-            guard !viewModel.participantActivitiesList.isEmpty else { return }
+            guard !viewModel.participantRegistrationList.isEmpty else { return }
             viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
             shareListPresented = true
         }, label: { Image(systemName: "doc.text").imageScale(.large).padding() }))
         .navigationBarItems(trailing: Button(action: {
-            guard !viewModel.participantActivitiesList.isEmpty else { return }
-            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
+            
+            switch reportType {
+            case .personReport:
+                guard !viewModel.participantRegistrationList.isEmpty else { return }
+                viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
+            case .activityReport:
+                guard !viewModel.groupedRegistrations.isEmpty else { return }
+                viewModel.createDocumentFor(activity: activity, for: selectedMonth.index + 1, year: 2023)
+            }
             isPdfViewerPresented = true
         }, label: { Image(systemName: "eye").imageScale(.large).padding() }))
-//        .navigationTitle("\(person.firstName) \(person.lastName)")
     }
     
     @ViewBuilder func titleText(titleText: String, subtitleText: String) -> some View {
@@ -111,11 +98,42 @@ struct ParticipantDetailsView: View {
                 .padding(.horizontal, 15)
         }
     }
+    
+    @ViewBuilder func regisrtartionList () -> some View {
+        switch reportType {
+        case .personReport:
+                        ScrollView {
+                            ForEach(viewModel.participantRegistrationList  , id: \.self) { registration in
+                                ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {}
+                            }
+                        }
+        case .activityReport:
+            ScrollView {
+                ForEach(viewModel.groupedRegistrations.keys.sorted(), id: \.self) { key in
+                    Section(header: Text("\(key) \(selectedMonth.stringValue())")) {
+                        ForEach(viewModel.groupedRegistrations[key] ?? [], id: \.id) { registration in
+                            ParticipantDetailsElement(title: registration.participantName, subtitle: nil, date: registration.timestamp.dateValue(), duration: registration.duration) { }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func requestRegistrations() {
+        switch reportType {
+        case .personReport:
+            viewModel.getActivities(participantId: person.id, month: selectedMonth.index+1, year: 2023)
+        case .activityReport:
+            viewModel.getParticipants(for: activity, month: selectedMonth.index+1, year: 2023)
+        }
+    }
 }
 
 struct ParticipantDetailsView_Previews: PreviewProvider {
     static let selectedMonth = SelectedMonth()
     static var previews: some View {
+        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: []), activity: dummyActivity, reportType: .activityReport).environmentObject(selectedMonth)
         ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: []), activity: dummyActivity, reportType: .personReport).environmentObject(selectedMonth)
     }
 }
@@ -138,7 +156,8 @@ struct MonthPicker: View {
             }
             Picker(selection: $selectedMonth.index, label: Text("Month")) {
                 ForEach(0 ..< months!.count) { index in
-                    Text(months![index]).tag(index)
+                    Text(months![index])
+                        .tag(index)
                         .font(.largeTitle)
                 }
             }
@@ -160,6 +179,11 @@ struct MonthPicker: View {
 
 class SelectedMonth: ObservableObject {
     @Published var index: Int
+    
+    func stringValue () -> String {
+        let months = DateFormatter().monthSymbols
+        return  months![index]
+    }
     
     init() {
         let currentMonth = Calendar.current.component(.month, from: Date()) - 1

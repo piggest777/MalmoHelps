@@ -13,7 +13,6 @@ struct ParticipantDetailsElement: View {
     let date: Date
     let duration: Float
     var action: ()->Void
-    @ObservedObject var viewModel = PersonElementViewModel()
     
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -74,3 +73,5 @@ struct ParticipantDetailsElement_Previews: PreviewProvider {
         ParticipantDetailsElement(title: "Dancing", subtitle: "Victoria", date: Date(), duration: 1.0, action: {print("Action")})
     }
 }
+
+
