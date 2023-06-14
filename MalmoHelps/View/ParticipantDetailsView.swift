@@ -27,7 +27,7 @@ struct ParticipantDetailsView: View {
     let activity: ActivityEntry
     
     let reportType: ReportType
-
+    
     @StateObject var viewModel = ParticipantDetailsViewModel()
     @EnvironmentObject var selectedMonth: SelectedMonth
     @State var isPdfViewerPresented: Bool  = false
@@ -44,7 +44,7 @@ struct ParticipantDetailsView: View {
                 titleText(titleText: activity.activityName, subtitleText: "\(activity.venue ?? String()), \(activity.personInCharge ?? String())")
             }
             MonthPicker()
-
+            
             regisrtartionList()
                 .frame(maxHeight: .infinity)
                 .padding(.horizontal, 10)
@@ -61,27 +61,15 @@ struct ParticipantDetailsView: View {
         })
         .onChange(of: shareListPresented, perform: { presented in
             if presented {
-                guard let pdfData = viewModel.pdfData else { return }
-                
-                        let activityViewController = UIActivityViewController(activityItems: [pdfData], applicationActivities: nil)
-                        UIApplication.shared.currentUIWindow()?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+                prepareAndPresentShareSheet(reportType: reportType, shareListPresented: &shareListPresented)
             }
         })
         .navigationBarItems(trailing: Button(action: {
-            guard !viewModel.participantRegistrationList.isEmpty else { return }
-            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
+            createDocument()
             shareListPresented = true
         }, label: { Image(systemName: "doc.text").imageScale(.large).padding() }))
         .navigationBarItems(trailing: Button(action: {
-            
-            switch reportType {
-            case .personReport:
-                guard !viewModel.participantRegistrationList.isEmpty else { return }
-                viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
-            case .activityReport:
-                guard !viewModel.groupedRegistrations.isEmpty else { return }
-                viewModel.createDocumentFor(activity: activity, for: selectedMonth.index + 1, year: 2023)
-            }
+            createDocument()
             isPdfViewerPresented = true
         }, label: { Image(systemName: "eye").imageScale(.large).padding() }))
     }
@@ -102,11 +90,11 @@ struct ParticipantDetailsView: View {
     @ViewBuilder func regisrtartionList () -> some View {
         switch reportType {
         case .personReport:
-                        ScrollView {
-                            ForEach(viewModel.participantRegistrationList  , id: \.self) { registration in
-                                ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {}
-                            }
-                        }
+            ScrollView {
+                ForEach(viewModel.participantRegistrationList  , id: \.self) { registration in
+                    ParticipantDetailsElement(title: registration.activityName, subtitle: registration.activityPersonInCharge, date: registration.timestamp.dateValue(), duration: registration.duration) {}
+                }
+            }
         case .activityReport:
             ScrollView {
                 ForEach(viewModel.groupedRegistrations.keys.sorted(), id: \.self) { key in
@@ -126,6 +114,98 @@ struct ParticipantDetailsView: View {
             viewModel.getActivities(participantId: person.id, month: selectedMonth.index+1, year: 2023)
         case .activityReport:
             viewModel.getParticipants(for: activity, month: selectedMonth.index+1, year: 2023)
+        }
+    }
+    
+    func createDocument() {
+        switch reportType {
+        case .personReport:
+            guard !viewModel.participantRegistrationList.isEmpty else { return }
+            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
+        case .activityReport:
+            guard !viewModel.groupedRegistrations.isEmpty else { return }
+            viewModel.createDocumentFor(activity: activity, for: selectedMonth.index + 1, year: 2023)
+        }
+    }
+    
+    func showSharePDFDataSheet() {
+        guard let pdfData = viewModel.pdfData else { return }
+        
+        let temporaryFolder = FileManager.default.temporaryDirectory
+        let fileName = documentNameGenerator(reportType: reportType)
+        let temporaryFileURL = temporaryFolder.appendingPathComponent("\(fileName).pdf")
+        print(temporaryFileURL.path)  // /Users/lsd/Library/Developer/XCPGDevices/E2003834-07AB-4833-B206-843DC0A52967/data/Containers/Data/Application/322D1F1D-4C97-474C-9040-FE5E740D38CF/tmp/document.pdf
+        do {
+            try pdfData.write(to: temporaryFileURL)
+            // your code
+            let activityViewController = UIActivityViewController(activityItems: [temporaryFileURL], applicationActivities: nil)
+            
+            activityViewController.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+                if completed {
+                    shareListPresented = false
+                } else {
+                    // Handle cancellation of activity
+                    shareListPresented = false
+                }
+            }
+            
+            UIApplication.shared.currentUIWindow()?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+        } catch {
+            print(error)
+        }
+        
+
+    }
+    
+    func prepareAndPresentShareSheet(reportType: ReportType, shareListPresented: inout Bool) {
+        guard let pdfData = viewModel.pdfData else { return }
+
+        do {
+            let temporaryFileURL = try writePDFDataToTemporaryDirectory(pdfData, reportType: reportType)
+            presentShareSheet(with: temporaryFileURL, shareListPresented: &shareListPresented)
+        } catch {
+            // handle error
+            print(error)
+        }
+    }
+    
+    func writePDFDataToTemporaryDirectory(_ pdfData: Data, reportType: ReportType) throws -> URL {
+        let temporaryFolder = FileManager.default.temporaryDirectory
+        let fileName = documentNameGenerator(reportType: reportType)
+        let temporaryFileURL = temporaryFolder.appendingPathComponent(fileName)
+        
+        try pdfData.write(to: temporaryFileURL)
+        
+        return temporaryFileURL
+    }
+
+    func presentShareSheet(with fileURL: URL, shareListPresented: inout Bool) {
+        let activityViewController = UIActivityViewController(activityItems: [fileURL], applicationActivities: nil)
+        
+        activityViewController.completionWithItemsHandler = { activityType, completed, returnedItems, error in
+            self.shareListPresented = false
+        }
+        
+        UIApplication.shared.currentUIWindow()?.rootViewController?.present(activityViewController, animated: true, completion: nil)
+    }
+    
+    func documentNameGenerator(reportType: ReportType) -> String {
+        switch reportType {
+        case .personReport:
+            let firstName = person.firstName
+            let firstLetterOfName = firstName[firstName.startIndex]
+            return "\(person.lastName)_\(firstLetterOfName)_\(selectedMonth.stringValue()).pdf"
+        case .activityReport:
+            let components = [
+                activity.activityName,
+                activity.venue,
+                activity.personInCharge,
+                selectedMonth.stringValue(),
+            ]
+            let validComponents = components.compactMap { $0 }.filter { !$0.isEmpty }
+            
+            let fileName = validComponents.joined(separator: "_")
+            return "\(fileName).pdf"
         }
     }
 }
@@ -172,7 +252,7 @@ struct MonthPicker: View {
                 Image(systemName: "chevron.right")
             }
         }.frame(maxWidth: .infinity)
-
+        
     }
 }
 

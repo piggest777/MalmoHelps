@@ -82,7 +82,7 @@ class ParticipantDetailsViewModel: ObservableObject {
         let calendar = Calendar.current
         let dateComponents = DateComponents(year: year, month: month)
         guard let date = calendar.date(from: dateComponents) else { return 31 }
-
+        
         let range = calendar.range(of: .day, in: .month, for: date)!
         let numberOfDays = range.count
         return numberOfDays
@@ -118,22 +118,51 @@ class ParticipantDetailsViewModel: ObservableObject {
         document.add(space: 10)
         
         let participantsList = getParticipantList(from: participantRegistrationList)
-        let numberOfTableRows = participantsList.count + 1
+        let numberOfTableRows = participantsList.count + 2
         let numberOfTablesColumns = groupedRegistrations.count + 2
         let table = PDFTable(rows: numberOfTableRows, columns: numberOfTablesColumns)
-        let contentTableStyle = configTableChar()
+        let contentTableStyle = configTableChar(fontSize: 12)
         table.style = PDFTableStyle(footerCount: 0, rowHeaderStyle: contentTableStyle, columnHeaderStyle: contentTableStyle, contentStyle: contentTableStyle)
         
         let headerRow = table[row: 0]
         var headerRowArray: [String] = []
         headerRowArray.append("Participants")
         
-        let daysArray: [String] = groupedRegistrations.keys.sorted().map(String.init)
-        headerRowArray.append(contentsOf: daysArray)
+        let daysArray: [Int] = groupedRegistrations.keys.sorted()
+        headerRowArray.append(contentsOf: daysArray.map(String.init))
         headerRowArray.append("Total")
         headerRow.content = headerRowArray
         
+        for i in (0...participantsList.count-1) {
+            table[row: i+1].content = configureTableContent(forParticipant: participantsList[i], numberOfDays: groupedRegistrations.count, daysArray: daysArray)
+        }
+        
+        let totalNumberOfPeople = createTotalNumberOfPeopleRow(registrationDict: groupedRegistrations)
+        table[row: numberOfTableRows - 1].content = totalNumberOfPeople
+        
+        for i in (0...numberOfTablesColumns-1) {
+            switch i {
+            case 0:
+                table.widths[i] = 0.2
+            case numberOfTablesColumns-1:
+                table.widths[numberOfTablesColumns-1] = 0.075
+            default:
+                let widht = (1.0-0.2)/CGFloat(numberOfTablesColumns).rounded()
+                table.widths[i] = widht
+            }
+        }
+        
         document.add(table: table)
+        document.add(space: 10)
+        
+        let totatlHours = getTotalHoursFor(for: participantRegistrationList)
+        let attributesTotalHours: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 18)
+        ]
+        let attributedTotalHours = NSMutableAttributedString(string: "Total hours: \(totatlHours)", attributes: attributesTotalHours)
+        
+        document.add(attributedText: attributedTotalHours)
+        document.add(space: 30)
         
         let generator = PDFGenerator(document: document)
         let pdfData = try? generator.generateData()
@@ -142,16 +171,54 @@ class ParticipantDetailsViewModel: ObservableObject {
     
     ///**Personaly activity repport part
     //configuation for table cell for personal repport
-    func configTableChar()-> PDFTableCellStyle {
+    func configTableChar(fontSize: CGFloat)-> PDFTableCellStyle {
         let colors = (fill: UIColor.white, text: UIColor.black)
         let lineStyle = PDFLineStyle(type: .full, color: UIColor.black, width: 1)
         let borders = PDFTableCellBorders(left: lineStyle, top: lineStyle, right: lineStyle, bottom: lineStyle)
-        let font = UIFont.systemFont(ofSize: 8)
+        let font = UIFont.systemFont(ofSize: fontSize)
         return PDFTableCellStyle(colors: colors, borders: borders, font: font)
     }
     
+    //table content for participant
+    func configureTableContent(forParticipant participant: String, numberOfDays: Int, daysArray:[Int]) -> [String?] {
+        let filteredParticipant = participantRegistrationList.filter {
+            $0.participantName == participant
+        }
+        let totalHours = getTotalHoursFor(for: filteredParticipant)
+        var rowContent:[String?] = []
+        rowContent.append(participant)
+        
+        var participantActivitiesArray = [String?](repeating: nil, count: numberOfDays)
+        
+        for registration in filteredParticipant {
+            let day = registration.day
+            let index = daysArray.firstIndex(where: {$0 == day})
+            if let index {
+                participantActivitiesArray[index] = String(registration.duration)
+            }
+        }
+        
+        rowContent.append(contentsOf: participantActivitiesArray)
+        rowContent.append(String(totalHours))
+        
+        return rowContent
+    }
+    
+    func createTotalNumberOfPeopleRow(registrationDict: [Int: [Registration]]) -> [String?] {
+        let sortedDict = registrationDict.sorted(by: { $0.key < $1.key })
+        var rowContent : [String?] = []
+        
+        rowContent.append("Participant(s) per day")
+        
+        sortedDict.forEach { key, value in
+            rowContent.append("\(value.count)")
+        }
+        rowContent.append(nil)
+        return rowContent
+    }
+    
     //table content for personal report
-    func configureTableContent(for activity: String, numberOfDays: Int) -> [String?]  {
+    func configureTableContent(forActivity activity: String, numberOfDays: Int) -> [String?]  {
         let filteredActivities = participantRegistrationList.filter {
             $0.activityName == activity
         }
@@ -209,11 +276,11 @@ class ParticipantDetailsViewModel: ObservableObject {
         document.add(space: 10)
         
         let activitiesArray = getActivityTypes(from: participantRegistrationList)
-        let numberOfRow = activitiesArray.count
+        let numberOfRows = activitiesArray.count
         let numberOfDays = getNumberOfDays(for: month, year: year)
         let numberOfColumns = numberOfDays + 2
-        let table = PDFTable(rows: numberOfRow + 1, columns: numberOfColumns)
-        let contentTableStyle = configTableChar()
+        let table = PDFTable(rows: numberOfRows + 2, columns: numberOfColumns)
+        let contentTableStyle = configTableChar(fontSize: 8)
         table.style = PDFTableStyle(footerCount: 0, rowHeaderStyle: contentTableStyle, columnHeaderStyle: contentTableStyle, contentStyle: contentTableStyle)
         table.widths[0] = 0.1
         
@@ -238,7 +305,7 @@ class ParticipantDetailsViewModel: ObservableObject {
         headerRowArray.append("Total")
         headerRow.content = headerRowArray
         for i in (1...activitiesArray.count) {
-            table[row: i].content = configureTableContent(for: activitiesArray[i-1], numberOfDays: numberOfDays)
+            table[row: i].content = configureTableContent(forActivity: activitiesArray[i-1], numberOfDays: numberOfDays)
         }
         
         let totalHoursForAllActivities = getTotalHoursFor(for: participantRegistrationList)
