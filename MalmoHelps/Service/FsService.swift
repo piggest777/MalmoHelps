@@ -277,24 +277,25 @@ class FsService {
     func getActivitiesParticipantFor(month: Int, year: Int, activity: ActivityEntry) -> Future<[Registration], Error> {
         return Future { promise in
             let colection = self.db.collection(REGISTRATION_COLLECTION)
-            let query = colection
+            var query = colection
                 .whereField(MONTH, isEqualTo: month)
                 .whereField(YEAR, isEqualTo: year)
                 .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
-            if let venue = activity.venue {
-                query.whereField(VENUE, isEqualTo: venue)
-            }
-            if let personInCharge = activity.personInCharge{
-                query.whereField(PERSON_IN_CHARGE, isEqualTo: personInCharge)
-            }
             
             query.getDocuments { snapshot, error in
                 if let error {
                     print("Error while fetchih actities participant: \(error)")
                     promise(.failure(error))
                 } else if let snapshot {
-                    let registrations = snapshot.documents.compactMap { document in
+                    var registrations = snapshot.documents.compactMap { document in
                         try? document.data(as: Registration.self)
+                    }
+                    if let venue = activity.venue {
+                      registrations = registrations.filter { $0.venue == venue}
+                    }
+                    
+                    if let personInCharge = activity.personInCharge {
+                        registrations = registrations.filter { $0.activityPersonInCharge == personInCharge}
                     }
                     promise(.success(registrations))
                 }

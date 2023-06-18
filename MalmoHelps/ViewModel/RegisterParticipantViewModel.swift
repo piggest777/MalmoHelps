@@ -45,7 +45,7 @@ class RegisterParticipantViewModel: ObservableObject {
     
     func fetchParticipantListFor(for date: Date, activity: ActivityEntry) {
         
-        let query = db.collection(REGISTRATION_COLLECTION)
+        var query = db.collection(REGISTRATION_COLLECTION)
               .whereField(YEAR, isEqualTo: year)
               .whereField(MONTH, isEqualTo: month)
               .whereField(DAY, isEqualTo: day)
@@ -54,7 +54,14 @@ class RegisterParticipantViewModel: ObservableObject {
               .whereField(TIMESTAMP, isLessThan: Timestamp(date: endOfDay))
         
         if let personInCharge = activity.personInCharge {
-            query.whereField(PERSON_IN_CHARGE, isEqualTo: personInCharge)
+           query = db.collection(REGISTRATION_COLLECTION)
+                .whereField(YEAR, isEqualTo: year)
+                .whereField(MONTH, isEqualTo: month)
+                .whereField(DAY, isEqualTo: day)
+                .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
+                .whereField(TIMESTAMP, isGreaterThanOrEqualTo: Timestamp(date: startOfDay))
+                .whereField(TIMESTAMP, isLessThan: Timestamp(date: endOfDay))
+                .whereField(PERSON_IN_CHARGE, isEqualTo: personInCharge)
         }
         
         registrationListener = query.addSnapshotListener({ querySnapshot, error in
