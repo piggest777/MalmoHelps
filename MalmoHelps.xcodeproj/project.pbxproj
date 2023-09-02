@@ -7,6 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C72CDEC2AA3A37F00E434F5 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */; };
+		2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */; };
+		2C72CDF02AA3A40200E434F5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */; };
+		2C72CDF22AA3A40A00E434F5 /* UnauthPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDF12AA3A40A00E434F5 /* UnauthPage.swift */; };
+		2C72CDF42AA3A42D00E434F5 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDF32AA3A42D00E434F5 /* Constants.swift */; };
+		2C72CDF62AA3A48D00E434F5 /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDF52AA3A48C00E434F5 /* LottieView.swift */; };
+		2C72CDF92AA3A52200E434F5 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CDF82AA3A52200E434F5 /* Lottie */; };
+		2C72CDFB2AA3A5D800E434F5 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDFA2AA3A5D800E434F5 /* User.swift */; };
+		2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */; };
+		2C72CE002AA3A62D00E434F5 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */; };
+		2C72CE022AA3A62D00E434F5 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */; };
 		7B28017C29C90D6400CDEEFD /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B28017B29C90D6400CDEEFD /* SearchBarView.swift */; };
 		7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B28017D29C911AB00CDEEFD /* AddPersonView.swift */; };
 		7B421CA629CCEE80009AC2A0 /* WideTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B421CA529CCEE80009AC2A0 /* WideTextField.swift */; };
@@ -28,7 +39,6 @@
 		7BC5B46829D2318700655834 /* ActivityEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5B46729D2318700655834 /* ActivityEntry.swift */; };
 		7BC5B46A29D247A700655834 /* ActivitiesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5B46929D247A700655834 /* ActivitiesViewModel.swift */; };
 		7BC5B46C29D301B200655834 /* ActivitiesElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC5B46B29D301B200655834 /* ActivitiesElement.swift */; };
-		7BD5C92029C7C1F6008FD3F4 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD5C91F29C7C1F6008FD3F4 /* TabView.swift */; };
 		7BD5C92229C7C29B008FD3F4 /* ActivitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD5C92129C7C29B008FD3F4 /* ActivitiesView.swift */; };
 		7BD5C92429C7CB7F008FD3F4 /* UIAplicationExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD5C92329C7CB7F008FD3F4 /* UIAplicationExt.swift */; };
 		7BF5E96729EF4F9600DE8BD2 /* ParticipantDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */; };
@@ -69,7 +79,6 @@
 		B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB228B8A0FE00321D23 /* ViewExt.swift */; };
 		B5818CB528B8B5E700321D23 /* Family.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB428B8B5E700321D23 /* Family.swift */; };
 		B5818CB728B94F1200321D23 /* FsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB628B94F1200321D23 /* FsService.swift */; };
-		B5818CB928B9505200321D23 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CB828B9505200321D23 /* Constant.swift */; };
 		B5818CBC28B95DD700321D23 /* FamiliesLookupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */; };
 		B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5818CBD28B95FF000321D23 /* StringExt.swift */; };
 		B5AF868D28BB374C005FCB26 /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AF868C28BB374C005FCB26 /* Category.swift */; };
@@ -82,6 +91,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
+		2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchViewModel.swift; sourceTree = "<group>"; };
+		2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		2C72CDF12AA3A40A00E434F5 /* UnauthPage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnauthPage.swift; sourceTree = "<group>"; };
+		2C72CDF32AA3A42D00E434F5 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		2C72CDF52AA3A48C00E434F5 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
+		2C72CDFA2AA3A5D800E434F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
 		7B28017B29C90D6400CDEEFD /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		7B28017D29C911AB00CDEEFD /* AddPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonView.swift; sourceTree = "<group>"; };
 		7B421CA529CCEE80009AC2A0 /* WideTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideTextField.swift; sourceTree = "<group>"; };
@@ -102,7 +119,6 @@
 		7BC5B46729D2318700655834 /* ActivityEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityEntry.swift; sourceTree = "<group>"; };
 		7BC5B46929D247A700655834 /* ActivitiesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesViewModel.swift; sourceTree = "<group>"; };
 		7BC5B46B29D301B200655834 /* ActivitiesElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesElement.swift; sourceTree = "<group>"; };
-		7BD5C91F29C7C1F6008FD3F4 /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
 		7BD5C92129C7C29B008FD3F4 /* ActivitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivitiesView.swift; sourceTree = "<group>"; };
 		7BD5C92329C7CB7F008FD3F4 /* UIAplicationExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAplicationExt.swift; sourceTree = "<group>"; };
 		7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantDetailsView.swift; sourceTree = "<group>"; };
@@ -132,7 +148,6 @@
 		B5818CB228B8A0FE00321D23 /* ViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExt.swift; sourceTree = "<group>"; };
 		B5818CB428B8B5E700321D23 /* Family.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Family.swift; sourceTree = "<group>"; };
 		B5818CB628B94F1200321D23 /* FsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FsService.swift; sourceTree = "<group>"; };
-		B5818CB828B9505200321D23 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FamiliesLookupViewModel.swift; sourceTree = "<group>"; };
 		B5818CBD28B95FF000321D23 /* StringExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringExt.swift; sourceTree = "<group>"; };
 		B5AF868C28BB374C005FCB26 /* Category.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
@@ -154,8 +169,11 @@
 				B51B718B28B3C57F005F5387 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				B51B718128B3C57F005F5387 /* FirebaseAppCheck in Frameworks */,
 				B51B718F28B3C57F005F5387 /* FirebaseStorage in Frameworks */,
+				2C72CDF92AA3A52200E434F5 /* Lottie in Frameworks */,
 				B51B719628B3C5F0005F5387 /* GoogleSignInSwift in Frameworks */,
+				2C72CE002AA3A62D00E434F5 /* FirebaseRemoteConfig in Frameworks */,
 				B51B719428B3C5F0005F5387 /* GoogleSignIn in Frameworks */,
+				2C72CE022AA3A62D00E434F5 /* FirebaseRemoteConfigSwift in Frameworks */,
 				B51B717D28B3C57F005F5387 /* FirebaseAnalytics in Frameworks */,
 				B51B718728B3C57F005F5387 /* FirebaseCrashlytics in Frameworks */,
 				B51B718328B3C57F005F5387 /* FirebaseAuth in Frameworks */,
@@ -169,11 +187,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C72CDFE2AA3A62D00E434F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B51B712E28B14CC9005F5387 = {
 			isa = PBXGroup;
 			children = (
 				B51B713928B14CC9005F5387 /* MalmoHelps */,
 				B51B713828B14CC9005F5387 /* Products */,
+				2C72CDFE2AA3A62D00E434F5 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -222,6 +248,7 @@
 				B54AEDAB28FF3F580094B024 /* ActivityVenue.swift */,
 				7BC5B46129CF8E4B00655834 /* Person.swift */,
 				7BAF03D229DF7ACB001562B1 /* Registration.swift */,
+				2C72CDFA2AA3A5D800E434F5 /* User.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -240,6 +267,7 @@
 				7BAF03D029DF64AD001562B1 /* RegisterParticipantViewModel.swift */,
 				7BAF03D829E48136001562B1 /* PersonElementViewModel.swift */,
 				7BF5E96A29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift */,
+				2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -255,15 +283,17 @@
 				B5AFA1BF28BA97DA0006CDF0 /* DistributeView.swift */,
 				B51B71A128B505D2005F5387 /* AddFamilyView.swift */,
 				B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */,
-				7BD5C91F29C7C1F6008FD3F4 /* TabView.swift */,
+				2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */,
 				7BD5C92129C7C29B008FD3F4 /* ActivitiesView.swift */,
 				7B28017D29C911AB00CDEEFD /* AddPersonView.swift */,
 				7B63C41C29F419A90032FCFB /* AddActivityView.swift */,
 				7BAC0F5229DCB4C5005476C9 /* RegisterParticipantView.swift */,
 				7BAF03DA29E48C9A001562B1 /* ParticipantListViewElement.swift */,
 				7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */,
-				B51B719A28B3CFA1005F5387 /* ViewComponent */,
+				2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */,
+				2C72CDF12AA3A40A00E434F5 /* UnauthPage.swift */,
 				7B63C41A29F320040032FCFB /* PDFViewer.swift */,
+				B51B719A28B3CFA1005F5387 /* ViewComponent */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -272,6 +302,7 @@
 			isa = PBXGroup;
 			children = (
 				B5818CB628B94F1200321D23 /* FsService.swift */,
+				2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */,
 				7B63C41829F31AD40032FCFB /* PDFManager.swift */,
 			);
 			path = Service;
@@ -292,6 +323,7 @@
 				7BAF03D429E1F952001562B1 /* PersonElement.swift */,
 				7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift */,
 				7BAF03D629E204FE001562B1 /* FloatingTextField.swift */,
+				2C72CDF52AA3A48C00E434F5 /* LottieView.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -310,7 +342,7 @@
 		B5818CBA28B9505700321D23 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				B5818CB828B9505200321D23 /* Constant.swift */,
+				2C72CDF32AA3A42D00E434F5 /* Constants.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -346,6 +378,9 @@
 				B51B719328B3C5F0005F5387 /* GoogleSignIn */,
 				B51B719528B3C5F0005F5387 /* GoogleSignInSwift */,
 				7B63C41629F3190E0032FCFB /* TPPDF */,
+				2C72CDF82AA3A52200E434F5 /* Lottie */,
+				2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */,
+				2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */,
 			);
 			productName = MalmoHelps;
 			productReference = B51B713728B14CC9005F5387 /* MalmoHelps.app */;
@@ -379,6 +414,7 @@
 				B51B717B28B3C57F005F5387 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				B51B719228B3C5F0005F5387 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				7B63C41529F3190E0032FCFB /* XCRemoteSwiftPackageReference "TPPDF" */,
+				2C72CDF72AA3A52200E434F5 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 			);
 			productRefGroup = B51B713828B14CC9005F5387 /* Products */;
 			projectDirPath = "";
@@ -415,28 +451,32 @@
 				B5AFA1BE28BA6D8D0006CDF0 /* SharedItems.swift in Sources */,
 				B5AF868F28BB3EB1005FCB26 /* AddCategoryView.swift in Sources */,
 				7BF5E96B29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift in Sources */,
+				2C72CDFB2AA3A5D800E434F5 /* User.swift in Sources */,
 				7BC5B46C29D301B200655834 /* ActivitiesElement.swift in Sources */,
 				7BC5B46629CFB9C800655834 /* AddPersonViewModel.swift in Sources */,
 				B51B716328B3BE8F005F5387 /* HomeView.swift in Sources */,
 				B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */,
+				2C72CDF62AA3A48D00E434F5 /* LottieView.swift in Sources */,
 				7B63C41929F31AD40032FCFB /* PDFManager.swift in Sources */,
 				B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */,
 				7BC5B46229CF8E4B00655834 /* Person.swift in Sources */,
 				7B63C41D29F419A90032FCFB /* AddActivityView.swift in Sources */,
-				B5818CB928B9505200321D23 /* Constant.swift in Sources */,
+				2C72CDF02AA3A40200E434F5 /* LoadingView.swift in Sources */,
+				2C72CDF42AA3A42D00E434F5 /* Constants.swift in Sources */,
 				B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */,
 				B5818CBC28B95DD700321D23 /* FamiliesLookupViewModel.swift in Sources */,
 				7BAF03D129DF64AD001562B1 /* RegisterParticipantViewModel.swift in Sources */,
 				7BF5E96D29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift in Sources */,
-				7BD5C92029C7C1F6008FD3F4 /* TabView.swift in Sources */,
 				B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */,
 				B51B715A28B25FDF005F5387 /* AppDelegate.swift in Sources */,
+				2C72CDEC2AA3A37F00E434F5 /* SwitchView.swift in Sources */,
 				B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */,
 				7BAF03D929E48136001562B1 /* PersonElementViewModel.swift in Sources */,
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
 				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
 				B54AEDAC28FF3F580094B024 /* ActivityVenue.swift in Sources */,
 				7BAF03D529E1F952001562B1 /* PersonElement.swift in Sources */,
+				2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */,
 				7BC5B46829D2318700655834 /* ActivityEntry.swift in Sources */,
 				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
 				B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */,
@@ -448,12 +488,14 @@
 				7BAC0F5329DCB4C5005476C9 /* RegisterParticipantView.swift in Sources */,
 				B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */,
 				B5533E5428BA196200B73F01 /* CardView.swift in Sources */,
+				2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */,
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
 				7BAF03D729E204FE001562B1 /* FloatingTextField.swift in Sources */,
 				7B63C41B29F320040032FCFB /* PDFViewer.swift in Sources */,
 				7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */,
 				B5818CB528B8B5E700321D23 /* Family.swift in Sources */,
 				B51B716028B3BCBC005F5387 /* AuthView.swift in Sources */,
+				2C72CDF22AA3A40A00E434F5 /* UnauthPage.swift in Sources */,
 				7BAF03DB29E48C9A001562B1 /* ParticipantListViewElement.swift in Sources */,
 				B51B713B28B14CC9005F5387 /* MalmoHelpsApp.swift in Sources */,
 				7BAF03D329DF7ACB001562B1 /* Registration.swift in Sources */,
@@ -680,6 +722,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C72CDF72AA3A52200E434F5 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
 		7B63C41529F3190E0032FCFB /* XCRemoteSwiftPackageReference "TPPDF" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/techprimate/TPPDF";
@@ -707,6 +757,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		2C72CDF82AA3A52200E434F5 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 2C72CDF72AA3A52200E434F5 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
+		2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B51B717B28B3C57F005F5387 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
+		};
+		2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B51B717B28B3C57F005F5387 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfigSwift;
+		};
 		7B63C41629F3190E0032FCFB /* TPPDF */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 7B63C41529F3190E0032FCFB /* XCRemoteSwiftPackageReference "TPPDF" */;
