@@ -12,6 +12,7 @@ struct ActivitiesElement: View {
     
     @Binding var showSearchView: Bool
     @Binding var currActivity: ActivityEntry
+    @AppStorage("user_status") var userStatus: String = UNDEFINED
     var action: () -> Void
     
     var body: some View {
@@ -27,17 +28,20 @@ struct ActivitiesElement: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }
-            Button {
-                action()
-            } label: {
-                Circle()
-                    .fill(Color("DarkShadow"))
-                     .frame(width: 40, height: 40)
-                     .overlay(
-                         Image(systemName: "doc.text")
-                             .foregroundColor(.white)
-                             .font(.system(size: 25, weight: .bold))
-                     )
+            
+            if userStatus == ADMIN {
+                Button {
+                    action()
+                } label: {
+                    Circle()
+                        .fill(Color("DarkShadow"))
+                         .frame(width: 40, height: 40)
+                         .overlay(
+                             Image(systemName: "doc.text")
+                                 .foregroundColor(.white)
+                                 .font(.system(size: 25, weight: .bold))
+                         )
+                }
             }
 
             Button {

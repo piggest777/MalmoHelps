@@ -24,6 +24,7 @@ struct ActivitiesView: View {
     @State var calendarViewHeight = 40.0
     @StateObject private var selectedMonth = SelectedMonth()
     @State private var reportType: ReportType = .personReport
+    @AppStorage("user_status") var userStatus: String = UNDEFINED
     
     @State var activityRepportNavLink: Bool = false
     
@@ -59,8 +60,10 @@ struct ActivitiesView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack {
-                    SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
-                    
+                    if userStatus == ADMIN {
+                        SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
+                    }
+
                     if familiesLookUp.queryResultPerson.isEmpty && keyword.isEmpty {
                         ZStack(alignment: .top) {
                             VStack {
@@ -106,9 +109,7 @@ struct ActivitiesView: View {
             .navigationBarItems(trailing: Button(action: {
                 showAddPerson.toggle()
             }, label: { Image(systemName: "person.fill.badge.plus").imageScale(.large).padding() }))
-            .navigationBarItems(leading:  Button(action: {
-                showAddActivity.toggle()
-            }, label: { Image(systemName: "note.text.badge.plus").imageScale(.large).padding() }))
+            .navigationBarItems(leading:  activityBarItems)
             .navigationTitle(Text("Activities"))
             .navigationBarTitleDisplayMode(.inline)
         }
@@ -124,6 +125,16 @@ struct ActivitiesView: View {
         .onChange(of: showAddActivity) { newValue in
             if newValue == false {
                 viewModel.getActivities()
+            }
+        }
+    }
+    
+    var activityBarItems: some View {
+        Group {
+            if userStatus == ADMIN {
+                Button(action: {
+                    showAddActivity.toggle()
+                }, label: { Image(systemName: "note.text.badge.plus").imageScale(.large).padding() })
             }
         }
     }

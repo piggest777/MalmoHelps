@@ -16,7 +16,6 @@ class FsService {
     
     static let shared = FsService()
     
-    
     let db = Firestore.firestore()
     
     func addFamilyToDB(family: Family, completionHandler: @escaping (Bool) -> () ) {
@@ -277,7 +276,7 @@ class FsService {
     func getActivitiesParticipantFor(month: Int, year: Int, activity: ActivityEntry) -> Future<[Registration], Error> {
         return Future { promise in
             let colection = self.db.collection(REGISTRATION_COLLECTION)
-            var query = colection
+            let query = colection
                 .whereField(MONTH, isEqualTo: month)
                 .whereField(YEAR, isEqualTo: year)
                 .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
@@ -300,6 +299,78 @@ class FsService {
                     promise(.success(registrations))
                 }
             }
+        }
+    }
+    
+    ///User managment
+    
+    func getUser(uid: String) -> Future<User, Error>{
+        return Future { promise in
+            let docRequest = self.db.collection(USERS_COLLECTION).document(uid)
+            docRequest.getDocument { snapshot, error in
+                if let error {
+                    
+                    print("Error while fetch user: \(error)")
+                    promise(.failure(FirestoreError.snapshotError))
+                }
+                
+                if let snapshot  {
+                    if let user = try? snapshot.data(as: User.self) {
+                        promise(.success(user))
+                    } else {
+                        promise (.failure(FirestoreError.userNotFound))
+                    }
+                }
+                else {
+                    promise(.failure(FirestoreError.snapshotError))
+                }
+            }
+        }
+    }
+    
+    func createUser(uid: String, name: String, email: String, completion: @escaping (Bool, Error?) -> ()) {
+        
+        let ref = db.collection(USERS_COLLECTION).document(uid)
+        
+        let data = [
+            USER_EMAIL : email,
+            USER_NAME : name,
+            ROLE : UNDEFINED
+        ]
+        
+        ref.getDocument { document, error in
+            if let document, document.exists {
+                print("user already exists")
+                completion(true, nil)
+            } else {
+                ref.setData(data, merge: false) { err in
+                    if let err {
+                        print("Error adding user: \(err)")
+                        completion(false, err)
+                    } else {
+                        completion(true, nil)
+                        print("Document successfully written!")
+                    }
+                    
+                }
+            }
+        }
+    }
+}
+
+enum FirestoreError: Error {
+    case snapshotError
+    case documentNotFound
+    case userNotFound
+    
+    func errorDescription() -> String {
+        switch self {
+        case .snapshotError:
+            return "Snapshot is nil"
+        case .documentNotFound:
+            return "Document is nil"
+        case .userNotFound:
+            return "User not found in database"
         }
     }
 }

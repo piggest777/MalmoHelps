@@ -11,7 +11,7 @@ import Combine
 struct AddCategoryView: View {
     
     @ObservedObject var vm = AddCategoryViewModel()
-    @EnvironmentObject var  cat: Categories
+    @EnvironmentObject var cat: Categories
     @Binding var showAddCategoryView: Bool
     @State var catName = ""
     @State var catNameEditing = false

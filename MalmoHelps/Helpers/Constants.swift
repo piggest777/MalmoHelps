@@ -1,5 +1,5 @@
 //
-//  Constant.swift
+//  Constants.swift
 //  MalmoHelps
 //
 //  Created by Denis Rakitin on 2022-08-26.
@@ -52,6 +52,21 @@ let DAY = "day"
 let TIMESTAMP = "timestamp"
 let PARTICIPANT_ID = "participant_id"
 let PARTICIPANT_NAME = "participant_name"
+
+//User Management
+let USERS_COLLECTION = "users"
+let USER_NAME = "name"
+let USER_UID = "user_uid"
+let AUTH_STATUS = "auth_status"
+let ROLE = "role"
+let USER_EMAIL = "email"
+
+//UserStatus
+let LOADING = "loading"
+let UNDEFINED = "undefined"
+let VOLUNTEER = "volunteer"
+let TEACHER = "teacher"
+let ADMIN = "admin"
 
 let DIST_POINTS = [
     ActivityVenue(venue: "Jägersro"),

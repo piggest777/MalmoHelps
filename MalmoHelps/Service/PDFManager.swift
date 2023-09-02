@@ -20,5 +20,4 @@ class PDFManager {
         let url = try? generator.generateURL(filename: "Example.pdf")
         return url
     }
-    
 }

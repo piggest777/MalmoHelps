@@ -13,9 +13,13 @@ struct ContentView: View {
     @EnvironmentObject var viewModel: AuthViewModel
 
     var body: some View {
-        switch viewModel.authState {
-        case .signedIn: SwitchView()
-        case .signedOut: AuthView()
+        Group {
+            switch viewModel.authState {
+            case .signedIn: SwitchView()
+            case .signedOut: AuthView()
+                }
+            }.alert(viewModel.alertText, isPresented: $viewModel.showAlert) {
+                Button("OK", role: .cancel) {}
         }
         
     }
