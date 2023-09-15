@@ -26,6 +26,7 @@ struct AddPersonView: View {
     @State var isValid: Bool = true
     @State private var isKeyboardVisible = false
     @State var isLoading = false
+    @State var person: Person?
     
     
     @State var firstNameValidator: Bool = true
@@ -80,8 +81,11 @@ struct AddPersonView: View {
                             }
                             let keywords = viewModel.createKeywordsArray(firstName: firstName, lastName: lastName)
                             
-                            let person = Person(firstName: firstName, lastName: lastName, startDate: Timestamp(), finishDate: nil, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: nil, keywords: keywords)
-                            viewModel.addPerson(person)
+                           person = Person(firstName: firstName, lastName: lastName, startDate: Timestamp(), finishDate: nil, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: nil, keywords: keywords)
+                            
+                            if let person {
+                                viewModel.checkPNBeforeAdding(person: person)
+                            }
                         } label: {
                             if viewModel.isLoading {
                                 ProgressView()
@@ -103,6 +107,14 @@ struct AddPersonView: View {
                                     .padding()
                             }
                         }.disabled(viewModel.isLoading)
+                        .alert(viewModel.alertText, isPresented: $viewModel.showPNAlert, actions: {
+                                Button("Cancel", role: .cancel) {}
+                                Button("Add") {
+                                    if let person {
+                                        viewModel.addPerson(person)
+                                    }
+                                }
+                            })
                     }
                 }
                 .alert(viewModel.alertText, isPresented: $viewModel.showAlert) {

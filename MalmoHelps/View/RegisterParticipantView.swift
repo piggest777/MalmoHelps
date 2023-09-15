@@ -44,7 +44,9 @@ struct RegisterParticipantView: View {
                 if keywordCalled == false {
                     keyword = $0
                     familiesLookUp.queryResultPerson.removeAll()
-                    familiesLookUp.fetchParticipants(keywords: keyword)
+                    if keyword.count > 2 {
+                        familiesLookUp.keywordSubject.send((keyword, .person))
+                    }
                     keywordCalled = true
                 } else {
                     keywordCalled = false
@@ -62,6 +64,7 @@ struct RegisterParticipantView: View {
                        ForEach (familiesLookUp.queryResultPerson,  id: \.id) { person in
                            PersonElement(person: person, date: date, activity: activity, showDuration: true) {
                                familiesLookUp.queryResultPerson.removeAll()
+                               keyword = ""
                            }
 
                         }

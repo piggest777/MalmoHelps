@@ -302,6 +302,32 @@ class FsService {
         }
     }
     
+    func checkIfPNEXist(pn: String) -> Future<Bool, Error> {
+        return Future { promise in
+            let ref = self.db.collection(PERSON_COLLECTION)
+                .whereField(PERSONAL_NUMBER, isEqualTo: pn)
+
+            ref.getDocuments { (snapshot, error) in
+                if let error = error {
+                    promise(.failure(error))
+                    return
+                }
+
+                guard let snapshot = snapshot else {
+                    promise(.failure(FirestoreError.snapshotError))
+                    return
+                }
+
+                if snapshot.documents.count > 0 {
+                    promise(.success(true))
+                } else {
+                    promise(.success(false))
+                }
+            }
+        }
+    }
+
+    
     ///User managment
     
     func getUser(uid: String) -> Future<User, Error>{

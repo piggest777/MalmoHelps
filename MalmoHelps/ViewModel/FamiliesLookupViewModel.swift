@@ -12,6 +12,11 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import Combine
 
+enum KeywordRequestSender {
+    case person
+    case family
+}
+
 class FamiliesLookupViewModel: ObservableObject {
     @Published var queryResultFamilies  = [Family]()
     @Published var searching: Bool = false
@@ -20,11 +25,24 @@ class FamiliesLookupViewModel: ObservableObject {
 //        Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "", phoneNumber: "", customQrCode: nil, keywords: [])
     ]
     var cancellables = Set<AnyCancellable>()
+    let keywordSubject = PassthroughSubject<(String, KeywordRequestSender), Never>()
     
     private let db = Firestore.firestore()
     
     init(){
         print("init")
+        keywordSubject
+            .debounce(for: .milliseconds(500), scheduler: DispatchQueue.main)
+            .sink { keyword, sender in
+                switch sender {
+                case .person:
+                    self.fetchParticipants(keywords: keyword)
+                case .family:
+                    self.fetchFamilies(with: keyword)
+                }
+
+            }
+            .store(in: &cancellables)
     }
     
     func fetchFamilies(with keyword: String) {

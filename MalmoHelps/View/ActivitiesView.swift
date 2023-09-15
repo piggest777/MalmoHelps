@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct ActivitiesView: View {
     @State var showAddPerson: Bool = false
@@ -44,7 +45,10 @@ struct ActivitiesView: View {
                 if keywordCalled == false {
                     keyword = $0
                     familiesLookUp.queryResultPerson.removeAll()
-                    familiesLookUp.fetchParticipants(keywords: keyword)
+                    if keyword.count > 2 {
+                        familiesLookUp.keywordSubject.send((keyword, .person))
+//                        familiesLookUp.fetchParticipants(keywords: keyword)
+                    }
                     keywordCalled = true
                 } else {
                     keywordCalled = false

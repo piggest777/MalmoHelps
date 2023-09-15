@@ -33,8 +33,9 @@ struct HomeView: View {
                 if keywordCalled == false {
                     keyword = $0
                     familiesLookUp.queryResultFamilies.removeAll()
-                    familiesLookUp.fetchFamilies(with: keyword.lowercased())
-                    
+                    if keyword.count > 2 {
+                        familiesLookUp.keywordSubject.send((keyword, .family))
+                    }
                     keywordCalled = true
                 } else {
                     keywordCalled = false

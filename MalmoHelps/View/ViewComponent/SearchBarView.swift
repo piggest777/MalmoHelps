@@ -18,7 +18,7 @@ struct SearchBarView: View {
                 .foregroundColor(Color.gray.opacity(0.5))
             HStack {
                 Image(systemName: "magnifyingglass")
-                TextField("Searching for...", text: $keyword)
+                TextField("Searching for person", text: $keyword)
                 .autocapitalization(.none)
                 
                 if searching {
