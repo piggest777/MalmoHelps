@@ -382,7 +382,28 @@ class FsService {
             }
         }
     }
+    
+    func deleteUserFromFirestore(uid: String?, completion: @escaping (Bool)->(Void))  {
+        if let uid {
+            let ref = db.collection(USERS_COLLECTION).document(uid)
+            ref.delete { error in
+                if error == nil {
+                    print("User with UID: \(uid) was deleted")
+                    self.deleteUser()
+                    completion(true)
+                    return
+                }
+                print("error while deleting user from firestore: \(String(describing: error))")
+            }
+        }
+    }
+    
+    func deleteUser() {
+        let user = Auth.auth().currentUser
+        user?.delete()
+    }
 }
+
 
 enum FirestoreError: Error {
     case snapshotError

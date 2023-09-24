@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C4AB6712ABF9CB700F92B2E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */; };
+		2C4AB6732ABF9E5500F92B2E /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */; };
+		2C4FB12A2AC0C3DB007A78E0 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4FB1292AC0C3DB007A78E0 /* loading.json */; };
+		2C4FB12D2AC0C412007A78E0 /* noauth.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4FB12C2AC0C412007A78E0 /* noauth.json */; };
 		2C72CDEC2AA3A37F00E434F5 /* SwitchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */; };
 		2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */; };
 		2C72CDF02AA3A40200E434F5 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */; };
@@ -91,6 +95,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C4AB66F2ABF7DE900F92B2E /* MalmoHelps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MalmoHelps.entitlements; sourceTree = "<group>"; };
+		2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
+		2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
+		2C4FB1292AC0C3DB007A78E0 /* loading.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = loading.json; sourceTree = "<group>"; };
+		2C4FB12C2AC0C412007A78E0 /* noauth.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = noauth.json; sourceTree = "<group>"; };
 		2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchView.swift; sourceTree = "<group>"; };
 		2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwitchViewModel.swift; sourceTree = "<group>"; };
 		2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
@@ -187,6 +196,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C4FB12B2AC0C3F6007A78E0 /* Lottie */ = {
+			isa = PBXGroup;
+			children = (
+				2C4FB12C2AC0C412007A78E0 /* noauth.json */,
+				2C4FB1292AC0C3DB007A78E0 /* loading.json */,
+			);
+			path = Lottie;
+			sourceTree = "<group>";
+		};
 		2C72CDFE2AA3A62D00E434F5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -214,6 +232,8 @@
 		B51B713928B14CC9005F5387 /* MalmoHelps */ = {
 			isa = PBXGroup;
 			children = (
+				2C4FB12B2AC0C3F6007A78E0 /* Lottie */,
+				2C4AB66F2ABF7DE900F92B2E /* MalmoHelps.entitlements */,
 				B51B719728B3C62B005F5387 /* Info.plist */,
 				B51B715E28B3BC8E005F5387 /* Service */,
 				B51B715B28B3BC0F005F5387 /* Model */,
@@ -268,6 +288,7 @@
 				7BAF03D829E48136001562B1 /* PersonElementViewModel.swift */,
 				7BF5E96A29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift */,
 				2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */,
+				2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -343,6 +364,7 @@
 			isa = PBXGroup;
 			children = (
 				2C72CDF32AA3A42D00E434F5 /* Constants.swift */,
+				2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -357,6 +379,7 @@
 				B51B713328B14CC9005F5387 /* Sources */,
 				B51B713428B14CC9005F5387 /* Frameworks */,
 				B51B713528B14CC9005F5387 /* Resources */,
+				2C4FB12E2AC0D0E4007A78E0 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -431,12 +454,39 @@
 			buildActionMask = 2147483647;
 			files = (
 				B51B714228B14CCF005F5387 /* Preview Assets.xcassets in Resources */,
+				2C4FB12D2AC0C412007A78E0 /* noauth.json in Resources */,
 				B51B714928B25CF8005F5387 /* GoogleService-Info.plist in Resources */,
 				B51B713F28B14CCF005F5387 /* Assets.xcassets in Resources */,
+				2C4FB12A2AC0C3DB007A78E0 /* loading.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		2C4FB12E2AC0D0E4007A78E0 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		B51B713328B14CC9005F5387 /* Sources */ = {
@@ -455,6 +505,7 @@
 				7BC5B46C29D301B200655834 /* ActivitiesElement.swift in Sources */,
 				7BC5B46629CFB9C800655834 /* AddPersonViewModel.swift in Sources */,
 				B51B716328B3BE8F005F5387 /* HomeView.swift in Sources */,
+				2C4AB6712ABF9CB700F92B2E /* ProfileViewModel.swift in Sources */,
 				B5533E5628BA288C00B73F01 /* DateExt.swift in Sources */,
 				2C72CDF62AA3A48D00E434F5 /* LottieView.swift in Sources */,
 				7B63C41929F31AD40032FCFB /* PDFManager.swift in Sources */,
@@ -495,6 +546,7 @@
 				7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */,
 				B5818CB528B8B5E700321D23 /* Family.swift in Sources */,
 				B51B716028B3BCBC005F5387 /* AuthView.swift in Sources */,
+				2C4AB6732ABF9E5500F92B2E /* CryptoUtils.swift in Sources */,
 				2C72CDF22AA3A40A00E434F5 /* UnauthPage.swift in Sources */,
 				7BAF03DB29E48C9A001562B1 /* ParticipantListViewElement.swift in Sources */,
 				B51B713B28B14CC9005F5387 /* MalmoHelpsApp.swift in Sources */,
@@ -543,7 +595,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -629,6 +681,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
@@ -666,6 +719,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";

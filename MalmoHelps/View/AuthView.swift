@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import _AuthenticationServices_SwiftUI
 
 
 struct AuthView: View {
@@ -34,13 +35,30 @@ struct AuthView: View {
                 Text("MALMÖ HELPS")
                     .font(.largeTitle)
                 Spacer().frame(height: 15)
-                Text("Log in with Google")
                 GoogleSignInButton()
                     .padding(.horizontal, 50)
                     .onTapGesture {
                         viewModel.signIn()
                     }
-                    .frame(height: 100)
+                    .frame(height: 60)
+                
+                SignInWithAppleButton(.signIn,
+                    onRequest: { request in
+                        viewModel.startSignInWithAppleFlow(request: request)
+                    },
+                    onCompletion: { result in
+                    switch result {
+                    case .success(let signInAuth):
+                        viewModel.authorizationController(didCompleteWithAuthorization: signInAuth)
+                        print("Authorization successful.")
+                    case .failure(let error):
+                        print("Authorization failed: " + error.localizedDescription)
+                    }
+                }
+                ).padding(.horizontal, 50)
+                    .padding(.bottom, 20)
+                
+                
                 if viewModel.reviewMode {
                     Group {
                         Text("Log in with e-mail")
@@ -99,5 +117,6 @@ struct AuthView: View {
 struct AuthView_Previews: PreviewProvider {
     static var previews: some View {
         AuthView()
+            .environmentObject(AuthViewModel())
     }
 }

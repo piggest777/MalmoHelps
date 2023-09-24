@@ -13,7 +13,8 @@ struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
     @AppStorage("distribution_place") var distPlace: String = ""
      var placeHolder = "Please choose"
-    
+    @StateObject var profileVM = ProfileViewModel()
+
     var body: some View {
         VStack {
             Text("Please choose current distribution point")
@@ -44,6 +45,35 @@ struct ProfileView: View {
                 
             }
             Spacer()
+            Button(action: profileVM.deleteCurrentUser) {
+                if profileVM.isLoading {
+                    ZStack {
+                        Rectangle()
+                            .background(Color(.black))
+                            .cornerRadius(12)
+                            .padding(.horizontal, 15)
+                            .frame(maxWidth: .infinity, maxHeight: 50, alignment: .center)
+                        ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                        .scaleEffect(1.5)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                    }
+                } else {
+                    Text("Delete Apple Account")
+                        .foregroundColor(.white)
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color(.black))
+                        .cornerRadius(12)
+                        .padding(.horizontal, 15)
+
+                }
+            }.onChange(of: profileVM.isSignedOut) { value in
+                if value == true {
+                    viewModel.authState = .signedOut
+                }
+            }
+            
             Button(action: viewModel.signOut) {
                 Text("Sign out")
                     .foregroundColor(.white)
@@ -61,6 +91,7 @@ struct ProfileView: View {
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView()
+            .environmentObject(AuthViewModel())
     }
 }
 
