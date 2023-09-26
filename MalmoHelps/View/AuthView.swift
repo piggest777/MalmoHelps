@@ -35,30 +35,53 @@ struct AuthView: View {
                 Text("MALMÖ HELPS")
                     .font(.largeTitle)
                 Spacer().frame(height: 15)
-                GoogleSignInButton()
-                    .padding(.horizontal, 50)
-                    .onTapGesture {
-                        viewModel.signIn()
+                Button(action: {
+                    viewModel.signIn()
+                }) {
+                    HStack {
+                        Spacer()
+                        Image("google_logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 24, height: 24)
+    
+                        Text("Sign in with Google")
+                            .foregroundColor(.black)
+                            .fontWeight(.medium)
+                        Spacer()
                     }
-                    .frame(height: 60)
-                
-                SignInWithAppleButton(.signIn,
-                    onRequest: { request in
-                        viewModel.startSignInWithAppleFlow(request: request)
-                    },
-                    onCompletion: { result in
-                    switch result {
-                    case .success(let signInAuth):
-                        viewModel.authorizationController(didCompleteWithAuthorization: signInAuth)
-                        print("Authorization successful.")
-                    case .failure(let error):
-                        print("Authorization failed: " + error.localizedDescription)
-                    }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal)
+                    .background(Color.white)
+                    .cornerRadius(8.0)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8.0)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
                 }
-                ).padding(.horizontal, 50)
-                    .padding(.bottom, 20)
+                .padding([.horizontal], 50)
+                .frame(height: 60)
                 
-                
+                Button(action: {
+                    // Start the Apple Sign In process
+                    viewModel.startSignInWithAppleFlow()
+                }) {
+                    HStack {
+                        Image(systemName: "applelogo") // SF Symbol for Apple logo
+                            .font(.title2)
+                            .foregroundColor(.white)
+                        Text("Sign in with Apple")
+                            .foregroundColor(.white)
+                            .fontWeight(.semibold)
+                    }
+                    .frame(maxWidth: .infinity)
+                    .padding()
+                    .background(Color.black)  // Apple's black color
+                    .cornerRadius(8.0)
+                }
+                .padding([.horizontal], 50)
+                .padding([.bottom], 20)
+
                 if viewModel.reviewMode {
                     Group {
                         Text("Log in with e-mail")

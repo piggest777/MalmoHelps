@@ -153,11 +153,14 @@ class AuthViewModel: NSObject, ObservableObject  {
 
 //Apple sign-id
 extension AuthViewModel {
-    func startSignInWithAppleFlow(request: ASAuthorizationAppleIDRequest) {
+    func startSignInWithAppleFlow() {
         let cryptoUtils = CryptoUtils()
         let nonce = cryptoUtils.randomNonceString()
       currentNonce = nonce
-      request.requestedScopes = [.fullName, .email]
+        
+        let appleIDProvider = ASAuthorizationAppleIDProvider()
+        let request = appleIDProvider.createRequest()
+        request.requestedScopes = [.fullName, .email]
         request.nonce = cryptoUtils.sha256(nonce)
 
       let authorizationController = ASAuthorizationController(authorizationRequests: [request])
