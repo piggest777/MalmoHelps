@@ -16,7 +16,8 @@ class ParticipantDetailsViewModel: ObservableObject {
     @Published var groupedRegistrations: [Int: [Registration]] = [:]
     @Published var pdfData: Data?
     private var cancellables = Set<AnyCancellable>()
-    
+    var activities: [ActivityEntry] = []
+        
     let attributesTitle: [NSAttributedString.Key: Any] = [
         .font: UIFont.systemFont(ofSize: 36)
     ]
@@ -94,9 +95,16 @@ class ParticipantDetailsViewModel: ObservableObject {
         return dateFormatter.monthSymbols[month - 1]
     }
     
+//    func getTotalHoursFor(for activities: [Registration]) -> Float {
+//        return activities.reduce(0.0) {$0 + $1.duration}
+//    }
+    
     func getTotalHoursFor(for activities: [Registration]) -> Float {
-        return activities.reduce(0.0) {$0 + $1.duration}
+        return activities.reduce(0) { (sum, activity) -> Float in
+            return sum + activity.duration
+        }
     }
+
     
     ///**Activity report part**
     
@@ -204,6 +212,63 @@ class ParticipantDetailsViewModel: ObservableObject {
         return rowContent
     }
     
+    func configureTableContent(forActivityType activityType: ActivityType, groupedRegistrations: [ActivityType: [Registration]], numberOfDays: Int) -> [String?] {
+        guard let activitiesForType = groupedRegistrations[activityType] else { return [] }
+        
+        var rowContent: [String?] = []
+        rowContent.append(activityType.description)  // Assuming ActivityType has a description property
+        
+        var activityDurations = [String?](repeating: nil, count: numberOfDays)
+        
+        for activity in activitiesForType {
+            let index = activity.day - 1
+            if activityDurations[index] != nil {
+                let currentDuration = Float(activityDurations[index]!)
+                if let currentDuration = currentDuration {
+                    let sum = currentDuration + activity.duration
+                    activityDurations[index] = String(sum)
+                } else {
+                    activityDurations[index] = String(activity.duration)
+                }
+            } else {
+                activityDurations[index] = String(activity.duration)
+            }
+        }
+        rowContent.append(contentsOf: activityDurations)
+        let totalHours = activitiesForType.map { $0.duration }.reduce(0, +)
+        rowContent.append(String(totalHours))
+        return rowContent
+    }
+    
+    func configureTableContent(forType type: ActivityType, numberOfDays: Int, using activityEntries: [ActivityEntry]) -> [String?] {
+        let filteredActivities = participantRegistrationList.filter {
+            getActivityType(for: $0.activityName, from: activityEntries) == type
+        }
+        let totalHours = getTotalHoursFor(for: filteredActivities)
+        var rowContent:[String?] = []
+        rowContent.append(type.description)
+        
+        var activityDurations = [String?](repeating: nil, count: numberOfDays)
+        
+        for activity in filteredActivities {
+            let index = activity.day - 1
+            if activityDurations[index] != nil {
+                let currentDuration = Float(activityDurations[index]!)
+                if let currentDuration {
+                    let sum = currentDuration + activity.duration
+                    activityDurations[index] = String(sum)
+                } else {
+                    activityDurations[index] = String(activity.duration)
+                }
+            } else {
+                activityDurations[index] = String(activity.duration)
+            }
+        }
+        rowContent.append(contentsOf: activityDurations)
+        rowContent.append(String(totalHours))
+        return rowContent
+    }
+    
     func createTotalNumberOfPeopleRow(registrationDict: [Int: [Registration]]) -> [String?] {
         let sortedDict = registrationDict.sorted(by: { $0.key < $1.key })
         var rowContent : [String?] = []
@@ -247,8 +312,28 @@ class ParticipantDetailsViewModel: ObservableObject {
         return rowContent
     }
     
-        // create PDF document for repport for peson
-    func createDocumentFor(person: Person, for month: Int, year: Int) {
+    
+    func getActivityType(for activityName: String, from activityEntries: [ActivityEntry]) -> ActivityType {
+        if let entry = activityEntries.first(where: { $0.activityName == activityName }) {
+            return ActivityType(rawValue: entry.activityType) ?? .undefined
+        }
+        return .undefined
+    }
+    
+    
+    
+    func groupRegistrationsByType(from activities: [Registration], using activityEntries: [ActivityEntry]) -> [ActivityType: [Registration]] {
+        var groupedByType = [ActivityType: [Registration]]()
+        for activity in activities {
+            let type = getActivityType(for: activity.activityName, from: activityEntries)
+            groupedByType[type, default: []].append(activity)
+        }
+        return groupedByType
+    }
+    
+    
+        // create PDF document for raport for person
+    func createDocumentFor(person: Person, for month: Int, year: Int, showTypes: Bool = false) {
         var layout = PDFPageFormat.a4.layout
         layout.size = PDFPageFormat.a4.landscapeSize
         layout.margin.left = 10.0
@@ -256,18 +341,18 @@ class ParticipantDetailsViewModel: ObservableObject {
         
         let personName = "\(person.firstName) \(person.lastName)"
         let personalNumber = person.personalNumber
-        let phoneNumber = person.phoneNumber
+//        let phoneNumber = person.phoneNumber
     
         let attributedMonth = NSMutableAttributedString(string: getFullMonthName(month: month), attributes: attributesMonth)
         
         let attributedTitle = NSMutableAttributedString(string: personName, attributes: attributesTitle)
         
-        let attributesPhone: [NSAttributedString.Key: Any] = [
-            .font: UIFont.boldSystemFont(ofSize: 18),
-            .underlineStyle: NSUnderlineStyle.double.rawValue,
-            .underlineColor: UIColor.black
-        ]
-        let attributedSubtitle = NSMutableAttributedString(string: "PN: \(personalNumber)  Phone number: \(phoneNumber)", attributes: attributesPhone)
+//        let attributesPhone: [NSAttributedString.Key: Any] = [
+//            .font: UIFont.boldSystemFont(ofSize: 18),
+//            .underlineStyle: NSUnderlineStyle.double.rawValue,
+//            .underlineColor: UIColor.black
+//        ]
+        let attributedSubtitle = NSMutableAttributedString(string: "Sammordningsnummer: \(personalNumber)" )
         
         document.add(attributedText: attributedTitle)
         document.add(attributedText: attributedSubtitle)
@@ -275,8 +360,17 @@ class ParticipantDetailsViewModel: ObservableObject {
         document.add(attributedText: attributedMonth)
         document.add(space: 10)
         
+        
+        let groupedActivities = groupRegistrationsByType(from: participantRegistrationList, using: activities)
+        let activityTypesArray = Array(groupedActivities.keys)
+        
         let activitiesArray = getActivityTypes(from: participantRegistrationList)
-        let numberOfRows = activitiesArray.count
+        var numberOfRows = 0
+        if showTypes {
+            numberOfRows = activityTypesArray.count
+        } else {
+            numberOfRows = activitiesArray.count
+        }
         let numberOfDays = getNumberOfDays(for: month, year: year)
         let numberOfColumns = numberOfDays + 2
         let table = PDFTable(rows: numberOfRows + 2, columns: numberOfColumns)
@@ -297,15 +391,19 @@ class ParticipantDetailsViewModel: ObservableObject {
         table.widths[numberOfDays+1] = 0.1
         let headerRow = table[row: 0]
         var headerRowArray: [String] = []
-        headerRowArray.append("Activities")
+        headerRowArray.append("Aktiviteter")
         for i in (1...numberOfDays) {
             headerRowArray.append(String(i))
             
         }
         headerRowArray.append("Total")
         headerRow.content = headerRowArray
-        for i in (1...activitiesArray.count) {
-            table[row: i].content = configureTableContent(forActivity: activitiesArray[i-1], numberOfDays: numberOfDays)
+        for i in (1...numberOfRows) {
+            if showTypes {
+                table[row: i].content = configureTableContent(forActivityType: activityTypesArray[i-1], groupedRegistrations: groupedActivities, numberOfDays: numberOfDays)
+            } else {
+                table[row: i].content = configureTableContent(forActivity: activitiesArray[i-1], numberOfDays: numberOfDays)
+            }
         }
         
         let totalHoursForAllActivities = getTotalHoursFor(for: participantRegistrationList)
@@ -316,20 +414,18 @@ class ParticipantDetailsViewModel: ObservableObject {
         let attributesTotalHours: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 18)
         ]
-        let attributedTotalHours = NSMutableAttributedString(string: "Total hours for all activities: \(totalHoursForAllActivities)", attributes: attributesTotalHours)
+        let attributedTotalHours = NSMutableAttributedString(string: "Totala närvarotimmar för månaden: \(totalHoursForAllActivities)", attributes: attributesTotalHours)
         
         document.add(attributedText: attributedTotalHours)
         document.add(space: 30)
         
-        
-        let section = PDFSection(columnWidths: [0.2, 0.2, 0.075, 0.2,0.2])
-        section.columns[0].add(.right, text: "ABF")
-        section.columns[1].add(.left, text: "_______________")
-        section.columns[2].add(.center, text: "        ")
-        section.columns[3].add(.right, text: personName)
-        section.columns[4].add(.left, text: "_______________")
-        document.add(section: section)
-        
+//        let section = PDFSection(columnWidths: [0.2, 0.2, 0.075, 0.2,0.2])
+//        section.columns[0].add(.right, text: "ABF")
+//        section.columns[1].add(.left, text: "_______________")
+//        section.columns[2].add(.center, text: "        ")
+//        section.columns[3].add(.right, text: personName)
+//        section.columns[4].add(.left, text: "_______________")
+//        document.add(section: section)
         
         let generator = PDFGenerator(document: document)
         

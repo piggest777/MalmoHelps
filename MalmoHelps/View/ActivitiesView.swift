@@ -11,7 +11,7 @@ import Combine
 struct ActivitiesView: View {
     @State var showAddPerson: Bool = false
     @State var showAddActivity: Bool = false
-    @StateObject var viewModel = ActivitiesViewModel()
+    @StateObject var activitiesVM = ActivitiesViewModel()
     @ObservedObject var familiesLookUp = FamiliesLookupViewModel()
     @State var showSearchPersonView: Bool = false
     @State private var showPicker = false
@@ -21,6 +21,7 @@ struct ActivitiesView: View {
     @State var keywordCalled = false
     @State var selectedActivity: ActivityEntry = ActivityEntry(id: "", activityName: "", venue: nil, personInCharge: nil)
     @State var navLinkActive = false
+    @State var adminNavLinkActive = false
     @State var currPerson: Person?
     @State var calendarViewHeight = 40.0
     @StateObject private var selectedMonth = SelectedMonth()
@@ -73,7 +74,7 @@ struct ActivitiesView: View {
                             VStack {
                                 Spacer().frame(height: calendarViewHeight + 10)
                                 ScrollView{
-                                    ForEach(viewModel.activities, id:\.id) { activity in
+                                    ForEach(activitiesVM.activities, id:\.id) { activity in
                                         ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity) {
                                             reportType = .activityReport
                                             selectedActivity = activity
@@ -108,6 +109,9 @@ struct ActivitiesView: View {
                     NavigationLink(destination:  ParticipantDetailsView(person: currPerson ?? dummyPerson, activity: selectedActivity, reportType: reportType) , isActive: $navLinkActive) {
                        EmptyView()
                     }
+                    NavigationLink(destination:  AdminDashboardView(), isActive: $adminNavLinkActive) {
+                       EmptyView()
+                    }
                 }
             }
             .navigationBarItems(trailing: Button(action: {
@@ -118,17 +122,15 @@ struct ActivitiesView: View {
             .navigationBarTitleDisplayMode(.inline)
         }
         .environmentObject(selectedMonth)
+        .environmentObject(activitiesVM)
         .sheet(isPresented: $showAddPerson) {
             AddPersonView(isPresented: $showAddPerson)
         }.sheet(isPresented: $showSearchPersonView) {
             RegisterParticipantView(date: selectedDate, activity: $selectedActivity, isPresented: $showSearchPersonView)
         }
-        .sheet(isPresented: $showAddActivity) {
-            AddActivityView(isPresented: $showAddActivity)
-        }
         .onChange(of: showAddActivity) { newValue in
             if newValue == false {
-                viewModel.getActivities()
+                activitiesVM.getActivities()
             }
         }
     }
@@ -136,9 +138,9 @@ struct ActivitiesView: View {
     var activityBarItems: some View {
         Group {
             if userStatus == ADMIN {
-                Button(action: {
-                    showAddActivity.toggle()
-                }, label: { Image(systemName: "note.text.badge.plus").imageScale(.large).padding() })
+                    Button(action: {
+                        adminNavLinkActive.toggle()
+                    }, label: { Image(systemName: "list.bullet.clipboard").imageScale(.large).padding() })
             }
         }
     }
@@ -198,6 +200,6 @@ struct ActivitiesView: View {
 
 struct ActivitiesView_Previews: PreviewProvider {
     static var previews: some View {
-        ActivitiesView(viewModel: ActivitiesViewModel(activities: [ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Denis")]))
+        ActivitiesView(activitiesVM: ActivitiesViewModel(activities: [ActivityEntry(id: "", activityName: "Dancing", venue: nil, personInCharge: "Denis")]))
     }
 }

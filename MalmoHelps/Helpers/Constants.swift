@@ -36,6 +36,8 @@ let PHONE_NUMBER = "phone"
 let START_DATE = "start_date"
 let FINISH_DATE = "finish_date"
 let CUSTOM_QR_CODE = "custom_qr_code"
+let ABF_REGION = "abf_region"
+let CITY = "city"
 
 //ActivityEntries
 let ACTIVITY_NAME = "activity_name"
@@ -43,6 +45,7 @@ let VENUE = "venue"
 let PERSON_IN_CHARGE = "person_in_charge"
 let ACTIVITY_COLLECTION = "activities"
 let DEFAULT_DURATION = "default_duration"
+let ACTiVITY_TYPE = "type"
 
 //ParticipantRegistration
 let REGISTRATION_COLLECTION = "participant_registration"
@@ -77,15 +80,10 @@ let DIST_POINTS = [
     ActivityVenue(venue: "Out of list")
 ]
 
- let ACTIVITIES = [
-    ActivityVenue(venue: "Singing"),
-    ActivityVenue(venue: "Painting"),
-    ActivityVenue(venue: "Dancing")
-]
 
 let CURR_POINT = "distribution_point"
 
-let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "_", phoneNumber: "_", customQrCode: nil, keywords: [])
+let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "_", phoneNumber: "_", customQrCode: nil, keywords: [], abfRegion: "South", city: "Malmö")
 
 let dummyActivity = ActivityEntry(id: "", activityName: "Dancing", venue: "Malmö", personInCharge: "Victoria")
 

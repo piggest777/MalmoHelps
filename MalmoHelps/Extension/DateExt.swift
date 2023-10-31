@@ -22,3 +22,33 @@ extension Date {
         return formatter.string(from: self)
     }
 }
+
+extension Date {
+    var year: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: self)
+    }
+    
+    func monthName() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM"
+        return formatter.string(from: self)
+    }
+    func monthAsInt() -> Int {
+        let calendar = Calendar.current
+        return calendar.component(.month, from: self)
+    }
+    
+    func yearAsInt() -> Int {
+        let calendar = Calendar.current
+        return calendar.component(.year, from: self)
+    }
+    
+    var yearAsString: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "yyyy"
+        return formatter.string(from: self)
+    }
+}
+

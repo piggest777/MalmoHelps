@@ -30,8 +30,10 @@ struct ParticipantDetailsView: View {
     
     @StateObject var viewModel = ParticipantDetailsViewModel()
     @EnvironmentObject var selectedMonth: SelectedMonth
+    @EnvironmentObject var activitiesVM: ActivitiesViewModel
     @State var isPdfViewerPresented: Bool  = false
     @State var shareListPresented: Bool = false
+    @State var groupedRapport: Bool = false
     
     var body: some View {
         VStack {
@@ -45,13 +47,25 @@ struct ParticipantDetailsView: View {
             }
             MonthPicker()
             
-            regisrtartionList()
+            registrationList()
                 .frame(maxHeight: .infinity)
                 .padding(.horizontal, 10)
-            
+            if reportType == .personReport {
+                StandardButton(text: "Activities report") {
+                    groupedRapport = false
+                    createDocument(grouped: groupedRapport)
+                    shareListPresented = true
+                }
+                StandardButton(text: "Grouped report") {
+                    groupedRapport = true
+                    createDocument(grouped: groupedRapport)
+                    shareListPresented = true
+                }
+            }
             Spacer()
         }.onAppear{
             requestRegistrations()
+            viewModel.activities = activitiesVM.activities
         }
         .onChange(of: selectedMonth.index) { _ in
             requestRegistrations()
@@ -87,7 +101,7 @@ struct ParticipantDetailsView: View {
         }
     }
     
-    @ViewBuilder func regisrtartionList () -> some View {
+    @ViewBuilder func registrationList () -> some View {
         switch reportType {
         case .personReport:
             ScrollView {
@@ -117,11 +131,11 @@ struct ParticipantDetailsView: View {
         }
     }
     
-    func createDocument() {
+    func createDocument(grouped: Bool = false) {
         switch reportType {
         case .personReport:
             guard !viewModel.participantRegistrationList.isEmpty else { return }
-            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023)
+            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023, showTypes: grouped)
         case .activityReport:
             guard !viewModel.groupedRegistrations.isEmpty else { return }
             viewModel.createDocumentFor(activity: activity, for: selectedMonth.index + 1, year: 2023)
@@ -134,7 +148,6 @@ struct ParticipantDetailsView: View {
         let temporaryFolder = FileManager.default.temporaryDirectory
         let fileName = documentNameGenerator(reportType: reportType)
         let temporaryFileURL = temporaryFolder.appendingPathComponent("\(fileName).pdf")
-        print(temporaryFileURL.path)  // /Users/lsd/Library/Developer/XCPGDevices/E2003834-07AB-4833-B206-843DC0A52967/data/Containers/Data/Application/322D1F1D-4C97-474C-9040-FE5E740D38CF/tmp/document.pdf
         do {
             try pdfData.write(to: temporaryFileURL)
             // your code
@@ -194,7 +207,8 @@ struct ParticipantDetailsView: View {
         case .personReport:
             let firstName = person.firstName
             let firstLetterOfName = firstName[firstName.startIndex]
-            return "\(person.lastName)_\(firstLetterOfName)_\(selectedMonth.stringValue()).pdf"
+            let grouped = groupedRapport ? "grouped" : "activities"
+            return "\(person.lastName)_\(firstLetterOfName)_\(grouped)_\(selectedMonth.stringValue()).pdf"
         case .activityReport:
             let components = [
                 activity.activityName,
@@ -212,9 +226,14 @@ struct ParticipantDetailsView: View {
 
 struct ParticipantDetailsView_Previews: PreviewProvider {
     static let selectedMonth = SelectedMonth()
+    static let activitiesVM = ActivitiesViewModel()
     static var previews: some View {
-        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: []), activity: dummyActivity, reportType: .activityReport).environmentObject(selectedMonth)
-        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: []), activity: dummyActivity, reportType: .personReport).environmentObject(selectedMonth)
+        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: [], abfRegion: nil, city: nil), activity: dummyActivity, reportType: .activityReport)
+            .environmentObject(selectedMonth)
+            .environmentObject(activitiesVM)
+        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: [], abfRegion: nil, city: nil), activity: dummyActivity, reportType: .personReport)
+            .environmentObject(selectedMonth)
+            .environmentObject(activitiesVM)
     }
 }
 

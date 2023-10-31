@@ -23,6 +23,8 @@ struct AddPersonView: View {
     @State var lastName: String = ""
     @State var phoneNumber: String = ""
     @State var personalNumber: String = ""
+    @State var abfRegion: String = ""
+    @State var city: String = ""
     @State var isValid: Bool = true
     @State private var isKeyboardVisible = false
     @State var isLoading = false
@@ -33,6 +35,8 @@ struct AddPersonView: View {
     @State var lastNameValidator: Bool = true
     @State var phoneNumberValidator: Bool = true
     @State var personalNumberValidator: Bool = true
+    @State var abfRegionValidation: Bool = true
+    @State var participantCityValidation: Bool = true
     
     init(isPresented: Binding<Bool>) {
         self._isPresented = isPresented
@@ -81,7 +85,8 @@ struct AddPersonView: View {
                             }
                             let keywords = viewModel.createKeywordsArray(firstName: firstName, lastName: lastName)
                             
-                           person = Person(firstName: firstName, lastName: lastName, startDate: Timestamp(), finishDate: nil, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: nil, keywords: keywords)
+
+                            person = Person(firstName: firstName, lastName: lastName, startDate: Timestamp(), finishDate: nil, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: nil, keywords: keywords, abfRegion: nil, city: nil)
                             
                             if let person {
                                 viewModel.checkPNBeforeAdding(person: person)
@@ -148,7 +153,8 @@ struct AddPersonView: View {
                 WideTextField(title: "First Name", placeholder: .required, validatorType: .required, input: $firstName, fieldValidation: $firstNameValidator),
                 WideTextField(title: "Last Name", placeholder: .required, validatorType: .required, input: $lastName, fieldValidation: $lastNameValidator),
                 WideTextField(title: "Personal Number", placeholder: .required, validatorType: .number, input: $personalNumber, fieldValidation: $personalNumberValidator),
-                WideTextField(title: "Phone", placeholder: .required, validatorType: .mobilePhone, input: $phoneNumber, fieldValidation: $phoneNumberValidator)
+                WideTextField(title: "Phone", placeholder: .required, validatorType: .mobilePhone, input: $phoneNumber, fieldValidation: $phoneNumberValidator),
+                WideTextField(title: "ABF Region", placeholder: .optional, validatorType: .none, input: $phoneNumber, fieldValidation: $phoneNumberValidator)
             ])
         }
         

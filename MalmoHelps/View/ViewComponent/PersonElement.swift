@@ -72,6 +72,6 @@ struct PersonElement: View {
 struct PersonElement_Previews: PreviewProvider {
     static var previews: some View {
         
-        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"]), date: Date(), activity: ActivityEntry(id: "", activityName: "Dance", venue: "Malmo", personInCharge: "Victoria"), showDuration: true, action: {print("")})
+        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"], abfRegion: nil, city: nil), date: Date(), activity: ActivityEntry(id: "", activityName: "Dance", venue: "Malmo", personInCharge: "Victoria"), showDuration: true, action: {print("")})
     }
 }

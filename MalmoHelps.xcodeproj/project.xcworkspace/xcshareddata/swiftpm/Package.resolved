@@ -152,6 +152,15 @@
         "revision" : "1955ebbc090a3fb2149fb53e703595c3146689af",
         "version" : "2.4.1"
       }
+    },
+    {
+      "identity" : "xlsxwriter.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/damuellen/xlsxwriter.swift",
+      "state" : {
+        "revision" : "449ad0d3228b6626871ef1a9473056d1e892c77f",
+        "version" : "1.0.2"
+      }
     }
   ],
   "version" : 2

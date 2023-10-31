@@ -16,11 +16,15 @@ struct AddActivityView: View {
     @State var personInCharge: String = ""
     @State var venue: String = ""
     @State var duration: String = ""
+    @State var activityType: ActivityType = .undefined
     
-    @State var activityNameValidation: Bool = true
+    @State var activityNameValidation = true
     @State var personInChargeValidation = true
     @State var venueValidation = true
     @State var durationValidation = true
+    
+    let activitiesTypes = ActivityType.allCases
+    var activityPlaceholder = "Choose type"
     
     @State private var isKeyboardVisible = false
     
@@ -32,21 +36,61 @@ struct AddActivityView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                     .edgesIgnoringSafeArea(.all)
                 VStack {
-                    Text("ActivityView")
+                    Text("Activity Card")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.vertical, 10)
                         .padding(.leading, 20)
                         .font(.title)
                     WideTextField(title: "Activity Name", placeholder: .required, validatorType: .required, input: $activityName, fieldValidation: $activityNameValidation)
-                    WideTextField(title: "Person in charge", placeholder: .optional, validatorType: .none, input: $personInCharge, fieldValidation: $personInChargeValidation)
-                    WideTextField(title: "Venue", placeholder: .optional, validatorType: .none, input: $venue, fieldValidation: $venueValidation)
+                    WideTextField(title: "Person in charge", placeholder: .required, validatorType: .none, input: $personInCharge, fieldValidation: $personInChargeValidation)
+                    WideTextField(title: "Venue", placeholder: .required, validatorType: .none, input: $venue, fieldValidation: $venueValidation)
                     WideTextField(title: "Default duration", placeholder: .required, validatorType: .float, input: $duration, fieldValidation: $durationValidation)
+                    Menu {
+                        ForEach(activitiesTypes, id: \.self){ type in
+                            if type != .undefined {
+                                Button("\(type.description)") {
+                                    activityType = type
+                                }
+                            }
+                        }
+                        
+                    } label: {
+                        VStack(spacing: 5){
+                            Divider()
+                                .overlay(.black)
+                            HStack{
+                                Text("Activity Type")
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .padding(.leading)
+                                    .font(.system(size: 16, weight: .bold, design: .default))
+                                    .foregroundColor(.black)
+                                Text(activityType == .undefined ? activityPlaceholder : activityType.description)
+                                    .foregroundColor(activityType == .undefined ? .gray : .black)
+                                
+                                Image(systemName: "chevron.down")
+                                    .foregroundColor(.accentColor)
+                                    .font(Font.system(size: 20, weight: .bold))
+                                    .padding(.trailing, 5)
+                            }
+                            
+                            .frame(height: 50)
+                            Divider()
+                                .overlay(.black)
+                        }
+                        .background(.white)
+                        
+                    }.padding(.vertical, 0)
                     Spacer()
                     if !isKeyboardVisible  {
                         Button {
-                            if activityName.isEmpty {
+                            if activityName.isEmpty ||
+                                personInCharge.isEmpty ||
+                                venue.isEmpty ||
+                                duration.isEmpty ||
+                                activityType == .undefined
+                            {
                                 viewModel.showAlert = true
-                                viewModel.alertText = "Please fill activity name"
+                                viewModel.alertText = "Please fill all required fields"
                                 return
                             }
                             
@@ -56,7 +100,7 @@ struct AddActivityView: View {
                                 return
                             }
                             
-                            let activity = ActivityEntry(id: "", activityName: activityName, venue: venue.isEmpty ? nil : venue , personInCharge: personInCharge.isEmpty ? nil : personInCharge, defaultDuration: Float(duration))
+                            let activity = ActivityEntry(id: "", activityName: activityName, venue: venue.isEmpty ? nil : venue , personInCharge: personInCharge.isEmpty ? nil : personInCharge, defaultDuration: Float(duration), activityType: activityType.rawValue)
                             
                             viewModel.addNewActivity(activity)
                             

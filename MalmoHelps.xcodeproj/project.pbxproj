@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C19A2822AE702F700715D59 /* YearMonthPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */; };
+		2C19A2842AE70DAC00715D59 /* AnimatedHideCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */; };
+		2C19A2892AE9C1FC00715D59 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2882AE9C1FC00715D59 /* ActivityType.swift */; };
+		2C19A28B2AEAEFA500715D59 /* ActivityReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */; };
 		2C4AB6712ABF9CB700F92B2E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */; };
 		2C4AB6732ABF9E5500F92B2E /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */; };
 		2C4FB12A2AC0C3DB007A78E0 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4FB1292AC0C3DB007A78E0 /* loading.json */; };
@@ -22,6 +26,13 @@
 		2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */; };
 		2C72CE002AA3A62D00E434F5 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */; };
 		2C72CE022AA3A62D00E434F5 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */; };
+		2C95E9292AE4AD250062D04A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C95E9282AE4AD250062D04A /* FirebaseFunctions */; };
+		2C95E92B2AE52D680062D04A /* ParticipantReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E92A2AE52D680062D04A /* ParticipantReport.swift */; };
+		2C95E92D2AE5338D0062D04A /* FirFunctionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */; };
+		2C95E92F2AE53A960062D04A /* AdminDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E92E2AE53A960062D04A /* AdminDashboardView.swift */; };
+		2C95E9312AE5A3870062D04A /* ReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E9302AE5A3870062D04A /* ReportView.swift */; };
+		2C95E9332AE5A4BC0062D04A /* MonthlyReportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E9322AE5A4BC0062D04A /* MonthlyReportViewModel.swift */; };
+		2C95E9352AE5A9B60062D04A /* MonthlyReportElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E9342AE5A9B60062D04A /* MonthlyReportElement.swift */; };
 		7B28017C29C90D6400CDEEFD /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B28017B29C90D6400CDEEFD /* SearchBarView.swift */; };
 		7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B28017D29C911AB00CDEEFD /* AddPersonView.swift */; };
 		7B421CA629CCEE80009AC2A0 /* WideTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B421CA529CCEE80009AC2A0 /* WideTextField.swift */; };
@@ -95,6 +106,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerView.swift; sourceTree = "<group>"; };
+		2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHideCalendar.swift; sourceTree = "<group>"; };
+		2C19A2882AE9C1FC00715D59 /* ActivityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityType.swift; sourceTree = "<group>"; };
+		2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReport.swift; sourceTree = "<group>"; };
 		2C4AB66F2ABF7DE900F92B2E /* MalmoHelps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MalmoHelps.entitlements; sourceTree = "<group>"; };
 		2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
@@ -108,6 +123,12 @@
 		2C72CDF52AA3A48C00E434F5 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		2C72CDFA2AA3A5D800E434F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
+		2C95E92A2AE52D680062D04A /* ParticipantReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantReport.swift; sourceTree = "<group>"; };
+		2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirFunctionManager.swift; sourceTree = "<group>"; };
+		2C95E92E2AE53A960062D04A /* AdminDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardView.swift; sourceTree = "<group>"; };
+		2C95E9302AE5A3870062D04A /* ReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportView.swift; sourceTree = "<group>"; };
+		2C95E9322AE5A4BC0062D04A /* MonthlyReportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyReportViewModel.swift; sourceTree = "<group>"; };
+		2C95E9342AE5A9B60062D04A /* MonthlyReportElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthlyReportElement.swift; sourceTree = "<group>"; };
 		7B28017B29C90D6400CDEEFD /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
 		7B28017D29C911AB00CDEEFD /* AddPersonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonView.swift; sourceTree = "<group>"; };
 		7B421CA529CCEE80009AC2A0 /* WideTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WideTextField.swift; sourceTree = "<group>"; };
@@ -176,6 +197,7 @@
 				B51B719128B3C57F005F5387 /* FirebaseStorageCombine-Community in Frameworks */,
 				B51B717F28B3C57F005F5387 /* FirebaseAnalyticsSwift in Frameworks */,
 				B51B718B28B3C57F005F5387 /* FirebaseFirestoreCombine-Community in Frameworks */,
+				2C95E9292AE4AD250062D04A /* FirebaseFunctions in Frameworks */,
 				B51B718128B3C57F005F5387 /* FirebaseAppCheck in Frameworks */,
 				B51B718F28B3C57F005F5387 /* FirebaseStorage in Frameworks */,
 				2C72CDF92AA3A52200E434F5 /* Lottie in Frameworks */,
@@ -269,6 +291,9 @@
 				7BC5B46129CF8E4B00655834 /* Person.swift */,
 				7BAF03D229DF7ACB001562B1 /* Registration.swift */,
 				2C72CDFA2AA3A5D800E434F5 /* User.swift */,
+				2C95E92A2AE52D680062D04A /* ParticipantReport.swift */,
+				2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */,
+				2C19A2882AE9C1FC00715D59 /* ActivityType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -289,6 +314,7 @@
 				7BF5E96A29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift */,
 				2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */,
 				2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */,
+				2C95E9322AE5A4BC0062D04A /* MonthlyReportViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -309,11 +335,12 @@
 				7B28017D29C911AB00CDEEFD /* AddPersonView.swift */,
 				7B63C41C29F419A90032FCFB /* AddActivityView.swift */,
 				7BAC0F5229DCB4C5005476C9 /* RegisterParticipantView.swift */,
-				7BAF03DA29E48C9A001562B1 /* ParticipantListViewElement.swift */,
 				7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */,
 				2C72CDEF2AA3A40200E434F5 /* LoadingView.swift */,
 				2C72CDF12AA3A40A00E434F5 /* UnauthPage.swift */,
 				7B63C41A29F320040032FCFB /* PDFViewer.swift */,
+				2C95E92E2AE53A960062D04A /* AdminDashboardView.swift */,
+				2C95E9302AE5A3870062D04A /* ReportView.swift */,
 				B51B719A28B3CFA1005F5387 /* ViewComponent */,
 			);
 			path = View;
@@ -325,6 +352,7 @@
 				B5818CB628B94F1200321D23 /* FsService.swift */,
 				2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */,
 				7B63C41829F31AD40032FCFB /* PDFManager.swift */,
+				2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -332,6 +360,7 @@
 		B51B719A28B3CFA1005F5387 /* ViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				7BAF03DA29E48C9A001562B1 /* ParticipantListViewElement.swift */,
 				B51B719B28B3CFEB005F5387 /* GoogleSignInButton.swift */,
 				B51B719F28B4104E005F5387 /* CircleButton.swift */,
 				B5818CAC28B89CF700321D23 /* TextWithTextfield.swift */,
@@ -345,6 +374,9 @@
 				7BF5E96C29F1A1E400DE8BD2 /* ParticipantDetailsElement.swift */,
 				7BAF03D629E204FE001562B1 /* FloatingTextField.swift */,
 				2C72CDF52AA3A48C00E434F5 /* LottieView.swift */,
+				2C95E9342AE5A9B60062D04A /* MonthlyReportElement.swift */,
+				2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */,
+				2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -404,6 +436,7 @@
 				2C72CDF82AA3A52200E434F5 /* Lottie */,
 				2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */,
 				2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */,
+				2C95E9282AE4AD250062D04A /* FirebaseFunctions */,
 			);
 			productName = MalmoHelps;
 			productReference = B51B713728B14CC9005F5387 /* MalmoHelps.app */;
@@ -438,6 +471,7 @@
 				B51B719228B3C5F0005F5387 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */,
 				7B63C41529F3190E0032FCFB /* XCRemoteSwiftPackageReference "TPPDF" */,
 				2C72CDF72AA3A52200E434F5 /* XCRemoteSwiftPackageReference "lottie-spm" */,
+				2C19A2852AE71A4F00715D59 /* XCRemoteSwiftPackageReference "xlsxwriter" */,
 			);
 			productRefGroup = B51B713828B14CC9005F5387 /* Products */;
 			projectDirPath = "";
@@ -495,6 +529,7 @@
 			files = (
 				7B421CA629CCEE80009AC2A0 /* WideTextField.swift in Sources */,
 				7BF5E96729EF4F9600DE8BD2 /* ParticipantDetailsView.swift in Sources */,
+				2C95E9312AE5A3870062D04A /* ReportView.swift in Sources */,
 				B5AF869328BB5CEA005FCB26 /* StandardButton.swift in Sources */,
 				B5AF869128BB413C005FCB26 /* AddCategoryViewModel.swift in Sources */,
 				B5818CB728B94F1200321D23 /* FsService.swift in Sources */,
@@ -502,6 +537,7 @@
 				B5AF868F28BB3EB1005FCB26 /* AddCategoryView.swift in Sources */,
 				7BF5E96B29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift in Sources */,
 				2C72CDFB2AA3A5D800E434F5 /* User.swift in Sources */,
+				2C19A2842AE70DAC00715D59 /* AnimatedHideCalendar.swift in Sources */,
 				7BC5B46C29D301B200655834 /* ActivitiesElement.swift in Sources */,
 				7BC5B46629CFB9C800655834 /* AddPersonViewModel.swift in Sources */,
 				B51B716328B3BE8F005F5387 /* HomeView.swift in Sources */,
@@ -528,27 +564,35 @@
 				B54AEDAC28FF3F580094B024 /* ActivityVenue.swift in Sources */,
 				7BAF03D529E1F952001562B1 /* PersonElement.swift in Sources */,
 				2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */,
+				2C95E92F2AE53A960062D04A /* AdminDashboardView.swift in Sources */,
 				7BC5B46829D2318700655834 /* ActivityEntry.swift in Sources */,
 				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
 				B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */,
 				B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */,
 				B5AF868D28BB374C005FCB26 /* Category.swift in Sources */,
 				B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */,
+				2C95E92B2AE52D680062D04A /* ParticipantReport.swift in Sources */,
 				B5AFA1C028BA97DB0006CDF0 /* DistributeView.swift in Sources */,
 				7BC5B46A29D247A700655834 /* ActivitiesViewModel.swift in Sources */,
+				2C19A2822AE702F700715D59 /* YearMonthPickerView.swift in Sources */,
 				7BAC0F5329DCB4C5005476C9 /* RegisterParticipantView.swift in Sources */,
 				B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */,
 				B5533E5428BA196200B73F01 /* CardView.swift in Sources */,
+				2C95E9352AE5A9B60062D04A /* MonthlyReportElement.swift in Sources */,
+				2C19A2892AE9C1FC00715D59 /* ActivityType.swift in Sources */,
 				2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */,
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
 				7BAF03D729E204FE001562B1 /* FloatingTextField.swift in Sources */,
 				7B63C41B29F320040032FCFB /* PDFViewer.swift in Sources */,
 				7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */,
 				B5818CB528B8B5E700321D23 /* Family.swift in Sources */,
+				2C95E92D2AE5338D0062D04A /* FirFunctionManager.swift in Sources */,
 				B51B716028B3BCBC005F5387 /* AuthView.swift in Sources */,
 				2C4AB6732ABF9E5500F92B2E /* CryptoUtils.swift in Sources */,
+				2C95E9332AE5A4BC0062D04A /* MonthlyReportViewModel.swift in Sources */,
 				2C72CDF22AA3A40A00E434F5 /* UnauthPage.swift in Sources */,
 				7BAF03DB29E48C9A001562B1 /* ParticipantListViewElement.swift in Sources */,
+				2C19A28B2AEAEFA500715D59 /* ActivityReport.swift in Sources */,
 				B51B713B28B14CC9005F5387 /* MalmoHelpsApp.swift in Sources */,
 				7BAF03D329DF7ACB001562B1 /* Registration.swift in Sources */,
 				7B63C41F29F41FA40032FCFB /* AddActivtiyViewModel.swift in Sources */,
@@ -683,7 +727,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -702,7 +746,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -721,7 +765,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 14;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -740,7 +784,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.10;
+				MARKETING_VERSION = 1.11;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -776,6 +820,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		2C19A2852AE71A4F00715D59 /* XCRemoteSwiftPackageReference "xlsxwriter" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/damuellen/xlsxwriter.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.2;
+			};
+		};
 		2C72CDF72AA3A52200E434F5 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
@@ -825,6 +877,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = B51B717B28B3C57F005F5387 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfigSwift;
+		};
+		2C95E9282AE4AD250062D04A /* FirebaseFunctions */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B51B717B28B3C57F005F5387 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFunctions;
 		};
 		7B63C41629F3190E0032FCFB /* TPPDF */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -8,6 +8,11 @@
 import Foundation
 import SwiftUI
 import Combine
+import Firebase
+import FirebaseFirestoreSwift
+import FirebaseAuth
+import FirebaseFunctions
+
 
 class ActivitiesViewModel: ObservableObject {
     @Published var activities: [ActivityEntry]
@@ -19,6 +24,7 @@ class ActivitiesViewModel: ObservableObject {
         self.activities = activities
         getActivities()
     }
+    
     func getActivities() {
         cancellable = FsService.shared.getAllActivities()
             .sink(receiveCompletion: { error in },

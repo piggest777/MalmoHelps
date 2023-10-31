@@ -20,7 +20,7 @@ struct StandardButton: View {
                 .frame(maxWidth: .infinity)
                 .background(color)
                 .cornerRadius(12)
-                .padding()
+                .padding(.horizontal, 10)
         }
     }
 }

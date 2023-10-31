@@ -18,6 +18,8 @@ struct Person {
     let phoneNumber: String
     let customQrCode: String?
     let keywords: [String]
+    let abfRegion: String?
+    let city: String?
     
     static func fromDocument(_ document: DocumentSnapshot) -> Person? {
         guard let data = document.data(),
@@ -31,8 +33,10 @@ struct Person {
         let id = document.documentID
         let customQrCode = data[CUSTOM_QR_CODE] as? String
         let finishDate = data[FINISH_DATE] as? Timestamp
+        let abfRegion = data[ABF_REGION] as? String
+        let city = data[CITY] as? String
         
-        return Person(id: id, firstName: firstName, lastName: lastName, startDate: startDate, finishDate: finishDate, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: customQrCode, keywords: keywords)
+        return Person(id: id, firstName: firstName, lastName: lastName, startDate: startDate, finishDate: finishDate, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: customQrCode, keywords: keywords, abfRegion: abfRegion, city: city)
     }
     }
 
