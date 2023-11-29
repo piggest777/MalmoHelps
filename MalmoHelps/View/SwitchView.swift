@@ -19,10 +19,12 @@ struct SwitchView: View {
     var body: some View {
         Group {
             switch viewModel.userStatus {
-            case ADMIN, TEACHER:
+            case ADMIN:
                 tabView(selectedIndex: $selectedTabIndex)
             case VOLUNTEER:
                 HomeView()
+            case TEACHER:
+                ActivitiesView()
             case UNDEFINED:
                 UnauthPage()
             case LOADING:

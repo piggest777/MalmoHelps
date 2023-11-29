@@ -100,7 +100,7 @@ struct AddActivityView: View {
                                 return
                             }
                             
-                            let activity = ActivityEntry(id: "", activityName: activityName, venue: venue.isEmpty ? nil : venue , personInCharge: personInCharge.isEmpty ? nil : personInCharge, defaultDuration: Float(duration), activityType: activityType.rawValue)
+                            let activity = ActivityEntry(id: "", activityName: activityName.trimSpaces(), venue: venue.isEmpty ? nil : venue.trimSpaces() , personInCharge: personInCharge.isEmpty ? nil : personInCharge.trimSpaces(), defaultDuration: Float(duration), activityType: activityType.rawValue)
                             
                             viewModel.addNewActivity(activity)
                             

@@ -24,9 +24,10 @@ struct ActivitiesView: View {
     @State var adminNavLinkActive = false
     @State var currPerson: Person?
     @State var calendarViewHeight = 40.0
-    @StateObject private var selectedMonth = SelectedMonth()
+    @StateObject private var selectedMonth = DateHelper()
     @State private var reportType: ReportType = .personReport
     @AppStorage("user_status") var userStatus: String = UNDEFINED
+    
     
     @State var activityRepportNavLink: Bool = false
     
@@ -48,7 +49,7 @@ struct ActivitiesView: View {
                     familiesLookUp.queryResultPerson.removeAll()
                     if keyword.count > 2 {
                         familiesLookUp.keywordSubject.send((keyword, .person))
-//                        familiesLookUp.fetchParticipants(keywords: keyword)
+                        //                        familiesLookUp.fetchParticipants(keywords: keyword)
                     }
                     keywordCalled = true
                 } else {
@@ -68,28 +69,76 @@ struct ActivitiesView: View {
                     if userStatus == ADMIN {
                         SearchBarView(keyword: keywordBinding, searching: $familiesLookUp.searching)
                     }
-
+                    
                     if familiesLookUp.queryResultPerson.isEmpty && keyword.isEmpty {
                         ZStack(alignment: .top) {
                             VStack {
                                 Spacer().frame(height: calendarViewHeight + 10)
-                                ScrollView{
-                                    ForEach(activitiesVM.activities, id:\.id) { activity in
-                                        ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity) {
-                                            reportType = .activityReport
-                                            selectedActivity = activity
-                                            navLinkActive = true
-                                            print("Actitity repport pressed for activity: \(selectedActivity.activityName)")
+                                
+                                ScrollView {
+                                    if !activitiesVM.favoriteActivities.isEmpty {
+                                        Section(header:  
+                                                    HStack {
+                                            Text("Favorites")
+                                                .font(.title)
+                                                .fontWeight(.bold)
+                                                .foregroundColor(.primary)
+                                                .padding(.leading, 5)
+                                            Spacer()
                                         }
-                                            .padding(.horizontal, 10)
-                                            .padding(.vertical, 5)
+                                        .background(Color("DarkShadow"))
+                                        .cornerRadius(5)
+                                        .padding(.horizontal, 10)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        ) {
+                                            ForEach(activitiesVM.favoriteActivities, id: \.id) { activity in
+                                                ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity) {
+                                                    reportType = .activityReport
+                                                    selectedActivity = activity
+                                                    navLinkActive = true
+                                                    print("Actitity repport pressed for activity: \(selectedActivity.activityName)")
+                                                }
+                                                .padding(.horizontal, 10)
+                                                .padding(.vertical, 5)
+                                            }
+                                        }
+                                    }
+                                    
+                                    ForEach(activitiesVM.groupedActivities, id: \.type) { group in
+                                        VStack(alignment: .leading) {
+                                            HStack {
+                                                Text(group.type.description)
+                                                    .fontWeight(.bold)
+                                                Spacer()
+                                                Image(systemName: group.isExpanded ? "chevron.up.circle" : "chevron.down.circle")
+                                            }
+                                            .padding()
+                                            .background(Rectangle().fill(Color.gray.opacity(0.2)))
+                                            .cornerRadius(8)
+                                                .onTapGesture {
+                                                    activitiesVM.toggleGroup(group.type)
+                                                }
+                                            
+                                            if group.isExpanded {
+                                                ForEach(group.activities, id: \.id) { activity in
+                                                    ActivitiesElement(activity: activity, showSearchView: $showSearchPersonView, currActivity: $selectedActivity) {
+                                                        reportType = .activityReport
+                                                        selectedActivity = activity
+                                                        navLinkActive = true
+                                                        print("Actitity repport pressed for activity: \(selectedActivity.activityName)")
+                                                    }
+                                                    .padding(.horizontal, 10)
+                                                    .padding(.vertical, 5)
+                                                }
+                                            }
+                                        }.padding(.horizontal, 10)
                                     }
                                 }
                             }
                             calendarView()
                                 .frame(maxHeight: calendarViewHeight)
                         }
-
+                        
                     } else {
                         ScrollView {
                             ForEach( familiesLookUp.queryResultPerson, id: \.id ) {
@@ -106,11 +155,11 @@ struct ActivitiesView: View {
                         }.padding(.horizontal)
                     }
                     Spacer()
-                    NavigationLink(destination:  ParticipantDetailsView(person: currPerson ?? dummyPerson, activity: selectedActivity, reportType: reportType) , isActive: $navLinkActive) {
-                       EmptyView()
+                    NavigationLink(destination: ParticipantDetailsView(person: currPerson ?? dummyPerson, activity: selectedActivity, reportType: reportType, isDetailsPresented: $navLinkActive) , isActive: $navLinkActive) {
+                        EmptyView()
                     }
                     NavigationLink(destination:  AdminDashboardView(), isActive: $adminNavLinkActive) {
-                       EmptyView()
+                        EmptyView()
                     }
                 }
             }
@@ -124,13 +173,15 @@ struct ActivitiesView: View {
         .environmentObject(selectedMonth)
         .environmentObject(activitiesVM)
         .sheet(isPresented: $showAddPerson) {
-            AddPersonView(isPresented: $showAddPerson)
+            AddPersonView(isPresented: $showAddPerson, person: nil, cities: activitiesVM.cities)
         }.sheet(isPresented: $showSearchPersonView) {
             RegisterParticipantView(date: selectedDate, activity: $selectedActivity, isPresented: $showSearchPersonView)
+                .environmentObject(activitiesVM)
         }
         .onChange(of: showAddActivity) { newValue in
             if newValue == false {
                 activitiesVM.getActivities()
+                
             }
         }
     }
@@ -138,62 +189,62 @@ struct ActivitiesView: View {
     var activityBarItems: some View {
         Group {
             if userStatus == ADMIN {
-                    Button(action: {
-                        adminNavLinkActive.toggle()
-                    }, label: { Image(systemName: "list.bullet.clipboard").imageScale(.large).padding() })
+                Button(action: {
+                    adminNavLinkActive.toggle()
+                }, label: { Image(systemName: "list.bullet.clipboard").imageScale(.large).padding() })
             }
         }
     }
     
     
     @ViewBuilder func calendarView() -> some View{
-            HStack (alignment: .center) {
-                Spacer()
-                Button {
-                    let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate)
-                    selectedDate = yesterday!
-                    changeDateByArrow = true
-                } label: {
-                    Image(systemName: "chevron.left")
+        HStack (alignment: .center) {
+            Spacer()
+            Button {
+                let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: selectedDate)
+                selectedDate = yesterday!
+                changeDateByArrow = true
+            } label: {
+                Image(systemName: "chevron.left")
+            }
+            Button {
+                withAnimation {
+                    showPicker.toggle()
+                    changeDateByArrow = false
                 }
-                Button {
+            }  label: {
+                Text("\(selectedDate, formatter: dateFormatter)")
+                    .padding(10)
+                    .padding(.horizontal, 30)
+                    .background(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.gray)
+                    )
+            }
+            .background(
+                DatePicker("", selection: $selectedDate, displayedComponents: .date)
+                    .datePickerStyle(.graphical)
+                    .frame(width: 300, height: 300)
+                    .clipped()
+                    .background(Color.white.cornerRadius(10))
+                    .opacity(showPicker ? 1 : 0 )
+                    .offset(x: 0, y: 180)
+            ).onChange(of: selectedDate) { newValue in
+                if !changeDateByArrow {
                     withAnimation {
                         showPicker.toggle()
-                        changeDateByArrow = false
-                    }
-                }  label: {
-                    Text("\(selectedDate, formatter: dateFormatter)")
-                        .padding(10)
-                        .padding(.horizontal, 30)
-                        .background(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.gray)
-                        )
-                }
-                .background(
-                    DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                        .datePickerStyle(.graphical)
-                        .frame(width: 300, height: 300)
-                        .clipped()
-                        .background(Color.white.cornerRadius(10))
-                        .opacity(showPicker ? 1 : 0 )
-                        .offset(x: 0, y: 180)
-                ).onChange(of: selectedDate) { newValue in
-                    if !changeDateByArrow {
-                        withAnimation {
-                            showPicker.toggle()
-                        }
                     }
                 }
-                Button {
-                    let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate)
-                    selectedDate = tomorrow!
-                    changeDateByArrow = true
-                } label: {
-                    Image(systemName: "chevron.right")
-                }
-                Spacer()
             }
+            Button {
+                let tomorrow = Calendar.current.date(byAdding: .day, value: 1, to: selectedDate)
+                selectedDate = tomorrow!
+                changeDateByArrow = true
+            } label: {
+                Image(systemName: "chevron.right")
+            }
+            Spacer()
+        }
     }
 }
 

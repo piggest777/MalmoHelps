@@ -23,8 +23,9 @@ struct Registration: Codable, Identifiable, Hashable {
     var activityName: String
     var activityPersonInCharge: String?
     var venue: String?
+    var activityId: String?
     
-    init(id: String = "", participantName: String, participantId: String, year: Int, month: Int, day: Int, duration: Float, timestamp: Timestamp, activityName: String, activityPersonInCharge: String?, venue: String?) {
+    init(id: String = "", participantName: String, participantId: String, year: Int, month: Int, day: Int, duration: Float, timestamp: Timestamp, activityName: String, activityPersonInCharge: String?, venue: String?, activityId: String?) {
         self.id = id
         self.participantName = participantName
         self.participantId = participantId
@@ -36,6 +37,7 @@ struct Registration: Codable, Identifiable, Hashable {
         self.activityName = activityName
         self.activityPersonInCharge = activityPersonInCharge
         self.venue = venue
+        self.activityId = activityId
     }
     
     init(from decoder: Decoder) throws {
@@ -51,7 +53,17 @@ struct Registration: Codable, Identifiable, Hashable {
         self.activityName = try container.decode(String.self, forKey: .activityName)
         self.activityPersonInCharge = try container.decodeIfPresent(String.self, forKey: .activityPersonInCharge)
         self.venue = try container.decodeIfPresent(String.self, forKey: .venue)
+        self.activityId = try container.decodeIfPresent(String.self, forKey: .activityId)
     }
+    
+    func getDisplayedActivityName(activitiesDict: [String : ActivityEntry]) -> String {
+        if let activityId = self.activityId,
+           let activityEntry = activitiesDict[activityId] {
+            return activityEntry.activityName
+        }
+        return activityName
+    }
+
     
     enum CodingKeys: String, CodingKey {
         case id
@@ -65,5 +77,6 @@ struct Registration: Codable, Identifiable, Hashable {
         case activityName = "activity_name"
         case activityPersonInCharge = "person_in_charge"
         case venue
+        case activityId = "activity_id"
     }
 }

@@ -18,14 +18,16 @@ struct ActivityEntry: Hashable, Codable {
     var personInCharge: String?
     var defaultDuration: Float?
     var activityType: Int
+    var archive: Bool
     
-    init(id: String, activityName: String, venue: String?, personInCharge: String?, defaultDuration: Float? = 1.0, activityType: Int = 0) {
+    init(id: String, activityName: String, venue: String?, personInCharge: String?, defaultDuration: Float? = 1.0, activityType: Int = 0, archive: Bool = false) {
         self.id = id
         self.activityName = activityName
         self.venue = venue
         self.personInCharge = personInCharge
         self.defaultDuration = defaultDuration
         self.activityType = activityType
+        self.archive = archive
     }
     
     enum CodingKeys: String, CodingKey {
@@ -35,6 +37,7 @@ struct ActivityEntry: Hashable, Codable {
         case personInCharge = "person_in_charge"
         case defaultDuration = "default_duration"
         case activityType = "type"
+        case archive = "archive"
     }
     
     init(from decoder: Decoder) throws {
@@ -45,5 +48,6 @@ struct ActivityEntry: Hashable, Codable {
         self.personInCharge = try container.decodeIfPresent(String.self, forKey: .personInCharge)
         self.defaultDuration = try container.decodeIfPresent(Float.self, forKey: .defaultDuration)
         self.activityType = try container.decodeIfPresent(Int.self, forKey: .activityType) ?? 0
+        self.archive = try container.decodeIfPresent(Bool.self, forKey: .archive) ?? false
     }
 }

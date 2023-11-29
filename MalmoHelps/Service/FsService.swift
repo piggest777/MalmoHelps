@@ -75,19 +75,30 @@ class FsService {
     }
     
     func addNewPerson(_ person: Person) -> Future<Void, Error> {
+        
+        let dataDictionary = [
+            FIRST_NAME : person.firstName,
+            LAST_NAME : person.lastName,
+            PERSONAL_NUMBER : person.personalNumber,
+            PHONE_NUMBER : person.phoneNumber,
+            START_DATE : Timestamp(),
+            FINISH_DATE : FINISH_DATE as Any,
+            CUSTOM_QR_CODE : person.customQrCode ?? "",
+            KEYWORDS : person.keywords,
+            REGION : person.abfRegion as Any,
+            GENDER : person.gender as Any,
+            CITY : person.city as Any,
+            CREATED_BY: Auth.auth().currentUser?.displayName  as Any
+        ]
+        
         return Future<Void, Error> { promise in
-            self.db.collection(PERSON_COLLECTION).addDocument(data: [
-                FIRST_NAME : person.firstName,
-                LAST_NAME : person.lastName,
-                PERSONAL_NUMBER : person.personalNumber,
-                PHONE_NUMBER : person.phoneNumber,
-                START_DATE : Timestamp(),
-                FINISH_DATE : FINISH_DATE,
-                CUSTOM_QR_CODE : person.customQrCode ?? "",
-                KEYWORDS : person.keywords,
-                ABF_REGION : person.abfRegion as Any,
-                CITY : person.city as Any
-            ]) { error in
+            var docId = person.id
+            if docId.isEmpty {
+                let collectionReference = self.db.collection(PERSON_COLLECTION)
+                let newDocumentReference = collectionReference.document()
+                docId = newDocumentReference.documentID
+            }
+            self.db.collection(PERSON_COLLECTION).document(docId).setData(dataDictionary){ error in
                 if let error = error {
                     promise(.failure(error))
                 } else {
@@ -104,7 +115,8 @@ class FsService {
                 PERSON_IN_CHARGE : activity.personInCharge as Any,
                 VENUE : activity.venue as Any,
                 DEFAULT_DURATION : activity.defaultDuration as Any,
-                ACTiVITY_TYPE : activity.activityType as Any
+                ACTIVITY_TYPE : activity.activityType as Any,
+                CREATED_BY: Auth.auth().currentUser?.displayName  as Any
             ]) { error in
                 if let error = error {
                     promise(.failure(error))
@@ -125,7 +137,8 @@ class FsService {
             
             self.db.collection(REGISTRATION_COLLECTION).addDocument(data: [
                 PARTICIPANT_NAME : "\(person.firstName) \(person.lastName)",
-                PARTICIPANT_ID :  person.id,
+                PARTICIPANT_ID : person.id,
+                ACTIVITY_ID: activity.id as Any,
                 YEAR : year,
                 MONTH : month,
                 DAY : day,
@@ -133,7 +146,8 @@ class FsService {
                 DURATION : activity.defaultDuration ?? 1.0,
                 ACTIVITY_NAME: activity.activityName,
                 PERSON_IN_CHARGE: activity.personInCharge as Any,
-                VENUE: activity.venue as Any
+                VENUE: activity.venue as Any,
+                CREATED_BY: Auth.auth().currentUser?.displayName  as Any
             ]) { error in
                 if let error {
                     promise(.failure(error))
@@ -226,6 +240,40 @@ class FsService {
         }
     }
     
+    func fetchParticipant(by uid: String) -> Future<Person, FirestoreError> {
+        let collectionRef = db.collection(PERSON_COLLECTION)
+        return Future<Person, FirestoreError> { promise in
+            collectionRef.document(uid).getDocument { snapshot, error in
+                if let error  {
+                    print(error.localizedDescription)
+                    promise(.failure(FirestoreError.snapshotError))
+                } else {
+                    guard let snapshot = snapshot else {
+                        promise(.failure(FirestoreError.documentNotFound))
+                        return
+                    }
+                    guard let participant = Person.fromDocument(snapshot) else  {
+                        promise(.failure(FirestoreError.snapshotError))
+                        return
+                    }
+                    promise(.success(participant))
+                }
+            }
+            
+        }
+    }
+    
+    func removeParticipant(by uid: String, completionHandler: @escaping (Bool) -> Void ) {
+        db.collection(PERSON_COLLECTION).document(uid).delete { error in
+            if error == nil {
+                completionHandler(true)
+            }
+            else {
+                print("Fail during deleting person: \(String(describing: error?.localizedDescription))")
+            }
+        }
+    }
+    
     func getAllCategories(completionHandler: @escaping ([Category])->()) {
         
         var categories: [Category] = []
@@ -276,33 +324,44 @@ class FsService {
         }
     }
     
-    func getActivitiesParticipantFor(month: Int, year: Int, activity: ActivityEntry) -> Future<[Registration], Error> {
+    private func fetchRegistrations(query: Query) -> Future<[Registration], Error> {
         return Future { promise in
-            let colection = self.db.collection(REGISTRATION_COLLECTION)
-            let query = colection
-                .whereField(MONTH, isEqualTo: month)
-                .whereField(YEAR, isEqualTo: year)
-                .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
-            
             query.getDocuments { snapshot, error in
-                if let error {
-                    print("Error while fetchih actities participant: \(error)")
+                if let error = error {
+                    print("Error while fetching activities participant: \(error)")
                     promise(.failure(error))
-                } else if let snapshot {
-                    var registrations = snapshot.documents.compactMap { document in
-                        try? document.data(as: Registration.self)
-                    }
-                    if let venue = activity.venue {
-                      registrations = registrations.filter { $0.venue == venue}
-                    }
-                    
-                    if let personInCharge = activity.personInCharge {
-                        registrations = registrations.filter { $0.activityPersonInCharge == personInCharge}
-                    }
-                    promise(.success(registrations))
+                    return
                 }
+                
+                guard let snapshot = snapshot else {
+                    print("Snapshot is nil")
+                    promise(.failure(FirestoreError.snapshotError)) // Define FirestoreError.snapshotError
+                    return
+                }
+
+                let registrations = snapshot.documents.compactMap { document in
+                    try? document.data(as: Registration.self)
+                }
+                promise(.success(registrations))
             }
         }
+    }
+    
+    func getActivitiesParticipantFor(month: Int, year: Int, activity: ActivityEntry) -> Future<[Registration], Error> {
+        let query = db.collection(REGISTRATION_COLLECTION)
+            .whereField(MONTH, isEqualTo: month)
+            .whereField(YEAR, isEqualTo: year)
+            .whereField(ACTIVITY_NAME, isEqualTo: activity.activityName)
+        return fetchRegistrations(query: query)
+    }
+    
+    func getActivitiesParticipantById(month: Int, year: Int, activityId: String) -> Future<[Registration], Error> {
+        let query = db.collection(REGISTRATION_COLLECTION)
+            .whereField(MONTH, isEqualTo: month)
+            .whereField(YEAR, isEqualTo: year)
+            .whereField(ACTIVITY_ID, isEqualTo: activityId)
+
+        return fetchRegistrations(query: query)
     }
     
     func checkIfPNEXist(pn: String) -> Future<Bool, Error> {
@@ -405,15 +464,54 @@ class FsService {
         let user = Auth.auth().currentUser
         user?.delete()
     }
-}
+    
+    ///City management
 
+    func getCities() -> Future<[City], Error> {
+        return Future<[City], Error> { promise in
+            let ref = self.db.collection(CITY_COLLECTION)
+            ref
+                .order(by: CITY)
+                .getDocuments { snapshot, error in
+                if let error = error {
+                    promise(.failure(error))
+                } else {
+                    if let cities = snapshot?.documents.compactMap({ try? $0.data(as: City.self) }) {
+                        promise(.success(cities))
+                    } else {
+                        promise(.failure(FirestoreError.snapshotError))
+                    }
+                }
+            }
+        }
+    }
+    
+    
+    func createCity(city: City, completionHandler: @escaping (Result<Void, FirestoreError>) -> Void) {
+        let data: [String: Any] = [
+            CITY: city.city,
+            REGION: city.region
+        ]
+        
+        db.collection(CITY_COLLECTION).addDocument(data: data) { error in
+            if let error = error {
+                completionHandler(.failure(.addDocumentError(error)))
+            } else {
+                completionHandler(.success(()))
+            }
+        }
+    }
+}
 
 enum FirestoreError: Error {
     case snapshotError
     case documentNotFound
     case userNotFound
+    case failedCast
+    case addDocumentError(Error)
     
-    func errorDescription() -> String {
+    
+    var description: String {
         switch self {
         case .snapshotError:
             return "Snapshot is nil"
@@ -421,6 +519,10 @@ enum FirestoreError: Error {
             return "Document is nil"
         case .userNotFound:
             return "User not found in database"
+        case .failedCast:
+            return "Data can't be readen"
+        case .addDocumentError(let error):
+            return "Document can't be created: \(error)"
         }
     }
 }

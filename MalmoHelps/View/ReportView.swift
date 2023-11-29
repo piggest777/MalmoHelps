@@ -80,6 +80,9 @@ struct ReportView: View {
                     Text("Updated: \(date)")
                 }
             }
+            .alert(viewModel.errorText, isPresented: $viewModel.showAlert) {
+                Button("OK", role: .cancel) {}
+            }
             .navigationBarItems(trailing: Button(action: {
                 showShareCSVSheet()
             }, label: { Image(systemName: "square.and.arrow.up").imageScale(.large).padding() }))

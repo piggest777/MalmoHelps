@@ -52,6 +52,6 @@ struct ParticipantListViewElement: View {
 
 struct ParticipantListViewElement_Previews: PreviewProvider {
     static var previews: some View {
-        ParticipantListViewElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"], abfRegion: nil, city: nil), action: { print("") })
+        ParticipantListViewElement(person: dummyPerson, action: { print("") })
     }
 }

@@ -30,9 +30,9 @@ extension Date {
         return formatter.string(from: self)
     }
     
-    func monthName() -> String {
+    func monthName(format: String = "MMM") -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "MMM"
+        formatter.dateFormat = format
         return formatter.string(from: self)
     }
     func monthAsInt() -> Int {
@@ -49,6 +49,20 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy"
         return formatter.string(from: self)
+    }
+    
+    init?(year: Int, month: Int) {
+        var components = DateComponents()
+        components.year = year
+        components.month = month
+        components.day = 1  // Set to the first day of the month
+
+        let calendar = Calendar.current
+        if let date = calendar.date(from: components) {
+            self = date
+        } else {
+            return nil
+        }
     }
 }
 

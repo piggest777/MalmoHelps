@@ -23,75 +23,95 @@ enum ReportType {
 }
 
 struct ParticipantDetailsView: View {
-    let person: Person
     let activity: ActivityEntry
-    
     let reportType: ReportType
+    @Binding var isViewPresented: Bool
     
+    
+    @ObservedObject var personViewModel: PersonDetailsViewModel
     @StateObject var viewModel = ParticipantDetailsViewModel()
-    @EnvironmentObject var selectedMonth: SelectedMonth
+    @EnvironmentObject var dateHelper: DateHelper
     @EnvironmentObject var activitiesVM: ActivitiesViewModel
     @State var isPdfViewerPresented: Bool  = false
     @State var shareListPresented: Bool = false
     @State var groupedRapport: Bool = false
+    @State var isEditProfilePresented: Bool = false
+    @State private var showDeletionAlert = false
+    
+    init(person: Person, activity: ActivityEntry, reportType: ReportType, isDetailsPresented: Binding<Bool>) {
+        personViewModel =  PersonDetailsViewModel(person: person)
+        self.activity = activity
+        self.reportType = reportType
+        self._isViewPresented = isDetailsPresented
+    }
+    
+    var month: Int {
+        dateHelper.date.monthAsInt()
+    }
+    
+    var year: Int {
+        dateHelper.date.yearAsInt()
+    }
     
     var body: some View {
         VStack {
-            Spacer()
-                .frame(height: 20)
             switch reportType {
             case .personReport:
-                titleText(titleText: "\(person.firstName) \(person.lastName)", subtitleText: person.personalNumber)
+                titleText(titleText: "\(personViewModel.person.firstName) \(personViewModel.person.lastName)", subtitleText: personViewModel.person.personalNumber)
             case .activityReport:
                 titleText(titleText: activity.activityName, subtitleText: "\(activity.venue ?? String()), \(activity.personInCharge ?? String())")
             }
-            MonthPicker()
+            horizontalMenu()
+                .padding(.horizontal, 10)
+            AnimatedHideCalendar(currentDate: $dateHelper.date)
+//            MonthPicker()
             
             registrationList()
                 .frame(maxHeight: .infinity)
                 .padding(.horizontal, 10)
-            if reportType == .personReport {
-                StandardButton(text: "Activities report") {
-                    groupedRapport = false
-                    createDocument(grouped: groupedRapport)
-                    shareListPresented = true
-                }
-                StandardButton(text: "Grouped report") {
-                    groupedRapport = true
-                    createDocument(grouped: groupedRapport)
-                    shareListPresented = true
-                }
-            }
             Spacer()
         }.onAppear{
             requestRegistrations()
+            print(activitiesVM.activities.count)
             viewModel.activities = activitiesVM.activities
         }
-        .onChange(of: selectedMonth.index) { _ in
+        .onChange(of: month) { _ in
             requestRegistrations()
         }
         .sheet(isPresented: $isPdfViewerPresented, content: {
             PDFViewer(isPresented: $isPdfViewerPresented, presentShareList: $shareListPresented, pdfData: viewModel.pdfData)
+        })
+        .sheet(isPresented: $isEditProfilePresented, content: {
+            AddPersonView(isPresented: $isEditProfilePresented, person: personViewModel.person, isEditMode: true, cities: activitiesVM.cities)
         })
         .onChange(of: shareListPresented, perform: { presented in
             if presented {
                 prepareAndPresentShareSheet(reportType: reportType, shareListPresented: &shareListPresented)
             }
         })
-        .navigationBarItems(trailing: Button(action: {
-            createDocument()
-            shareListPresented = true
-        }, label: { Image(systemName: "doc.text").imageScale(.large).padding() }))
-        .navigationBarItems(trailing: Button(action: {
-            createDocument()
-            isPdfViewerPresented = true
-        }, label: { Image(systemName: "eye").imageScale(.large).padding() }))
+        .onChange(of: isEditProfilePresented) { newValue in
+            if newValue == false {
+                guard !personViewModel.person.id.isEmpty else { return }
+                FsService.shared.fetchParticipant(by: personViewModel.person.id)
+                    .sink { result in
+                        switch  result {
+                        case .finished:
+                            print("Successfully get participant")
+                        case .failure(let error):
+                            print("Can't update participant: \(error.description)")
+                        }
+                    } receiveValue: { participant in
+                        personViewModel.person = participant
+                    }.store(in: &viewModel.cancellables)
+            }
+        }
+
     }
     
     @ViewBuilder func titleText(titleText: String, subtitleText: String) -> some View {
         VStack {
             Text(titleText)
-                .font(.largeTitle)
+                .font(.title)
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding(.horizontal, 10)
             Text(subtitleText)
@@ -112,7 +132,7 @@ struct ParticipantDetailsView: View {
         case .activityReport:
             ScrollView {
                 ForEach(viewModel.groupedRegistrations.keys.sorted(), id: \.self) { key in
-                    Section(header: Text("\(key) \(selectedMonth.stringValue())")) {
+                    Section(header: Text("\(key) \(dateHelper.date.monthName(format: "MMMM"))")) {
                         ForEach(viewModel.groupedRegistrations[key] ?? [], id: \.id) { registration in
                             ParticipantDetailsElement(title: registration.participantName, subtitle: nil, date: registration.timestamp.dateValue(), duration: registration.duration) { }
                         }
@@ -122,12 +142,68 @@ struct ParticipantDetailsView: View {
         }
     }
     
+    
+    @ViewBuilder func horizontalMenu() -> some View {
+        HStack {
+            
+            if reportType == .personReport {
+                IconButton(iconName: "person.text.rectangle", text: "Profile") {
+                    isEditProfilePresented = true
+                }
+            }
+            IconButton(iconName: "doc.text.fill", text: "Rapport") {
+                groupedRapport = false
+                createDocument(grouped: groupedRapport)
+                shareListPresented = true
+
+            }
+            if reportType == .personReport {
+                IconButton(iconName: "doc.on.doc.fill", text: "Grouped") {
+                    groupedRapport = true
+                    createDocument(grouped: groupedRapport)
+                    shareListPresented = true
+                }
+            }
+            IconButton(iconName: "eye.fill", text: "Preview") {
+                createDocument()
+                isPdfViewerPresented = true
+            }
+            
+//            if reportType == .personReport {
+//                IconButton(iconName: "trash", text: "Remove", isDestractive: true) {
+//                    self.showDeletionAlert = true
+//                }.alert(isPresented: $showDeletionAlert) {
+//                    deleteAlert()
+//                }
+//            }
+            
+                }
+        .padding(.horizontal, 10)
+    }
+    
+    // Define the alert
+    func deleteAlert() -> Alert {
+        Alert(
+            title: Text("Warning"),
+            message: Text("Are you sure you want to delete this participant's information? This action cannot be undone."),
+            primaryButton: .destructive(Text("Delete"), action: deleteParticipant),
+            secondaryButton: .cancel()
+        )
+    }
+    
+    func deleteParticipant() {
+        let personId = personViewModel.person.id
+        FsService.shared.removeParticipant(by: personId) { success in
+            isViewPresented = false
+        }
+    }
+    
     func requestRegistrations() {
         switch reportType {
         case .personReport:
-            viewModel.getActivities(participantId: person.id, month: selectedMonth.index+1, year: 2023)
+            viewModel.getActivities(participantId: personViewModel.person.id, month: month, year: year)
         case .activityReport:
-            viewModel.getParticipants(for: activity, month: selectedMonth.index+1, year: 2023)
+            viewModel.getParticipants(for: activity, month: month, year: year)
         }
     }
     
@@ -135,10 +211,10 @@ struct ParticipantDetailsView: View {
         switch reportType {
         case .personReport:
             guard !viewModel.participantRegistrationList.isEmpty else { return }
-            viewModel.createDocumentFor(person: person, for: selectedMonth.index + 1, year: 2023, showTypes: grouped)
+            viewModel.createDocumentFor(person: personViewModel.person, for: month, year: year, showTypes: grouped)
         case .activityReport:
             guard !viewModel.groupedRegistrations.isEmpty else { return }
-            viewModel.createDocumentFor(activity: activity, for: selectedMonth.index + 1, year: 2023)
+            viewModel.createDocumentFor(activity: activity, for: month, year: year)
         }
     }
     
@@ -205,16 +281,16 @@ struct ParticipantDetailsView: View {
     func documentNameGenerator(reportType: ReportType) -> String {
         switch reportType {
         case .personReport:
-            let firstName = person.firstName
+            let firstName = personViewModel.person.firstName
             let firstLetterOfName = firstName[firstName.startIndex]
             let grouped = groupedRapport ? "grouped" : "activities"
-            return "\(person.lastName)_\(firstLetterOfName)_\(grouped)_\(selectedMonth.stringValue()).pdf"
+            return "\(personViewModel.person.lastName)_\(firstLetterOfName)_\(grouped)_\(dateHelper.date.monthName()).pdf"
         case .activityReport:
             let components = [
                 activity.activityName,
                 activity.venue,
                 activity.personInCharge,
-                selectedMonth.stringValue(),
+                dateHelper.date.monthName(),
             ]
             let validComponents = components.compactMap { $0 }.filter { !$0.isEmpty }
             
@@ -225,13 +301,13 @@ struct ParticipantDetailsView: View {
 }
 
 struct ParticipantDetailsView_Previews: PreviewProvider {
-    static let selectedMonth = SelectedMonth()
+    static let selectedMonth = DateHelper()
     static let activitiesVM = ActivitiesViewModel()
     static var previews: some View {
-        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: [], abfRegion: nil, city: nil), activity: dummyActivity, reportType: .activityReport)
+        ParticipantDetailsView(person: dummyPerson, activity: dummyActivity, reportType: .activityReport, isDetailsPresented: .constant(true))
             .environmentObject(selectedMonth)
             .environmentObject(activitiesVM)
-        ParticipantDetailsView(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: nil, personalNumber: "890908-5832", phoneNumber: "0768719691", customQrCode: nil, keywords: [], abfRegion: nil, city: nil), activity: dummyActivity, reportType: .personReport)
+        ParticipantDetailsView(person: dummyPerson, activity: dummyActivity, reportType: .personReport, isDetailsPresented: .constant(true))
             .environmentObject(selectedMonth)
             .environmentObject(activitiesVM)
     }
@@ -240,7 +316,7 @@ struct ParticipantDetailsView_Previews: PreviewProvider {
 struct MonthPicker: View {
     let months = DateFormatter().monthSymbols
     
-    @EnvironmentObject var selectedMonth: SelectedMonth
+    @EnvironmentObject var selectedMonth: DateHelper
     
     var body: some View {
         HStack {
@@ -276,8 +352,9 @@ struct MonthPicker: View {
 }
 
 
-class SelectedMonth: ObservableObject {
+class DateHelper: ObservableObject {
     @Published var index: Int
+    @Published var date: Date
     
     func stringValue () -> String {
         let months = DateFormatter().monthSymbols
@@ -288,6 +365,7 @@ class SelectedMonth: ObservableObject {
         let currentMonth = Calendar.current.component(.month, from: Date()) - 1
         // Subtracting 1 since the monthSymbols array is 0-indexed
         index = currentMonth
+        date = Date()
     }
 }
 

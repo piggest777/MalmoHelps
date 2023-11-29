@@ -14,10 +14,6 @@ struct PersonElement: View {
     let person: Person
     let date: Date
     let activity: ActivityEntry
-//    let activityName: String
-//    let defaultDuration: Float?
-//    let personInCharge: String?
-//    let venue: String?
     var showDuration: Bool
     @State var duration: Float = 1.0
     var action: () -> Void
@@ -72,6 +68,6 @@ struct PersonElement: View {
 struct PersonElement_Previews: PreviewProvider {
     static var previews: some View {
         
-        PersonElement(person: Person(firstName: "Denis", lastName: "Rakitin", startDate: Timestamp(), finishDate: Timestamp(), personalNumber: "8909085832", phoneNumber: "", customQrCode: nil, keywords: ["Denis"], abfRegion: nil, city: nil), date: Date(), activity: ActivityEntry(id: "", activityName: "Dance", venue: "Malmo", personInCharge: "Victoria"), showDuration: true, action: {print("")})
+        PersonElement(person: dummyPerson, date: Date(), activity: ActivityEntry(id: "", activityName: "Dance", venue: "Malmo", personInCharge: "Victoria"), showDuration: true, action: {print("")})
     }
 }

@@ -49,7 +49,7 @@ struct AnimatedHideCalendar: View {
                         isMonthlyPickerVisible.toggle()
                     }
                 } label: {
-                    Text(isMonthlyPickerVisible ? "" : "Show")
+                    Text(isMonthlyPickerVisible ? "Hide" : "Show")
                         .foregroundStyle(Color("ButtonColor"))
                 }.padding(.trailing, 20)
             }

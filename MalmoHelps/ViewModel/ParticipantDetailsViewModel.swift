@@ -15,7 +15,7 @@ class ParticipantDetailsViewModel: ObservableObject {
     @Published var participantRegistrationList: [Registration] = []
     @Published var groupedRegistrations: [Int: [Registration]] = [:]
     @Published var pdfData: Data?
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     var activities: [ActivityEntry] = []
         
     let attributesTitle: [NSAttributedString.Key: Any] = [
@@ -48,20 +48,48 @@ class ParticipantDetailsViewModel: ObservableObject {
     func getParticipants(for activity: ActivityEntry, month: Int, year: Int) {
         participantRegistrationList.removeAll()
         groupedRegistrations.removeAll()
-        FsService.shared.getActivitiesParticipantFor(month: month, year: year, activity: activity)
+
+        let transferDate = TRANSFER_DATE.fromString()
+
+        let future: Future<[Registration], Error>
+        if let transferDate,
+           let rapportDate = Date(year: year, month: month),
+           rapportDate >= transferDate,
+           let activityId = activity.id {
+            future = FsService.shared.getActivitiesParticipantById(month: month, year: year, activityId: activityId)
+        } else {
+            future = FsService.shared.getActivitiesParticipantFor(month: month, year: year, activity: activity)
+        }
+
+        processRegistrations(future: future, activity: activity)
+    }
+    
+    private func processRegistrations(future: Future<[Registration], Error>, activity: ActivityEntry) {
+        future
             .sink { completion in
                 switch completion {
                 case .failure(let error):
-                    print("Error fetching activities for partisipant: \(error)")
+                    print("Error fetching activities for participant: \(error)")
                 case .finished:
                     break
                 }
             } receiveValue: { registrations in
+                
+                var registrations = registrations
+                if let venue = activity.venue {
+                  registrations = registrations.filter { $0.venue == venue}
+                }
+                
+                if let personInCharge = activity.personInCharge {
+                    registrations = registrations.filter { $0.activityPersonInCharge == personInCharge}
+                }
+
                 self.participantRegistrationList.append(contentsOf: registrations)
                 self.groupedRegistrations = Dictionary(grouping: registrations, by: { $0.day })
             }
             .store(in: &cancellables)
     }
+
     
     func getActivityTypes(from activities: [Registration]) -> [String] {
         var activityTypes = Set<String>()
@@ -320,8 +348,6 @@ class ParticipantDetailsViewModel: ObservableObject {
         return .undefined
     }
     
-    
-    
     func groupRegistrationsByType(from activities: [Registration], using activityEntries: [ActivityEntry]) -> [ActivityType: [Registration]] {
         var groupedByType = [ActivityType: [Registration]]()
         for activity in activities {
@@ -341,17 +367,11 @@ class ParticipantDetailsViewModel: ObservableObject {
         
         let personName = "\(person.firstName) \(person.lastName)"
         let personalNumber = person.personalNumber
-//        let phoneNumber = person.phoneNumber
     
         let attributedMonth = NSMutableAttributedString(string: getFullMonthName(month: month), attributes: attributesMonth)
         
         let attributedTitle = NSMutableAttributedString(string: personName, attributes: attributesTitle)
         
-//        let attributesPhone: [NSAttributedString.Key: Any] = [
-//            .font: UIFont.boldSystemFont(ofSize: 18),
-//            .underlineStyle: NSUnderlineStyle.double.rawValue,
-//            .underlineColor: UIColor.black
-//        ]
         let attributedSubtitle = NSMutableAttributedString(string: "Sammordningsnummer: \(personalNumber)" )
         
         document.add(attributedText: attributedTitle)
@@ -418,14 +438,6 @@ class ParticipantDetailsViewModel: ObservableObject {
         
         document.add(attributedText: attributedTotalHours)
         document.add(space: 30)
-        
-//        let section = PDFSection(columnWidths: [0.2, 0.2, 0.075, 0.2,0.2])
-//        section.columns[0].add(.right, text: "ABF")
-//        section.columns[1].add(.left, text: "_______________")
-//        section.columns[2].add(.center, text: "        ")
-//        section.columns[3].add(.right, text: personName)
-//        section.columns[4].add(.left, text: "_______________")
-//        document.add(section: section)
         
         let generator = PDFGenerator(document: document)
         

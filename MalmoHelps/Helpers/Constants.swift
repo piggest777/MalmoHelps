@@ -9,10 +9,14 @@ import Foundation
 import Firebase
 
 
+typealias DropdownEnum =  CaseIterable & DropdownMenuUndefined
+
 let REF_FAMILIES = "families"
 let CATEGORIES = "categories"
 let REF_DISTRIBUTED = "distributed_categories"
+let CREATED_BY = "created"
 
+//distribution collection
 let PLACE = "place"
 let ROOM = "room"
 let FIRST_NAME = "first_name"
@@ -36,8 +40,7 @@ let PHONE_NUMBER = "phone"
 let START_DATE = "start_date"
 let FINISH_DATE = "finish_date"
 let CUSTOM_QR_CODE = "custom_qr_code"
-let ABF_REGION = "abf_region"
-let CITY = "city"
+let GENDER = "gender"
 
 //ActivityEntries
 let ACTIVITY_NAME = "activity_name"
@@ -45,7 +48,11 @@ let VENUE = "venue"
 let PERSON_IN_CHARGE = "person_in_charge"
 let ACTIVITY_COLLECTION = "activities"
 let DEFAULT_DURATION = "default_duration"
-let ACTiVITY_TYPE = "type"
+let ACTIVITY_TYPE = "type"
+let ARCHIVE = "archive"
+
+let FAVORITES_KEY = "favoritesKey"
+let TRANSFER_DATE = "01-12-23"
 
 //ParticipantRegistration
 let REGISTRATION_COLLECTION = "participant_registration"
@@ -55,6 +62,7 @@ let DAY = "day"
 let TIMESTAMP = "timestamp"
 let PARTICIPANT_ID = "participant_id"
 let PARTICIPANT_NAME = "participant_name"
+let ACTIVITY_ID = "activity_id"
 
 //User Management
 let USERS_COLLECTION = "users"
@@ -71,6 +79,11 @@ let VOLUNTEER = "volunteer"
 let TEACHER = "teacher"
 let ADMIN = "admin"
 
+//City
+let CITY_COLLECTION = "cities"
+let CITY = "city"
+let REGION = "region"
+
 let DIST_POINTS = [
     ActivityVenue(venue: "Jägersro"),
     ActivityVenue(venue: "ABF"),
@@ -83,7 +96,7 @@ let DIST_POINTS = [
 
 let CURR_POINT = "distribution_point"
 
-let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "_", phoneNumber: "_", customQrCode: nil, keywords: [], abfRegion: "South", city: "Malmö")
+let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "19890908", phoneNumber: "12345678", customQrCode: nil, keywords: [], abfRegion: "South", city: "Malmö", gender: "Kvinna")
 
 let dummyActivity = ActivityEntry(id: "", activityName: "Dancing", venue: "Malmö", personInCharge: "Victoria")
 

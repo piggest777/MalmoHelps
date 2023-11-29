@@ -19,4 +19,21 @@ extension String {
         }
         return sequences
     }
+    
+    func fromString(format: String = "dd-MM-yy") -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = Locale(identifier: "sv_SE")
+
+        if let date = dateFormatter.date(from: self) {
+            return date
+        } else {
+            print("Invalid date format")
+            return nil
+        }
+    }
+    
+    func trimSpaces() -> String {
+        return self.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }

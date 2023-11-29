@@ -17,6 +17,8 @@ struct RegisterParticipantView: View {
     @State var keyword = ""
     @State var keywordCalled = false
     
+    @EnvironmentObject var actvitiesVM: ActivitiesViewModel
+    
     init(date: Date, activity: Binding<ActivityEntry>, isPresented: Binding<Bool>, familiesLookUp: FamiliesLookupViewModel = FamiliesLookupViewModel(), keyword: String = "", keywordCalled: Bool = false) {
         viewModel = RegisterParticipantViewModel(registrationDay: date, activity: activity.wrappedValue)
         self.date = date
@@ -34,6 +36,11 @@ struct RegisterParticipantView: View {
             formatter.dateStyle = .medium
             return formatter
         }()
+    
+    var isFav: Bool {
+        guard let id = activity.id else { return false }
+        return StorageManager.isFav(activityId: id)
+    }
     
     var body: some View {
         let keywordBinding = Binding<String>(
@@ -81,11 +88,23 @@ struct RegisterParticipantView: View {
                 Spacer()
             }.navigationTitle(Text(activity.activityName))
                 .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .topBarTrailing) {
                         Button {
                             isPresented = false
                         } label: {
                             Image(systemName: "xmark")
+                                .imageScale(.medium)
+                                .padding()
+                        }
+                    }
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            guard let id = activity.id else { return }
+                            StorageManager.updateFavorite(activityID: id, isFavorite: !isFav)
+                            actvitiesVM.updateFavoriteActivities()
+                        } label: {
+                            Image(systemName: isFav ? "star.fill" : "star")
+                                .foregroundColor(.yellow)
                                 .imageScale(.medium)
                                 .padding()
                         }
@@ -103,7 +122,7 @@ struct RegisterParticipantView_Previews: PreviewProvider {
 
 struct RegistrateElement_Previews: PreviewProvider {
     static var previews: some View {
-        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp(), activityName: "Dancing", activityPersonInCharge: "Victoria", venue: "Malmo"), action: {print("Action")})
+        RegistrateElement(registredPerson: Registration(participantName: "Denis", participantId: "1", year: 2023, month: 04, day: 10, duration: 1.0, timestamp: Timestamp(), activityName: "Dancing", activityPersonInCharge: "Victoria", venue: "Malmo", activityId: "1234567"), action: {print("Action")})
     }
 }
 

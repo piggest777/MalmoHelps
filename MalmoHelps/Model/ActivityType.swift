@@ -7,7 +7,17 @@
 
 import Foundation
 
-enum ActivityType: Int, CaseIterable {
+enum ActivityType: Int, DropdownEnum {
+    
+    var undefined: Bool {
+        get {
+            if self.description == "Odefinierad" {
+                return true
+            }
+            return false
+        }
+    }
+    
     case undefined = 0
     case individualSupport = 1
     case health = 2

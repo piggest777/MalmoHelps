@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2C03E6562B0A1D630014FA99 /* IconButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03E6552B0A1D630014FA99 /* IconButton.swift */; };
+		2C03E6582B0A83790014FA99 /* PersonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03E6572B0A83790014FA99 /* PersonViewModel.swift */; };
+		2C03E65A2B0AD3A70014FA99 /* ActivityGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03E6592B0AD3A70014FA99 /* ActivityGroup.swift */; };
+		2C03E65C2B0D4CAF0014FA99 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03E65B2B0D4CAF0014FA99 /* City.swift */; };
+		2C03E65E2B1367AB0014FA99 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C03E65D2B1367AB0014FA99 /* StorageManager.swift */; };
 		2C19A2822AE702F700715D59 /* YearMonthPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */; };
 		2C19A2842AE70DAC00715D59 /* AnimatedHideCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */; };
 		2C19A2892AE9C1FC00715D59 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2882AE9C1FC00715D59 /* ActivityType.swift */; };
@@ -26,6 +31,10 @@
 		2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */; };
 		2C72CE002AA3A62D00E434F5 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CDFF2AA3A62D00E434F5 /* FirebaseRemoteConfig */; };
 		2C72CE022AA3A62D00E434F5 /* FirebaseRemoteConfigSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 2C72CE012AA3A62D00E434F5 /* FirebaseRemoteConfigSwift */; };
+		2C8A83D82B055E19009C6ED8 /* ABFRegions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A83D72B055E19009C6ED8 /* ABFRegions.swift */; };
+		2C8A83DA2B056B28009C6ED8 /* DropdownMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A83D92B056B28009C6ED8 /* DropdownMenu.swift */; };
+		2C8A83DC2B056BA3009C6ED8 /* DropdownMenuUndefined.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A83DB2B056BA3009C6ED8 /* DropdownMenuUndefined.swift */; };
+		2C8A83DE2B08C17D009C6ED8 /* Gender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8A83DD2B08C17D009C6ED8 /* Gender.swift */; };
 		2C95E9292AE4AD250062D04A /* FirebaseFunctions in Frameworks */ = {isa = PBXBuildFile; productRef = 2C95E9282AE4AD250062D04A /* FirebaseFunctions */; };
 		2C95E92B2AE52D680062D04A /* ParticipantReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E92A2AE52D680062D04A /* ParticipantReport.swift */; };
 		2C95E92D2AE5338D0062D04A /* FirFunctionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */; };
@@ -106,6 +115,11 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2C03E6552B0A1D630014FA99 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
+		2C03E6572B0A83790014FA99 /* PersonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonViewModel.swift; sourceTree = "<group>"; };
+		2C03E6592B0AD3A70014FA99 /* ActivityGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityGroup.swift; sourceTree = "<group>"; };
+		2C03E65B2B0D4CAF0014FA99 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
+		2C03E65D2B1367AB0014FA99 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearMonthPickerView.swift; sourceTree = "<group>"; };
 		2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHideCalendar.swift; sourceTree = "<group>"; };
 		2C19A2882AE9C1FC00715D59 /* ActivityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityType.swift; sourceTree = "<group>"; };
@@ -123,6 +137,10 @@
 		2C72CDF52AA3A48C00E434F5 /* LottieView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		2C72CDFA2AA3A5D800E434F5 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteConfigManager.swift; sourceTree = "<group>"; };
+		2C8A83D72B055E19009C6ED8 /* ABFRegions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABFRegions.swift; sourceTree = "<group>"; };
+		2C8A83D92B056B28009C6ED8 /* DropdownMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenu.swift; sourceTree = "<group>"; };
+		2C8A83DB2B056BA3009C6ED8 /* DropdownMenuUndefined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownMenuUndefined.swift; sourceTree = "<group>"; };
+		2C8A83DD2B08C17D009C6ED8 /* Gender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gender.swift; sourceTree = "<group>"; };
 		2C95E92A2AE52D680062D04A /* ParticipantReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticipantReport.swift; sourceTree = "<group>"; };
 		2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirFunctionManager.swift; sourceTree = "<group>"; };
 		2C95E92E2AE53A960062D04A /* AdminDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardView.swift; sourceTree = "<group>"; };
@@ -291,9 +309,14 @@
 				7BC5B46129CF8E4B00655834 /* Person.swift */,
 				7BAF03D229DF7ACB001562B1 /* Registration.swift */,
 				2C72CDFA2AA3A5D800E434F5 /* User.swift */,
+				2C03E65B2B0D4CAF0014FA99 /* City.swift */,
 				2C95E92A2AE52D680062D04A /* ParticipantReport.swift */,
 				2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */,
 				2C19A2882AE9C1FC00715D59 /* ActivityType.swift */,
+				2C03E6592B0AD3A70014FA99 /* ActivityGroup.swift */,
+				2C8A83D72B055E19009C6ED8 /* ABFRegions.swift */,
+				2C8A83DD2B08C17D009C6ED8 /* Gender.swift */,
+				2C8A83DB2B056BA3009C6ED8 /* DropdownMenuUndefined.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -315,6 +338,7 @@
 				2C72CDED2AA3A3BB00E434F5 /* SwitchViewModel.swift */,
 				2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */,
 				2C95E9322AE5A4BC0062D04A /* MonthlyReportViewModel.swift */,
+				2C03E6572B0A83790014FA99 /* PersonViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -353,6 +377,7 @@
 				2C72CDFC2AA3A5FA00E434F5 /* RemoteConfigManager.swift */,
 				7B63C41829F31AD40032FCFB /* PDFManager.swift */,
 				2C95E92C2AE5338D0062D04A /* FirFunctionManager.swift */,
+				2C03E65D2B1367AB0014FA99 /* StorageManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -377,6 +402,8 @@
 				2C95E9342AE5A9B60062D04A /* MonthlyReportElement.swift */,
 				2C19A2812AE702F700715D59 /* YearMonthPickerView.swift */,
 				2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */,
+				2C8A83D92B056B28009C6ED8 /* DropdownMenu.swift */,
+				2C03E6552B0A1D630014FA99 /* IconButton.swift */,
 			);
 			path = ViewComponent;
 			sourceTree = "<group>";
@@ -533,6 +560,7 @@
 				B5AF869328BB5CEA005FCB26 /* StandardButton.swift in Sources */,
 				B5AF869128BB413C005FCB26 /* AddCategoryViewModel.swift in Sources */,
 				B5818CB728B94F1200321D23 /* FsService.swift in Sources */,
+				2C03E6562B0A1D630014FA99 /* IconButton.swift in Sources */,
 				B5AFA1BE28BA6D8D0006CDF0 /* SharedItems.swift in Sources */,
 				B5AF868F28BB3EB1005FCB26 /* AddCategoryView.swift in Sources */,
 				7BF5E96B29F02ADF00DE8BD2 /* ParticipantDetailsViewModel.swift in Sources */,
@@ -547,9 +575,11 @@
 				7B63C41929F31AD40032FCFB /* PDFManager.swift in Sources */,
 				B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */,
 				7BC5B46229CF8E4B00655834 /* Person.swift in Sources */,
+				2C03E65E2B1367AB0014FA99 /* StorageManager.swift in Sources */,
 				7B63C41D29F419A90032FCFB /* AddActivityView.swift in Sources */,
 				2C72CDF02AA3A40200E434F5 /* LoadingView.swift in Sources */,
 				2C72CDF42AA3A42D00E434F5 /* Constants.swift in Sources */,
+				2C03E65A2B0AD3A70014FA99 /* ActivityGroup.swift in Sources */,
 				B5818CBE28B95FF000321D23 /* StringExt.swift in Sources */,
 				B5818CBC28B95DD700321D23 /* FamiliesLookupViewModel.swift in Sources */,
 				7BAF03D129DF64AD001562B1 /* RegisterParticipantViewModel.swift in Sources */,
@@ -557,10 +587,12 @@
 				B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */,
 				B51B715A28B25FDF005F5387 /* AppDelegate.swift in Sources */,
 				2C72CDEC2AA3A37F00E434F5 /* SwitchView.swift in Sources */,
+				2C03E6582B0A83790014FA99 /* PersonViewModel.swift in Sources */,
 				B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */,
 				7BAF03D929E48136001562B1 /* PersonElementViewModel.swift in Sources */,
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
 				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
+				2C8A83DE2B08C17D009C6ED8 /* Gender.swift in Sources */,
 				B54AEDAC28FF3F580094B024 /* ActivityVenue.swift in Sources */,
 				7BAF03D529E1F952001562B1 /* PersonElement.swift in Sources */,
 				2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */,
@@ -572,16 +604,20 @@
 				B5AF868D28BB374C005FCB26 /* Category.swift in Sources */,
 				B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */,
 				2C95E92B2AE52D680062D04A /* ParticipantReport.swift in Sources */,
+				2C8A83D82B055E19009C6ED8 /* ABFRegions.swift in Sources */,
 				B5AFA1C028BA97DB0006CDF0 /* DistributeView.swift in Sources */,
 				7BC5B46A29D247A700655834 /* ActivitiesViewModel.swift in Sources */,
 				2C19A2822AE702F700715D59 /* YearMonthPickerView.swift in Sources */,
 				7BAC0F5329DCB4C5005476C9 /* RegisterParticipantView.swift in Sources */,
 				B52797F428C3EB3D00AFF75E /* DistributeViewModel.swift in Sources */,
 				B5533E5428BA196200B73F01 /* CardView.swift in Sources */,
+				2C03E65C2B0D4CAF0014FA99 /* City.swift in Sources */,
 				2C95E9352AE5A9B60062D04A /* MonthlyReportElement.swift in Sources */,
 				2C19A2892AE9C1FC00715D59 /* ActivityType.swift in Sources */,
+				2C8A83DC2B056BA3009C6ED8 /* DropdownMenuUndefined.swift in Sources */,
 				2C72CDFD2AA3A5FA00E434F5 /* RemoteConfigManager.swift in Sources */,
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
+				2C8A83DA2B056B28009C6ED8 /* DropdownMenu.swift in Sources */,
 				7BAF03D729E204FE001562B1 /* FloatingTextField.swift in Sources */,
 				7B63C41B29F320040032FCFB /* PDFViewer.swift in Sources */,
 				7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */,
@@ -727,7 +763,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -746,7 +782,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.20.1;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -765,7 +801,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -784,7 +820,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.11;
+				MARKETING_VERSION = 1.20.1;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -15,6 +15,9 @@ class MonthlyReportViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var updateDate: Date?
     @Published var reportType: MonthlyReportType = .participantsReport
+    @Published var showAlert: Bool = false
+    var errorText = ""
+    
     var cancellables = Set<AnyCancellable>()
     
     var resultString: String = ""
@@ -32,6 +35,8 @@ class MonthlyReportViewModel: ObservableObject {
                         break
                     case .failure(let error):
                         print("Error: \(error)")
+                        self.errorText = "Error: \(error)"
+                        self.showAlert = true
                         self.isLoading = false
                     }
                 }, receiveValue: { report in
@@ -68,9 +73,9 @@ class MonthlyReportViewModel: ObservableObject {
                 .store(in: &cancellables)
         }
     }
-    
+        
     func convertParticipantsToCSV(from reports: [ParticipantReport]) -> String {
-        var result = "Participant ID,Participant Name,Participant Surname,Total Hours,Personal Number\n"
+        var result = "Participant ID,Participant Name,Participant Surname,Total Hours,Personal Number,ABF Region,City,Gender\n"
         for report in reports {
             result += report.toCSV() + "\n"
         }
@@ -128,14 +133,17 @@ class MonthlyReportViewModel: ObservableObject {
         for i in 1..<rows.count {
             let row = rows[i]
             let components = row.components(separatedBy: ",")
-            guard components.count == 5 else { continue }
+            guard components.count == 8 else { continue }
 
             let report = ParticipantReport(
                 participantId: components[0],
                 participantName: components[1],
                 participantSurname: components[2],
                 totalHours: Double(components[3]) ?? 0.0,
-                personalNumber: components[4]
+                personalNumber: components[4],
+                region: components[5],
+                city: components[6],
+                gender: components[7]
             )
 
             reports.append(report)
