@@ -37,7 +37,7 @@ class FirFunctionManager {
     func calculateActivityHours(month: Int, year: Int) -> Future<[ActivityReport], Error> {
         return Future { promise in
             let functions = Functions.functions()
-            functions.httpsCallable("calculateActivityHours").call(["month": month, "year": year]) { (result, error) in
+            functions.httpsCallable("calculateActivityHoursForPeriod").call(["startMonth": month, "startYear": year]) { (result, error) in
                 if let error = error {
                     promise(.failure(error))
                 } else if let result = result?.data as? [[String: Any]],

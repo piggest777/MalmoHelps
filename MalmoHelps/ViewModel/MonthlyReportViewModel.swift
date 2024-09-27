@@ -51,7 +51,7 @@ class MonthlyReportViewModel: ObservableObject {
                 })
                 .store(in: &cancellables)
         case .activitiesReport:
-            FirFunctionManager.shared.calculateActivityHours(month: month, year: year)
+            FirFunctionManager.shared.calculateActivityHours(month: 10, year: 2023)
                 .sink(receiveCompletion: { completion in
                     switch completion {
                     case .finished:
@@ -83,7 +83,7 @@ class MonthlyReportViewModel: ObservableObject {
     }
     
     func convertActivitiesToCSV(from reports: [ActivityReport]) -> String {
-        var result = "Activity ID, Activities Name,Person in charge,Venue,Total Hours\n"
+        var result = "Activity ID, Activities Name,Person in charge,Venue,Total Hours,Unique visitiors\n"
         for report in reports {
             result += report.toCSV() + "\n"
         }
@@ -161,14 +161,15 @@ class MonthlyReportViewModel: ObservableObject {
         for i in 1..<rows.count {
             let row = rows[i]
             let components = row.components(separatedBy: ",")
-            guard components.count == 5 else { continue }
+            guard components.count == 6 else { continue }
 
             let report = ActivityReport(
                 activityId: components[0],
                 activityName: components[1],
                 personInCharge: components[2],
                 venue: components[3],
-                totalHours: Double(components[4]) ?? 0.0
+                totalHours: Double(components[4]) ?? 0.0, 
+                uniqueVisitorsCount: Int(components[5]) ?? 0
             )
 
             reports.append(report)

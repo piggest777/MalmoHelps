@@ -18,6 +18,7 @@ struct Family: Codable {
     var notes: String?
     var keywords: [String]
     var addingDate: Timestamp
+    var issueDate: String
 }
 
 

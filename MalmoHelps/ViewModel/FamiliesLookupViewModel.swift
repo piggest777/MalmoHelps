@@ -64,8 +64,9 @@ class FamiliesLookupViewModel: ObservableObject {
                 let notes = data[NOTES] as? String ?? ""
                 let familySize = data[FAMILY_SIZE] as? String ?? ""
                 let addingDate = data[ADDING_DATE] as? Timestamp ?? Timestamp()
+                let issueDate = data[ISSUE_DATE] as? String ?? ""
                 
-                let newFamily = Family(id: id, place: place, room: room, firstName: firstName, lastName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: addingDate)
+                let newFamily = Family(id: id, place: place, room: room, firstName: firstName, lastName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: addingDate, issueDate: issueDate)
                
                 if !self.queryResultFamilies.contains( where: { $0.id == id}) {
                     self.queryResultFamilies.append(newFamily)

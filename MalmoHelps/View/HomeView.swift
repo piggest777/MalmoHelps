@@ -65,7 +65,7 @@ struct HomeView: View {
                             }
                         }
                         Spacer()
-                        NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp())), isActive: $navLinkActive) {
+                        NavigationLink(destination: FamilyDetailsView(family: currFamily ?? Family(place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp(), issueDate: "")), isActive: $navLinkActive) {
                             EmptyView()
                         }.isDetailLink(false)
                     }
@@ -91,7 +91,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showAddFamily) {
-            AddFamilyView(showAddFamily: $showAddFamily, isDeleted: $isDeleted, family: Family(place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+            AddFamilyView(showAddFamily: $showAddFamily, isDeleted: $isDeleted, family: Family(place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp(), issueDate: ""))
         }
         .environmentObject(cat)
     }

@@ -73,7 +73,7 @@ struct DistributeView: View {
 
 struct DistributeView_Previews: PreviewProvider {
     static var previews: some View {
-        DistributeView(family: Family(id: "", place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp()))
+        DistributeView(family: Family(id: "", place: "", room: "", firstName: "", lastName: "", memberCount: "", notes: "", keywords: [], addingDate: Timestamp(), issueDate: ""))
     }
 }
 

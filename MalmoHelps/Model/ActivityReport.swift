@@ -13,13 +13,15 @@ struct ActivityReport: Codable {
     let personInCharge: String
     let venue: String
     let totalHours: Double
+    let uniqueVisitorsCount: Int?
     
-    init(activityId: String, activityName: String, personInCharge: String, venue: String, totalHours: Double) {
+    init(activityId: String, activityName: String, personInCharge: String, venue: String, totalHours: Double, uniqueVisitorsCount: Int?) {
         self.activityId = activityId
         self.activityName = activityName
         self.personInCharge = personInCharge
         self.venue = venue
         self.totalHours = totalHours
+        self.uniqueVisitorsCount = uniqueVisitorsCount
     }
     
     enum CodingKeys: String, CodingKey {
@@ -28,6 +30,7 @@ struct ActivityReport: Codable {
         case personInCharge
         case venue
         case totalHours
+        case uniqueVisitorsCount
     }
     
     init(from decoder: Decoder) throws {
@@ -37,11 +40,12 @@ struct ActivityReport: Codable {
         self.personInCharge = try container.decode(String.self, forKey: .personInCharge)
         self.venue = try container.decode(String.self, forKey: .venue)
         self.totalHours = try container.decode(Double.self, forKey: .totalHours)
+        self.uniqueVisitorsCount = try container.decodeIfPresent( Int.self, forKey: .uniqueVisitorsCount)
     }
 }
 
 extension ActivityReport {
     func toCSV() -> String {
-        return "\(activityId),\(activityName),\(personInCharge),\(venue),\(totalHours)"
+        return "\(activityId),\(activityName),\(personInCharge),\(venue),\(totalHours),\(uniqueVisitorsCount ?? 0)"
     }
 }

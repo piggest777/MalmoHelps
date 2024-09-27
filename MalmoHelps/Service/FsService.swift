@@ -28,7 +28,8 @@ class FsService {
             FAMILY_SIZE : family.memberCount,
             NOTES : family.notes ?? "",
             KEYWORDS : family.keywords,
-            ADDING_DATE : family.addingDate
+            ADDING_DATE : family.addingDate,
+            ISSUE_DATE : family.issueDate
             
         ], merge: true) { err in
             if err != nil {
@@ -50,7 +51,8 @@ class FsService {
             FAMILY_SIZE : family.memberCount,
             NOTES : family.notes ?? "",
             KEYWORDS : family.keywords,
-            ADDING_DATE : family.addingDate
+            ADDING_DATE : family.addingDate,
+            ISSUE_DATE : family.issueDate
             
         ], merge: true) { err in
             if err != nil {

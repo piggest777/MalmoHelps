@@ -102,7 +102,9 @@ struct ReportView: View {
     
     func showShareCSVSheet() {
         
-        if viewModel.monthlyParticipantList.isEmpty { return }
+//        if viewModel.monthlyParticipantList.isEmpty { 
+//            return
+//        }
         
         let url = viewModel.getFileUrl(month: date.monthAsInt(), year: date.yearAsInt())
         

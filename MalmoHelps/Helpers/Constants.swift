@@ -25,6 +25,7 @@ let FAMILY_SIZE = "family_size"
 let NOTES = "notes"
 let KEYWORDS = "keywords"
 let ADDING_DATE = "adding_date"
+let ISSUE_DATE = "issue_date"
 
 let CATEGORY = "category"
 let DISTRIBUTION_DATE = "distribution_date"

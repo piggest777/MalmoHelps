@@ -26,6 +26,7 @@ enum ActivityType: Int, DropdownEnum {
     case studyVisit = 5
     case internship = 6
     case competenceDevelopment = 7
+    case careForAllProjects = 8
     
     static let names: [ActivityType: String] = [
         .undefined: "Odefinierad",
@@ -35,7 +36,8 @@ enum ActivityType: Int, DropdownEnum {
         .studySupport: "Förberedelser till studier",
         .studyVisit: "Studiebesök",
         .internship: "Praktik",
-        .competenceDevelopment: "Kompetensutveckling"
+        .competenceDevelopment: "Kompetensutveckling",
+        .careForAllProjects: "Care for all"
     ]
     
     var description: String {

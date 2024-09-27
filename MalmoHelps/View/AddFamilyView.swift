@@ -20,10 +20,12 @@ struct AddFamilyView: View {
     @State var secondName = ""
     @State var familySize = ""
     @State var notes = ""
+    @State var issueDate = ""
     @State var placeholder = "Place for short notes"
     @State var editingPlace  = false
     @State var editingFirst = false
     @State var editingSecond = false
+    @State var editingIssueDate = false
     @State var editingNumberOfFamilies = false
     @State var showAlert = false
     @State var alertText = ""
@@ -36,7 +38,6 @@ struct AddFamilyView: View {
     
     
     var family: Family
-    
     
     var body: some View {
         NavigationView {
@@ -59,6 +60,7 @@ struct AddFamilyView: View {
                         TextWithTextfield(textString: "First name", textBinding: $firstName, editing: $editingFirst)
                         
                         TextWithTextfield(textString: "Second name", textBinding: $secondName, editing: $editingSecond)
+                        TextWithTextfield(textString: "Issue date", textBinding: $issueDate, editing: $editingIssueDate)
                         
                     }
                     Text("Family size")
@@ -134,7 +136,7 @@ struct AddFamilyView: View {
                                 showAlert = false
                                 
                                 
-                                let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, lastName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp())
+                                let newFamily = Family(id: family.id, place: place, room: room, firstName: firstName, lastName: secondName, memberCount: familySize, notes: notes, keywords: keywords, addingDate: Timestamp(), issueDate: issueDate)
                                 visibilityProgressView = .visible
                                 buttonDisabled = true
                                 
@@ -230,6 +232,7 @@ struct AddFamilyView: View {
                 place = family.place
                 room = family.room ?? ""
                 notes = family.notes ?? ""
+                issueDate = family.issueDate ?? ""
                 if let room = family.room, room.isEmpty {
                     liveInMGS = false
                 } else {
@@ -259,7 +262,7 @@ struct AddFamilyView: View {
 struct AddFamilyView_Previews: PreviewProvider {
     
     static var previews: some View {
-        AddFamilyView(showAddFamily: .constant(true), isDeleted: .constant(false), family: Family(id: "123",place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp()))
+        AddFamilyView(showAddFamily: .constant(true), isDeleted: .constant(false), family: Family(id: "123",place: "", firstName: "", lastName: "", memberCount: "", keywords: [], addingDate: Timestamp(), issueDate: ""))
     }
 }
 
