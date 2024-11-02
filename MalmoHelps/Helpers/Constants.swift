@@ -42,6 +42,9 @@ let START_DATE = "start_date"
 let FINISH_DATE = "finish_date"
 let CUSTOM_QR_CODE = "custom_qr_code"
 let GENDER = "gender"
+let DOCUMENT_TYPE = "document_type"
+let AGE_GROUP = "age_group"
+let COUNTRY_OF_ORIGIN = "country_of_origin"
 
 //ActivityEntries
 let ACTIVITY_NAME = "activity_name"
@@ -97,7 +100,22 @@ let DIST_POINTS = [
 
 let CURR_POINT = "distribution_point"
 
-let dummyPerson = Person(firstName: "John", lastName: "Doe", startDate: Timestamp(), finishDate: nil, personalNumber: "19890908", phoneNumber: "12345678", customQrCode: nil, keywords: [], abfRegion: "South", city: "Malmö", gender: "Kvinna")
+let dummyPerson = Person(
+    firstName: "John",
+    lastName: "Doe",
+    startDate: Timestamp(),
+    finishDate: nil,
+    personalNumber: "19890908",
+    phoneNumber: "12345678",
+    customQrCode: nil,
+    keywords: [],
+    abfRegion: "South",
+    city: "Malmö",
+    gender: "Female",
+    documentType: "Swedish citizenship",
+    ageGroup: "27-62",
+    countryOfOrigin: "Sweden"
+)
 
 let dummyActivity = ActivityEntry(id: "", activityName: "Dancing", venue: "Malmö", personInCharge: "Victoria")
 

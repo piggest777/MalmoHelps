@@ -21,6 +21,9 @@ struct Person {
     let abfRegion: String?
     let city: String?
     let gender: String?
+    let documentType: String
+    let ageGroup: String
+    let countryOfOrigin: String
     
     static func fromDocument(_ document: DocumentSnapshot) -> Person? {
         guard let data = document.data(),
@@ -37,8 +40,11 @@ struct Person {
         let abfRegion = data[REGION] as? String
         let city = data[CITY] as? String
         let gender = data[GENDER] as? String
+        let documentType = data[DOCUMENT_TYPE] as? String ?? ""
+        let ageGroup = data[AGE_GROUP] as? String ?? ""
+        let countryOfOrigin = data[COUNTRY_OF_ORIGIN] as? String ?? ""
         
-        return Person(id: id, firstName: firstName, lastName: lastName, startDate: startDate, finishDate: finishDate, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: customQrCode, keywords: keywords, abfRegion: abfRegion, city: city, gender: gender)
+        return Person(id: id, firstName: firstName, lastName: lastName, startDate: startDate, finishDate: finishDate, personalNumber: personalNumber, phoneNumber: phoneNumber, customQrCode: customQrCode, keywords: keywords, abfRegion: abfRegion, city: city, gender: gender, documentType: documentType, ageGroup: ageGroup, countryOfOrigin: countryOfOrigin)
     }
-    }
+}
 

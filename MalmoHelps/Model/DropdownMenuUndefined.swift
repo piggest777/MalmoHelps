@@ -11,3 +11,9 @@ protocol DropdownMenuUndefined {
     var undefined: Bool { get }
     var description: String { get } 
 }
+
+protocol DropdownData {
+    var description: String { get }
+    var isUndefined: Bool { get }
+}
+

@@ -11,7 +11,7 @@ import Firebase
 import FirebaseFirestoreSwift
 
 
-struct City: Codable, Hashable, Identifiable {
+struct City: Codable, Hashable, Identifiable, DropdownData {
     @DocumentID var id: String?
     let city: String
     let region: String
@@ -20,11 +20,25 @@ struct City: Codable, Hashable, Identifiable {
         case id, city, region
     }
 
+    init(id: String? = nil, city: String, region: String) {
+        self.id = id
+        self.city = city
+        self.region = region
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         
         self._id = try container.decode(DocumentID<String>.self, forKey: .id)
         city = try container.decode(String.self, forKey: .city)
         region = try container.decode(String.self, forKey: .region)
+    }
+    
+    var description: String {
+        return city
+    }
+    
+    var isUndefined: Bool {
+        return city.isEmpty
     }
 }

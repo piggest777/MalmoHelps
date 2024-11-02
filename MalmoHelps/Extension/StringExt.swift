@@ -37,3 +37,14 @@ extension String {
         return self.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
+
+extension String: DropdownData {
+    
+    var description: String {
+        return self
+    }
+
+    var isUndefined: Bool {
+        return self.isEmpty
+    }
+}

@@ -7,21 +7,18 @@
 
 import Foundation
 
-enum Gender: String, DropdownEnum {
+enum Gender: String, CaseIterable, DropdownData {
     
     case male = "Man"
     case female = "Kvinna"
     case undefined
     
     var description: String {
-        self.rawValue
+        return rawValue.isEmpty ? "Undefined" : rawValue
     }
     
-    var undefined: Bool {
-        if self == .undefined {
-            return true
-        }
-        return false
+    var isUndefined: Bool {
+        return self == .undefined
     }
     
     static func gender(fromString stringGender: String?) -> Gender {

@@ -82,6 +82,7 @@ struct ParticipantDetailsView: View {
             PDFViewer(isPresented: $isPdfViewerPresented, presentShareList: $shareListPresented, pdfData: viewModel.pdfData)
         })
         .sheet(isPresented: $isEditProfilePresented, content: {
+//            AddPersonView(cities: [])
             AddPersonView(isPresented: $isEditProfilePresented, person: personViewModel.person, isEditMode: true, cities: activitiesVM.cities)
         })
         .onChange(of: shareListPresented, perform: { presented in

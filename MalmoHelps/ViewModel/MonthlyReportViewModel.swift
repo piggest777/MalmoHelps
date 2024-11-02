@@ -51,7 +51,7 @@ class MonthlyReportViewModel: ObservableObject {
                 })
                 .store(in: &cancellables)
         case .activitiesReport:
-            FirFunctionManager.shared.calculateActivityHours(month: 10, year: 2023)
+            FirFunctionManager.shared.calculateActivityHours(month: month, year: year)
                 .sink(receiveCompletion: { completion in
                     switch completion {
                     case .finished:

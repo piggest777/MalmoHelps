@@ -7,6 +7,8 @@
 
 import Foundation
 import Combine
+import UIKit
+import SwiftUICore
 
 class AddPersonViewModel: ObservableObject {
     
@@ -19,6 +21,22 @@ class AddPersonViewModel: ObservableObject {
     @Published var isLoading = false
     
     private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        setupNavigationBar()
+    }
+    
+    func setupNavigationBar () {
+        let coloredAppearance = UINavigationBarAppearance()
+        coloredAppearance.configureWithOpaqueBackground()
+        coloredAppearance.backgroundColor = UIColor(Color("DarkShadow"))
+        coloredAppearance.titleTextAttributes = [.foregroundColor: UIColor.black]
+        coloredAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        UINavigationBar.appearance().standardAppearance = coloredAppearance
+        UINavigationBar.appearance().compactAppearance = coloredAppearance
+        UINavigationBar.appearance().scrollEdgeAppearance = coloredAppearance
+        UINavigationBar.appearance().tintColor = .black
+    }
     
     func checkPNBeforeAdding(person: Person) {
         FsService.shared.checkIfPNEXist(pn: person.personalNumber)

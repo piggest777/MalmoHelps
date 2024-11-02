@@ -77,20 +77,23 @@ class FsService {
     }
     
     func addNewPerson(_ person: Person) -> Future<Void, Error> {
-        
-        let dataDictionary = [
-            FIRST_NAME : person.firstName,
-            LAST_NAME : person.lastName,
-            PERSONAL_NUMBER : person.personalNumber,
-            PHONE_NUMBER : person.phoneNumber,
-            START_DATE : Timestamp(),
-            FINISH_DATE : FINISH_DATE as Any,
-            CUSTOM_QR_CODE : person.customQrCode ?? "",
-            KEYWORDS : person.keywords,
-            REGION : person.abfRegion as Any,
-            GENDER : person.gender as Any,
-            CITY : person.city as Any,
-            CREATED_BY: Auth.auth().currentUser?.displayName  as Any
+        // Create a dictionary with all necessary data fields
+        let dataDictionary: [String: Any] = [
+            FIRST_NAME: person.firstName,
+            LAST_NAME: person.lastName,
+            PERSONAL_NUMBER: person.personalNumber,
+            PHONE_NUMBER: person.phoneNumber,
+            START_DATE: person.startDate,
+            FINISH_DATE: person.finishDate as Any,
+            CUSTOM_QR_CODE: person.customQrCode ?? "",
+            KEYWORDS: person.keywords,
+            REGION: person.abfRegion as Any,
+            GENDER: person.gender as Any,
+            CITY: person.city as Any,
+            DOCUMENT_TYPE: person.documentType as Any,
+            AGE_GROUP: person.ageGroup as Any,
+            COUNTRY_OF_ORIGIN: person.countryOfOrigin as Any,
+            CREATED_BY: Auth.auth().currentUser?.displayName as Any
         ]
         
         return Future<Void, Error> { promise in
@@ -100,7 +103,8 @@ class FsService {
                 let newDocumentReference = collectionReference.document()
                 docId = newDocumentReference.documentID
             }
-            self.db.collection(PERSON_COLLECTION).document(docId).setData(dataDictionary){ error in
+            
+            self.db.collection(PERSON_COLLECTION).document(docId).setData(dataDictionary) { error in
                 if let error = error {
                     promise(.failure(error))
                 } else {

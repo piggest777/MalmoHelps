@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum ABFRegions: String, DropdownEnum {
+enum ABFRegions: String, CaseIterable, DropdownData {
     var description: String {
         self.rawValue
     }
@@ -18,7 +18,7 @@ enum ABFRegions: String, DropdownEnum {
     case nordost = "ABF Skåne Nordost"
     case undefined = "Odefinierad"
     
-    var undefined: Bool {
+    var isUndefined: Bool {
         get {
             if self == .undefined {
                 return true

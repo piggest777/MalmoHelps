@@ -16,6 +16,14 @@
 		2C19A2842AE70DAC00715D59 /* AnimatedHideCalendar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */; };
 		2C19A2892AE9C1FC00715D59 /* ActivityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A2882AE9C1FC00715D59 /* ActivityType.swift */; };
 		2C19A28B2AEAEFA500715D59 /* ActivityReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */; };
+		2C1B9F1C2CBB31DF00F36435 /* PersonalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F1B2CBB31D500F36435 /* PersonalInfoView.swift */; };
+		2C1B9F1E2CBB324800F36435 /* LocationInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F1D2CBB324800F36435 /* LocationInfoView.swift */; };
+		2C1B9F222CBC5CE600F36435 /* Background.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F212CBC5CD400F36435 /* Background.swift */; };
+		2C1B9F262CBC683D00F36435 /* CustomActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F252CBC683D00F36435 /* CustomActionButton.swift */; };
+		2C1B9F282CBC69A800F36435 /* AddPersonValidatorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F272CBC69A800F36435 /* AddPersonValidatorViewModel.swift */; };
+		2C1B9F2A2CBC843C00F36435 /* AgeGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F292CBC843C00F36435 /* AgeGroup.swift */; };
+		2C1B9F2C2CBC86F300F36435 /* DocumentType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F2B2CBC86F300F36435 /* DocumentType.swift */; };
+		2C1B9F2E2CBC875100F36435 /* DocumentInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C1B9F2D2CBC875100F36435 /* DocumentInfoView.swift */; };
 		2C4AB6712ABF9CB700F92B2E /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */; };
 		2C4AB6732ABF9E5500F92B2E /* CryptoUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */; };
 		2C4FB12A2AC0C3DB007A78E0 /* loading.json in Resources */ = {isa = PBXBuildFile; fileRef = 2C4FB1292AC0C3DB007A78E0 /* loading.json */; };
@@ -124,6 +132,14 @@
 		2C19A2832AE70DAB00715D59 /* AnimatedHideCalendar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedHideCalendar.swift; sourceTree = "<group>"; };
 		2C19A2882AE9C1FC00715D59 /* ActivityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityType.swift; sourceTree = "<group>"; };
 		2C19A28A2AEAEFA500715D59 /* ActivityReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityReport.swift; sourceTree = "<group>"; };
+		2C1B9F1B2CBB31D500F36435 /* PersonalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalInfoView.swift; sourceTree = "<group>"; };
+		2C1B9F1D2CBB324800F36435 /* LocationInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationInfoView.swift; sourceTree = "<group>"; };
+		2C1B9F212CBC5CD400F36435 /* Background.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Background.swift; sourceTree = "<group>"; };
+		2C1B9F252CBC683D00F36435 /* CustomActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomActionButton.swift; sourceTree = "<group>"; };
+		2C1B9F272CBC69A800F36435 /* AddPersonValidatorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonValidatorViewModel.swift; sourceTree = "<group>"; };
+		2C1B9F292CBC843C00F36435 /* AgeGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgeGroup.swift; sourceTree = "<group>"; };
+		2C1B9F2B2CBC86F300F36435 /* DocumentType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentType.swift; sourceTree = "<group>"; };
+		2C1B9F2D2CBC875100F36435 /* DocumentInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInfoView.swift; sourceTree = "<group>"; };
 		2C4AB66F2ABF7DE900F92B2E /* MalmoHelps.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MalmoHelps.entitlements; sourceTree = "<group>"; };
 		2C4AB6702ABF9CB700F92B2E /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		2C4AB6722ABF9E5500F92B2E /* CryptoUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoUtils.swift; sourceTree = "<group>"; };
@@ -236,6 +252,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2C1B9F1A2CBB31C100F36435 /* AddPersonView */ = {
+			isa = PBXGroup;
+			children = (
+				2C1B9F2D2CBC875100F36435 /* DocumentInfoView.swift */,
+				2C1B9F1D2CBB324800F36435 /* LocationInfoView.swift */,
+				2C1B9F1B2CBB31D500F36435 /* PersonalInfoView.swift */,
+				7B28017D29C911AB00CDEEFD /* AddPersonView.swift */,
+			);
+			path = AddPersonView;
+			sourceTree = "<group>";
+		};
 		2C4FB12B2AC0C3F6007A78E0 /* Lottie */ = {
 			isa = PBXGroup;
 			children = (
@@ -301,6 +328,8 @@
 		B51B715B28B3BC0F005F5387 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B9F2B2CBC86F300F36435 /* DocumentType.swift */,
+				2C1B9F292CBC843C00F36435 /* AgeGroup.swift */,
 				B5818CB428B8B5E700321D23 /* Family.swift */,
 				B5AFA1BD28BA6D8C0006CDF0 /* SharedItems.swift */,
 				B5AF868C28BB374C005FCB26 /* Category.swift */,
@@ -324,6 +353,7 @@
 		B51B715C28B3BC30005F5387 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B9F272CBC69A800F36435 /* AddPersonValidatorViewModel.swift */,
 				B51B719828B3C76E005F5387 /* AuthViewModel.swift */,
 				B5818CBB28B95DD700321D23 /* FamiliesLookupViewModel.swift */,
 				B5AFA1BB28BA6D160006CDF0 /* SharedItemsViewModel.swift */,
@@ -356,7 +386,7 @@
 				B5AF868E28BB3EB1005FCB26 /* AddCategoryView.swift */,
 				2C72CDEB2AA3A37F00E434F5 /* SwitchView.swift */,
 				7BD5C92129C7C29B008FD3F4 /* ActivitiesView.swift */,
-				7B28017D29C911AB00CDEEFD /* AddPersonView.swift */,
+				2C1B9F1A2CBB31C100F36435 /* AddPersonView */,
 				7B63C41C29F419A90032FCFB /* AddActivityView.swift */,
 				7BAC0F5229DCB4C5005476C9 /* RegisterParticipantView.swift */,
 				7BF5E96629EF4F9600DE8BD2 /* ParticipantDetailsView.swift */,
@@ -385,6 +415,8 @@
 		B51B719A28B3CFA1005F5387 /* ViewComponent */ = {
 			isa = PBXGroup;
 			children = (
+				2C1B9F252CBC683D00F36435 /* CustomActionButton.swift */,
+				2C1B9F212CBC5CD400F36435 /* Background.swift */,
 				7BAF03DA29E48C9A001562B1 /* ParticipantListViewElement.swift */,
 				B51B719B28B3CFEB005F5387 /* GoogleSignInButton.swift */,
 				B51B719F28B4104E005F5387 /* CircleButton.swift */,
@@ -554,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C1B9F262CBC683D00F36435 /* CustomActionButton.swift in Sources */,
 				7B421CA629CCEE80009AC2A0 /* WideTextField.swift in Sources */,
 				7BF5E96729EF4F9600DE8BD2 /* ParticipantDetailsView.swift in Sources */,
 				2C95E9312AE5A3870062D04A /* ReportView.swift in Sources */,
@@ -574,6 +607,7 @@
 				2C72CDF62AA3A48D00E434F5 /* LottieView.swift in Sources */,
 				7B63C41929F31AD40032FCFB /* PDFManager.swift in Sources */,
 				B51B71A228B505D2005F5387 /* AddFamilyView.swift in Sources */,
+				2C1B9F1C2CBB31DF00F36435 /* PersonalInfoView.swift in Sources */,
 				7BC5B46229CF8E4B00655834 /* Person.swift in Sources */,
 				2C03E65E2B1367AB0014FA99 /* StorageManager.swift in Sources */,
 				7B63C41D29F419A90032FCFB /* AddActivityView.swift in Sources */,
@@ -587,20 +621,25 @@
 				B51B719E28B3E909005F5387 /* ProfileView.swift in Sources */,
 				B51B715A28B25FDF005F5387 /* AppDelegate.swift in Sources */,
 				2C72CDEC2AA3A37F00E434F5 /* SwitchView.swift in Sources */,
+				2C1B9F222CBC5CE600F36435 /* Background.swift in Sources */,
 				2C03E6582B0A83790014FA99 /* PersonViewModel.swift in Sources */,
 				B51B713D28B14CC9005F5387 /* ContentView.swift in Sources */,
 				7BAF03D929E48136001562B1 /* PersonElementViewModel.swift in Sources */,
 				B51B719928B3C76E005F5387 /* AuthViewModel.swift in Sources */,
 				B51B71A028B4104E005F5387 /* CircleButton.swift in Sources */,
 				2C8A83DE2B08C17D009C6ED8 /* Gender.swift in Sources */,
+				2C1B9F282CBC69A800F36435 /* AddPersonValidatorViewModel.swift in Sources */,
 				B54AEDAC28FF3F580094B024 /* ActivityVenue.swift in Sources */,
 				7BAF03D529E1F952001562B1 /* PersonElement.swift in Sources */,
+				2C1B9F2A2CBC843C00F36435 /* AgeGroup.swift in Sources */,
 				2C72CDEE2AA3A3BB00E434F5 /* SwitchViewModel.swift in Sources */,
 				2C95E92F2AE53A960062D04A /* AdminDashboardView.swift in Sources */,
 				7BC5B46829D2318700655834 /* ActivityEntry.swift in Sources */,
+				2C1B9F1E2CBB324800F36435 /* LocationInfoView.swift in Sources */,
 				B5AFA1BC28BA6D160006CDF0 /* SharedItemsViewModel.swift in Sources */,
 				B5533E5228B9BE5C00B73F01 /* FamilyDetailsView.swift in Sources */,
 				B5818CB328B8A0FE00321D23 /* ViewExt.swift in Sources */,
+				2C1B9F2E2CBC875100F36435 /* DocumentInfoView.swift in Sources */,
 				B5AF868D28BB374C005FCB26 /* Category.swift in Sources */,
 				B51B719C28B3CFEB005F5387 /* GoogleSignInButton.swift in Sources */,
 				2C95E92B2AE52D680062D04A /* ParticipantReport.swift in Sources */,
@@ -619,6 +658,7 @@
 				B5818CAD28B89CF800321D23 /* TextWithTextfield.swift in Sources */,
 				2C8A83DA2B056B28009C6ED8 /* DropdownMenu.swift in Sources */,
 				7BAF03D729E204FE001562B1 /* FloatingTextField.swift in Sources */,
+				2C1B9F2C2CBC86F300F36435 /* DocumentType.swift in Sources */,
 				7B63C41B29F320040032FCFB /* PDFViewer.swift in Sources */,
 				7B28017E29C911AB00CDEEFD /* AddPersonView.swift in Sources */,
 				B5818CB528B8B5E700321D23 /* Family.swift in Sources */,
@@ -763,7 +803,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -778,11 +818,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.5;
+				MARKETING_VERSION = 1.20.7;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -801,7 +842,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = MalmoHelps/MalmoHelps.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 22;
+				CURRENT_PROJECT_VERSION = 24;
 				DEVELOPMENT_ASSET_PATHS = "\"MalmoHelps/Preview Content\"";
 				DEVELOPMENT_TEAM = 83G4KB5W5L;
 				ENABLE_PREVIEWS = YES;
@@ -816,11 +857,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.20.5;
+				MARKETING_VERSION = 1.20.7;
 				PRODUCT_BUNDLE_IDENTIFIER = se.malmohelps.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
